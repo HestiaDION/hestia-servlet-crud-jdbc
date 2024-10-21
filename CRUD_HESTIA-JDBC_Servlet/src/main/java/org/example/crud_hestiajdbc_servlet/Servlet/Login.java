@@ -35,11 +35,11 @@ public class Login extends HttpServlet {
 
                 HttpSession session = req.getSession();
                 session.setAttribute("administrador", admin);
-                req.getRequestDispatcher("../webapp/page/TabelasAdministradoras.jsp").forward(req, resp); // Certifique-se de que o caminho esteja correto
+                req.getRequestDispatcher("page/TabelasAdministradoras.jsp").forward(req, resp); // Certifique-se de que o caminho esteja correto
             }
             else
             {
-                req.getRequestDispatcher("../page/ErroLogin.jsp").forward(req, resp);
+                req.getRequestDispatcher("page/ErroLogin.jsp").forward(req, resp);
             }
         }
         catch (SQLException e)

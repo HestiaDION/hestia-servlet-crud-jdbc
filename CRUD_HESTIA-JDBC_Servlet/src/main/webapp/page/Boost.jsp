@@ -67,7 +67,7 @@
         %>
         <tr>
             <td><%= boost.getuId() %></td>
-            <td><%= boost.getcTipoBoost() %></td>
+            <td><%= boost.getcNmBoost() %></td>
             <td><%= boost.getnValor() %></td>
             <td><%= boost.getnPctBoost() %></td>
             <td>

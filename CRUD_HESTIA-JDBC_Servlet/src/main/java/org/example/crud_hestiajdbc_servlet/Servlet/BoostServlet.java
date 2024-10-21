@@ -49,7 +49,7 @@ public class BoostServlet extends HttpServlet {
         }
         catch (NullPointerException e){
             request.setAttribute("ListaBoost", boosts);
-            request.getRequestDispatcher("Boost.jsp").forward(request, response);
+            request.getRequestDispatcher("page/Boost.jsp").forward(request, response);
             return;
         }
         catch (SQLException e) {
@@ -58,7 +58,7 @@ public class BoostServlet extends HttpServlet {
             return;
         }
         request.setAttribute("ListaBoost", boosts);
-        request.getRequestDispatcher("Boost.jsp").forward(request, response);
+        request.getRequestDispatcher("page/Boost.jsp").forward(request, response);
     }
 
 

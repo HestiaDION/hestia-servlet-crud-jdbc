@@ -55,7 +55,7 @@ public class FiltroServlet extends HttpServlet {
             return;
         }
         request.setAttribute("ListaFiltro", filtros);
-        request.getRequestDispatcher("Filtro.jsp").forward(request, response);
+        request.getRequestDispatcher("page/Filtro.jsp").forward(request, response);
     }
 
 
