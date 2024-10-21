@@ -40,7 +40,7 @@ public class FiltroDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodosFiltros(Filtro filtro)
+    public ResultSet selecionarTodosFiltros()
     {
         try
         {
