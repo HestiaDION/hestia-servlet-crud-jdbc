@@ -39,7 +39,7 @@ public class BoostServlet extends HttpServlet {
             while (rs.next()) {
                 Boost boost = new Boost();
                 boost.setuId(UUID.fromString(rs.getString("uId")));
-                boost.setcTipoBoost(rs.getString("cTipoBoost"));
+                boost.setcTipoBoost(rs.getString("cNmBoost"));
                 boost.setnValor(rs.getDouble("nValor"));
                 boost.setnPctBoost(rs.getDouble("nPctBoost"));
                 boosts.add(boost);

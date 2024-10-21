@@ -23,7 +23,7 @@ public class Boost {
     }
     public Boost(UUID uId, String cTipoBoost, double nValor, double nPctBoost) {
         this.uId = uId;
-        this.cTipoBoost = cTipoBoost;
+        this.cNmBoost = cTipoBoost;
         this.nValor = nValor;
         this.nPctBoost = nPctBoost;
     }

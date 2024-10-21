@@ -44,7 +44,7 @@ public class AdminServlet extends HttpServlet {
         }
         System.out.println(admins);
         request.setAttribute("ListaAdmins", admins);
-        request.getRequestDispatcher("Admin.jsp").forward(request, response);
+        request.getRequestDispatcher("../page/Admin.jsp").forward(request, response);
     }
 
 
