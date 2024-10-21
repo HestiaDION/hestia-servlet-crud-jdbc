@@ -16,6 +16,15 @@ public class Boost {
         this.nValor = nValor;
         this.nPctBoost = nPctBoost;
     }
+    public Boost() {
+
+    }
+    public Boost(UUID uId, String cTipoBoost, double nValor, double nPctBoost) {
+        this.uId = uId;
+        this.cTipoBoost = cTipoBoost;
+        this.nValor = nValor;
+        this.nPctBoost = nPctBoost;
+    }
 
 //    DEFINIÇÃO DOS MÉTODOS getters
     public UUID getuId() {

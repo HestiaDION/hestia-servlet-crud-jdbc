@@ -16,6 +16,16 @@ public class Admin {
         this.cEmail = cEmail;
         this.cSenha = cSenha;
     }
+//    DEFINIÇÃO DO MÉTODO CONSTRUTOR VAZIO
+    public Admin() {
+
+    }
+    public Admin( UUID uId, String cNome, String cEmail, String cSenha) {
+        this.uId = UUID.randomUUID();
+        this.cNome = cNome;
+        this.cEmail = cEmail;
+        this.cSenha = cSenha;
+    }
 
 //    DEFINIÇÃO MÉTODOS getters
     public UUID getuId() {

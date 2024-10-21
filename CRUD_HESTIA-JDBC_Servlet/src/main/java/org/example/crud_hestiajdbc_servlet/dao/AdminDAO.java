@@ -3,6 +3,7 @@ package org.example.crud_hestiajdbc_servlet.dao;
 import org.example.crud_hestiajdbc_servlet.connection.Conexao;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -165,6 +166,37 @@ public class AdminDAO extends Conexao {
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cSenha = ?");
             pstmt.setString(1, admin.getcSenha());
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+        }
+        catch (SQLException sqle)
+        {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+
+            // Atribuí um nulo para indentificação da exceção
+            rs = null;
+        }
+        finally
+        {
+            desconectar();
+
+            return rs;
+        }
+    }
+
+    public  ResultSet selecionarAdminsParaLogin(Admin admin)
+    {
+        try
+        {
+            conectar();
+
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ? AND cSenha = ?");
+            pstmt.setString(1, admin.getcEmail());
+            pstmt.setString(2, admin.getcSenha());
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();

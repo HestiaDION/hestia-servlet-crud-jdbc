@@ -21,7 +21,7 @@ public class Conexao {
             Class.forName("org.postgresql.Driver");
 
             // Estabelece a conexão com o banco de dados
-            conn = DriverManager.getConnection("postgres://avnadmin:AVNS_3URGOb6MG5fTz7u4pnP@pg-aplicativo-hestia24.k.aivencloud.com:23986/defaultdb?sslmode=require");
+            conn = DriverManager.getConnection("jdbc:postgresql://pg-aplicativo-hestia24.k.aivencloud.com:23986/hestia", "avnadmin", "AVNS_3URGOb6MG5fTz7u4pnP");
 
             // Retornar true ao estabelecer a conexão
             return true;

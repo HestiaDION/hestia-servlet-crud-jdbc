@@ -14,6 +14,14 @@ public class Filtro {
         this.cNome = cNome;
         this.cCategoria = cCategoria;
     }
+    public Filtro(){
+
+    }
+    public Filtro(UUID uId, String cNome, String cCategoria) {
+        this.uId = uId;
+        this.cNome = cNome;
+        this.cCategoria = cCategoria;
+    }
 
 //    DEFINIÇÃO DOS MÉTODOS getters
     public UUID getuId() {
