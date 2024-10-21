@@ -5,16 +5,18 @@ import java.util.UUID;
 public class Boost {
 //    DEFINIÇÃO DOS ATRIBUTOS DA CLASSE
     private UUID uId;          // (UUID)
-    private String cTipoBoost; // (VARCHAR(50))
+    private String cNmBoost; // (VARCHAR(50))
     private double nValor;     // (DECIMAL(10,2))
     private double nPctBoost;  // (DECIMAL(10,1))
+    private String cDescricao; // (TEXT)
 
 //    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Boost(String cTipoBoost, double nValor, double nPctBoost) {
+    public Boost(String cNmBoost, double nValor, double nPctBoost, String cDescricao) {
         this.uId = UUID.randomUUID();
-        this.cTipoBoost = cTipoBoost;
+        this.cNmBoost = cNmBoost;
         this.nValor = nValor;
         this.nPctBoost = nPctBoost;
+        this.cDescricao = cDescricao;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS getters
@@ -22,8 +24,8 @@ public class Boost {
         return uId;
     }
 
-    public String getcTipoBoost() {
-        return cTipoBoost;
+    public String getcNmBoost() {
+        return cNmBoost;
     }
 
     public double getnValor() {
@@ -34,13 +36,17 @@ public class Boost {
         return nPctBoost;
     }
 
-//    DEFINIÇÃO MÉTODOS setters
+    public String getcDescricao() {
+        return cDescricao;
+    }
+
+    //    DEFINIÇÃO MÉTODOS setters
     public void setuId(UUID uId) {
         this.uId = uId;
     } // Método Inútil Por Enquanto
 
     public void setcTipoBoost(String cTipoBoost) {
-        this.cTipoBoost = cTipoBoost;
+        this.cNmBoost = cTipoBoost;
     } // Método Inútil Por Enquanto
 
     public void setnValor(double nValor) {
@@ -51,10 +57,14 @@ public class Boost {
         this.nPctBoost = nPctBoost;
     } // Método Inútil Por Enquanto
 
-//    DEFINIÇÃO DO MÉTODO toString
+    public void setcDescricao(String cDescricao) {
+        this.cDescricao = cDescricao;
+    }
+
+    //    DEFINIÇÃO DO MÉTODO toString
     @Override
     public String toString() {
-        return "ID do Boost = " + this.uId + "\nTipo do Boost = " + this.cTipoBoost +
-                "\nValor do Boost = " + this.nValor + "\nPorcentagem do Boost = " + this.nPctBoost;
+        return "ID do Boost = " + this.uId + "\nTipo do Boost = " + this.cNmBoost +
+                "\nValor do Boost = " + this.nValor + "\nPorcentagem do Boost = " + this.nPctBoost + "\nDescrição do Boost: = " + this.cDescricao;
     }
 }
