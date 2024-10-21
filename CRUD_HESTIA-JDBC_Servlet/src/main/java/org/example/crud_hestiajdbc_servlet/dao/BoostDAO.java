@@ -15,11 +15,12 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Boost (uId, cTipoBoost, nValor, nPctBoost) VALUES (?, ?, ?, ?)");
+            pstmt = conn.prepareStatement("INSERT INTO Boost (uId, cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?, ?)");
             pstmt.setObject(1, boost.getuId());
-            pstmt.setString(2, boost.getcTipoBoost());
+            pstmt.setString(2, boost.getcNmBoost());
             pstmt.setDouble(3, boost.getnValor());
             pstmt.setDouble(4, boost.getnPctBoost());
+            pstmt.setString(5,boost.getcDescricao());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
@@ -48,7 +49,7 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cTipoBoost, nValor, nPctBoost FROM Boost");
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -76,7 +77,7 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cTipoBoost, nValor, nPctBoost FROM Boost WHERE uId = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId = ?");
             pstmt.setObject(1, boost.getuId());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -105,8 +106,8 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cTipoBoost, nValor, nPctBoost FROM Boost WHERE cTipoBoost = ?");
-            pstmt.setString(1, boost.getcTipoBoost());
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost = ?");
+            pstmt.setString(1, boost.getcNmBoost());
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -134,7 +135,7 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cTipoBoost, nValor, nPctBoost FROM Boost WHERE nValor = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE nValor = ?");
             pstmt.setDouble(1, boost.getnValor());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -163,7 +164,7 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cTipoBoost, nValor, nPctBoost FROM Boost WHERE nPctBoost = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE nPctBoost = ?");
             pstmt.setDouble(1, boost.getnPctBoost());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -193,8 +194,8 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Boost SET cTipoBoost = ?, nValor = ?, nPctBoost = ? WHERE uId = ?");
-            pstmt.setString(1, boost.getcTipoBoost());
+            pstmt = conn.prepareStatement("UPDATE Boost SET cNmBoost = ?, nValor = ?, nPctBoost = ? WHERE uId = ?");
+            pstmt.setString(1, boost.getcNmBoost());
             pstmt.setDouble(2, boost.getnValor());
             pstmt.setDouble(3, boost.getnPctBoost());
             pstmt.setObject(4, boost.getuId());
