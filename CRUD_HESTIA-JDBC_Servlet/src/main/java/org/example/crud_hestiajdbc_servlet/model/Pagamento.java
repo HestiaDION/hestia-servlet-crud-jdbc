@@ -25,6 +25,7 @@ public class Pagamento {
         this.uId_Plano = uId_Plano;
         this.uId_Universitario = uId_Universitario;
     }
+    public Pagamento(){}
 
 //    DEFINIÇÃO DOS MÉTODOS getters
     public UUID getuId() {

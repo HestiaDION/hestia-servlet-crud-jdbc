@@ -45,7 +45,7 @@ public class PagamentoDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodosPagamentos(Pagamento pagamento)
+    public ResultSet selecionarTodosPagamentos()
     {
         try
         {
