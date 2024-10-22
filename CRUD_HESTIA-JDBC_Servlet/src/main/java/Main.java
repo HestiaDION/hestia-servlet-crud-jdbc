@@ -3,33 +3,22 @@ import org.example.crud_hestiajdbc_servlet.model.*;
 
 import java.rmi.server.UID;
 import java.sql.*;
+import java.text.DateFormat;
 import java.util.UUID;
+import java.time.LocalDate;
 
 public class Main {
-    static Connection conn;
-
-    static {
-        try {
-            conn = DriverManager.getConnection("jdbc:postgresql://pg-aplicativo-hestia24.k.aivencloud.com:23986/hestia", "avnadmin", "AVNS_3URGOb6MG5fTz7u4pnP");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Main() throws SQLException {
-    }
-
     public static void main(String[] args) throws SQLException {
         // CLASSE ADMIN
-//        AdminDAO admin = new AdminDAO();
-//
-//        if (admin.adicionarAdmin(new Admin("Lucas", "lucas.laurente@germinare.org", "123abc")) == -1) {
-//            System.out.println("Não foi possível adicionar admin");
-//        }
-//        else {
-//            System.out.println("Admin adicionado com sucesso!");
-//        }
-//
+        AdminDAO admin = new AdminDAO();
+
+        if (admin.adicionarAdmin(new Admin("Pietro", "pietro.medico@germinare.org", "123abc")) == -1) {
+            System.out.println("Não foi possível adicionar admin");
+        }
+        else {
+            System.out.println("Admin adicionado com sucesso!");
+        }
+
 ////        admin.atualizarAdmin(new Admin("Maria Júlia","maria.dawla@germinare.org.br","456def")); SOBRECARGA DE CONSTRUTAR
 //
 //        ResultSet rs = admin.selecionarTodosAdmins();
@@ -75,13 +64,31 @@ public class Main {
 //        }
 
 //        CLASSE PAGAMENTO
-        PagamentoDAO pagamento = new PagamentoDAO();
-        PreparedStatement pstmt = conn.prepareStatement("SELECT uId FROM anunciante WHERE cUsername = 'julianev'");
-        UUID uidAnunciante = UUID.fromString(String.valueOf(pstmt.executeQuery()));
+//        try
+//        {
+//            PagamentoDAO pagamento = new PagamentoDAO();
+//            UUID uidAnunciante =
+//
+//            PlanoDAO plano = new PlanoDAO();
+//            pstmt = conn.prepareStatement("SELECT uId FROM plano WHERE cNome = 'Chamas Douradas'");
+//            UUID uidPlano = pstmt.executeQuery()
+//                    ;
+//
+//            pagamento.adicionarPagamento(new Pagamento("A", "02/04/2025", 5, 16, uidAnunciante, uidPlano, null));
+//            System.out.println("Pagamento adicionado com sucesso");
+//        }
+//        catch (IllegalArgumentException iae)
+//        {
+//            iae.printStackTrace();
+//            System.out.println("Não foi possível adicionar o pagamento");
+//        }
 
-        pstmt = conn.prepareStatement("SELECT uId FROM plano WHERE cNome = 'Chamas Douradas'");
-        UUID uidPlano = UUID.fromString(String.valueOf(pstmt.executeQuery()));
 
-        pagamento.adicionarPagamento(new Pagamento("A","02/04/2025",5,16,uidAnunciante,uidPlano,null));
+        UUID uIdAnunciante = UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6");
+        UUID uIdPlano = UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a");
+
+
+        Pagamento pagamento = new Pagamento("1", Date.valueOf("2024-10-22"), 5, 16, uIdAnunciante, uIdPlano, null);
+
     }
 }
