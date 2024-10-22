@@ -9,12 +9,23 @@ public class Plano {
     private double nValor;     // (DECIMAL(10,2))
     private String cDescricao; // (VARCHAR(MAX))
 
-//    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Plano(String cNome, double nValor, String cDescricao) {
-        this.uId = UUID.randomUUID();
+//    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
+    public Plano(UUID uId, String cNome, double nValor, String cDescricao) {
+        this.uId = uId;
         this.cNome = cNome;
         this.nValor = nValor;
         this.cDescricao = cDescricao;
+    }
+
+    public Plano(String cNome, double nValor, String cDescricao) {
+        this.cNome = cNome;
+        this.nValor = nValor;
+        this.cDescricao = cDescricao;
+    }
+
+    public Plano()
+    {
+
     }
 
 //    DEFINIÇÃO DOS MÉTODOS getters

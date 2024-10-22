@@ -305,6 +305,9 @@ public class PagamentoDAO extends Conexao {
         }
     }
 
+//    DEFINIÇÃO DOS MÉTODOS DE CONSULTA ESPECÍFICA
+
+
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarPagamento(Pagamento pagamento)
     {

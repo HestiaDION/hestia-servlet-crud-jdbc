@@ -14,10 +14,10 @@ public class Pagamento {
     private UUID uId_Plano;         // (UUID)
     private UUID uId_Universitario; // (UUID)
 
-//    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Pagamento(String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
+//    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
+    public Pagamento(UUID uId, String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
                      UUID uId_Anunciante, UUID uId_Plano, UUID uId_Universitario) {
-        this.uId = UUID.randomUUID();
+        this.uId = uId;
         this.cAtivo = cAtivo;
         this.dDtFim = dDtFim;
         this.nPctDesconto = nPctDesconto;
@@ -26,7 +26,21 @@ public class Pagamento {
         this.uId_Plano = uId_Plano;
         this.uId_Universitario = uId_Universitario;
     }
-    public Pagamento(){}
+
+    public Pagamento(String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
+                     UUID uId_Anunciante, UUID uId_Plano, UUID uId_Universitario) {
+        this.cAtivo = cAtivo;
+        this.dDtFim = dDtFim;
+        this.nPctDesconto = nPctDesconto;
+        this.nTotal = nTotal;
+        this.uId_Anunciante = uId_Anunciante;
+        this.uId_Plano = uId_Plano;
+        this.uId_Universitario = uId_Universitario;
+    }
+    public Pagamento()
+    {
+
+    }
 
 //    DEFINIÇÃO DOS MÉTODOS getters
     public UUID getuId() {

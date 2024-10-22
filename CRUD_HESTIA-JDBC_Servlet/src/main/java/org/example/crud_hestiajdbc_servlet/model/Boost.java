@@ -10,22 +10,23 @@ public class Boost {
     private double nPctBoost;  // (DECIMAL(10,1))
     private String cDescricao; // (TEXT)
 
-//    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Boost(String cNmBoost, double nValor, double nPctBoost, String cDescricao) {
-        this.uId = UUID.randomUUID();
+//    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
+    public Boost(UUID uId, String cNmBoost, double nValor, double nPctBoost, String cDescricao) {
+        this.uId = uId;
         this.cNmBoost = cNmBoost;
         this.nValor = nValor;
         this.nPctBoost = nPctBoost;
         this.cDescricao = cDescricao;
     }
-    public Boost() {
 
-    }
-    public Boost(UUID uId, String cTipoBoost, double nValor, double nPctBoost) {
-        this.uId = uId;
+    public Boost(String cTipoBoost, double nValor, double nPctBoost) {
         this.cNmBoost = cTipoBoost;
         this.nValor = nValor;
         this.nPctBoost = nPctBoost;
+    }
+
+    public Boost() {
+
     }
 
 //    DEFINIÇÃO DOS MÉTODOS getters

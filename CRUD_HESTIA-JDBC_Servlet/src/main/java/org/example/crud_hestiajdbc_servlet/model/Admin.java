@@ -9,22 +9,22 @@ public class Admin {
     private String cEmail; // (VARCHAR(266))
     private String cSenha; // (VARCHAR(100))
 
-//    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Admin(String cNome, String cEmail, String cSenha) {
-        this.uId = UUID.randomUUID();
+//    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
+    public Admin(UUID uId, String cNome, String cEmail, String cSenha) {
+        this.uId = uId;
         this.cNome = cNome;
         this.cEmail = cEmail;
         this.cSenha = cSenha;
     }
-//    DEFINIÇÃO DO MÉTODO CONSTRUTOR VAZIO
+
+    public Admin(String cNome, String cEmail, String cSenha) {
+        this.cNome = cNome;
+        this.cEmail = cEmail;
+        this.cSenha = cSenha;
+    }
+
     public Admin() {
 
-    }
-    public Admin( UUID uId, String cNome, String cEmail, String cSenha) {
-        this.uId = UUID.randomUUID();
-        this.cNome = cNome;
-        this.cEmail = cEmail;
-        this.cSenha = cSenha;
     }
 
 //    DEFINIÇÃO MÉTODOS getters

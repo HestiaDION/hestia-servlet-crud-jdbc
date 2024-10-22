@@ -8,19 +8,20 @@ public class Filtro {
     private String cNome;      // (VARCHAR(100))
     private String cCategoria; // (VARCHAR(100))
 
-//    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Filtro(String cNome, String cCategoria) {
+//    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
+    public Filtro(UUID uId, String cNome, String cCategoria) {
         this.uId = UUID.randomUUID();
         this.cNome = cNome;
         this.cCategoria = cCategoria;
     }
-    public Filtro(){
 
-    }
-    public Filtro(UUID uId, String cNome, String cCategoria) {
-        this.uId = uId;
+    public Filtro(String cNome, String cCategoria) {
         this.cNome = cNome;
         this.cCategoria = cCategoria;
+    }
+
+    public Filtro() {
+
     }
 
 //    DEFINIÇÃO DOS MÉTODOS getters

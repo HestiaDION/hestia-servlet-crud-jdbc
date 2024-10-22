@@ -9,12 +9,23 @@ public class Plano_vantagem {
     private char cAtivo;      // (CHAR(1))
     private UUID uId_Plano;   // (UUID)
 
-//    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Plano_vantagem(String cVantagem, char cAtivo, UUID uId_Plano) {
-        this.uId = UUID.randomUUID();
+//    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
+    public Plano_vantagem(UUID uId, String cVantagem, char cAtivo, UUID uId_Plano) {
+        this.uId = uId;
         this.cVantagem = cVantagem;
         this.cAtivo = cAtivo;
         this.uId_Plano = uId_Plano;
+    }
+
+    public Plano_vantagem(String cVantagem, char cAtivo, UUID uId_Plano) {
+        this.cVantagem = cVantagem;
+        this.cAtivo = cAtivo;
+        this.uId_Plano = uId_Plano;
+    }
+
+    public Plano_vantagem()
+    {
+
     }
 
 //    DEFINIÇÃO DOS MÉTODOS getters
