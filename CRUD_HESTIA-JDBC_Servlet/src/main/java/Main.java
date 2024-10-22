@@ -2,24 +2,23 @@ import org.example.crud_hestiajdbc_servlet.dao.*;
 import org.example.crud_hestiajdbc_servlet.model.*;
 
 import java.rmi.server.UID;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.text.DateFormat;
 import java.util.UUID;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
         // CLASSE ADMIN
-//        AdminDAO admin = new AdminDAO();
-//
-//        if (admin.adicionarAdmin(new Admin("Lucas", "lucas.laurente@germinare.org", "123abc")) == -1) {
-//            System.out.println("Não foi possível adicionar admin");
-//        }
-//        else {
-//            System.out.println("Admin adicionado com sucesso!");
-//        }
-//
+        AdminDAO admin = new AdminDAO();
+
+        if (admin.adicionarAdmin(new Admin("Pietro", "pietro.medico@germinare.org", "123abc")) == -1) {
+            System.out.println("Não foi possível adicionar admin");
+        }
+        else {
+            System.out.println("Admin adicionado com sucesso!");
+        }
+
 ////        admin.atualizarAdmin(new Admin("Maria Júlia","maria.dawla@germinare.org.br","456def")); SOBRECARGA DE CONSTRUTAR
 //
 //        ResultSet rs = admin.selecionarTodosAdmins();
@@ -49,29 +48,47 @@ public class Main {
 //        }
 
 //        CLASSE FILTRO
-        FiltroDAO filtro = new FiltroDAO();
-
-        if (filtro.adicionarFiltro(new Filtro("Exótico", "Animal")) == -1) {
-            System.out.println("Não foi possível adicionar o filtro");
-        }
-        else {
-            System.out.println("Filtro adicionado com sucesso!");
-        }
-
-        ResultSet rs = filtro.selecionarTodosFiltros();
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
-            System.out.println(linha);
-        }
-
-//        CLASSE PAGAMENTO - DESCONSIDERAR
-//        PagamentoDAO pagamento = new PagamentoDAO();
-//        Connection conn = null;
-//        PreparedStatement pstmt = conn.prepareStatement("SELECT uId FROM anunciante WHERE cUsername = 'julianev'");
-//        UUID uid = UUID.class.cast(pstmt.executeQuery());
+//        FiltroDAO filtro = new FiltroDAO();
 //
-//        PlanoDAO plano = new PlanoDAO();
+//        if (filtro.adicionarFiltro(new Filtro("Exótico", "Animal")) == -1) {
+//            System.out.println("Não foi possível adicionar o filtro");
+//        }
+//        else {
+//            System.out.println("Filtro adicionado com sucesso!");
+//        }
 //
-//        pagamento.adicionarPagamento(new Pagamento("A", "12/04/2025", 5, 16, uid, plano.selecionarPlanosPorNome("")));
+//        ResultSet rs = filtro.selecionarTodosFiltros();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
+//            System.out.println(linha);
+//        }
+
+//        CLASSE PAGAMENTO
+//        try
+//        {
+//            PagamentoDAO pagamento = new PagamentoDAO();
+//            UUID uidAnunciante =
+//
+//            PlanoDAO plano = new PlanoDAO();
+//            pstmt = conn.prepareStatement("SELECT uId FROM plano WHERE cNome = 'Chamas Douradas'");
+//            UUID uidPlano = pstmt.executeQuery()
+//                    ;
+//
+//            pagamento.adicionarPagamento(new Pagamento("A", "02/04/2025", 5, 16, uidAnunciante, uidPlano, null));
+//            System.out.println("Pagamento adicionado com sucesso");
+//        }
+//        catch (IllegalArgumentException iae)
+//        {
+//            iae.printStackTrace();
+//            System.out.println("Não foi possível adicionar o pagamento");
+//        }
+
+
+        UUID uIdAnunciante = UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6");
+        UUID uIdPlano = UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a");
+
+
+        Pagamento pagamento = new Pagamento("1", Date.valueOf("2024-10-22"), 5, 16, uIdAnunciante, uIdPlano, null);
+
     }
 }

@@ -1,26 +1,27 @@
 package org.example.crud_hestiajdbc_servlet.model;
 
+import java.sql.Date;
 import java.util.UUID;
 
 public class Pagamento {
 //    DEFINIÇÃO DOS ATRIBUTOS DA CLASSE
     private UUID uId;               // (UUID)
     private String cAtivo;          // (CHAR(2))
-    private String dDtFim;          // (VARCHAR(10))
+    private Date dDtFim;            // (DATE)
     private double nPctDesconto;    // (DECIMAL(10,1))
-    private double nValor;          // (DECIMAL(10,2))
+    private double nTotal;          // (DECIMAL(10,2))
     private UUID uId_Anunciante;    // (UUID)
     private UUID uId_Plano;         // (UUID)
     private UUID uId_Universitario; // (UUID)
 
 //    DEFINIÇÃO DO MÉTODO CONSTRUTOR
-    public Pagamento(String cAtivo, String dDtFim, double nPctDesconto, double nValor,
+    public Pagamento(String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
                      UUID uId_Anunciante, UUID uId_Plano, UUID uId_Universitario) {
         this.uId = UUID.randomUUID();
         this.cAtivo = cAtivo;
         this.dDtFim = dDtFim;
         this.nPctDesconto = nPctDesconto;
-        this.nValor = nValor;
+        this.nTotal = nTotal;
         this.uId_Anunciante = uId_Anunciante;
         this.uId_Plano = uId_Plano;
         this.uId_Universitario = uId_Universitario;
@@ -36,7 +37,7 @@ public class Pagamento {
         return cAtivo;
     }
 
-    public String getdDtFim() {
+    public Date getdDtFim() {
         return dDtFim;
     }
 
@@ -44,8 +45,8 @@ public class Pagamento {
         return nPctDesconto;
     }
 
-    public double getnValor() {
-        return nValor;
+    public double getnTotal() {
+        return nTotal;
     }
 
     public UUID getuId_Anunciante() {
@@ -69,7 +70,7 @@ public class Pagamento {
         this.cAtivo = cAtivo;
     } // Método Inútil Por Enquanto
 
-    public void setdDtFim(String dDtFim) {
+    public void setdDtFim(Date dDtFim) {
         this.dDtFim = dDtFim;
     } // Método Inútil Por Enquanto
 
@@ -77,8 +78,8 @@ public class Pagamento {
         this.nPctDesconto = nPctDesconto;
     } // Método Inútil Por Enquanto
 
-    public void setnValor(double nValor) {
-        this.nValor = nValor;
+    public void setnTotal(double nTotal) {
+        this.nTotal = nTotal;
     } // Método Inútil Por Enquanto
 
     public void setuId_Anunciante(UUID uId_Anunciante) {
@@ -99,7 +100,7 @@ public class Pagamento {
         return "ID do Pagamento = " + this.uId + "\nAtividade do Pagamento = " + this.cAtivo +
                 "\nData de Validade do Pagamento = " + this.dDtFim +
                 "\nPorcentagem de Desconto do Pagamento = " + this.nPctDesconto +
-                "\nValor do Pagamento = " + this.nValor +
+                "\nTotal do Pagamento = " + this.nTotal +
                 "\nID do Anunciante do Pagamento = " + this.uId_Anunciante +
                 "\nID do Plano do Pagamento = " + this.uId_Plano +
                 "\nID do Universitário do Pagamento = " + this.uId_Universitario;

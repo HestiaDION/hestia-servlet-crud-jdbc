@@ -15,12 +15,12 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Pagamento (uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            pstmt = conn.prepareStatement("INSERT INTO Pagamento (uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
             pstmt.setObject(1, pagamento.getuId());
             pstmt.setString(2, pagamento.getcAtivo());
-            pstmt.setString(3, pagamento.getdDtFim());
+            pstmt.setDate(3, pagamento.getdDtFim());
             pstmt.setDouble(4, pagamento.getnPctDesconto());
-            pstmt.setDouble(5, pagamento.getnValor());
+            pstmt.setDouble(5, pagamento.getnTotal());
             pstmt.setObject(6, pagamento.getuId_Anunciante());
             pstmt.setObject(7, pagamento.getuId_Plano());
             pstmt.setObject(8, pagamento.getuId_Universitario());
@@ -52,7 +52,7 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento");
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -80,7 +80,7 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId = ?");
             pstmt.setObject(1, pagamento.getuId());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -109,7 +109,7 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE cAtivo = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE cAtivo = ?");
             pstmt.setString(1, pagamento.getcAtivo());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -138,8 +138,8 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE dDtFim = ?");
-            pstmt.setString(1, pagamento.getdDtFim());
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE dDtFim = ?");
+            pstmt.setObject(1, pagamento.getdDtFim());
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -167,7 +167,7 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE nPctDesconto = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE nPctDesconto = ?");
             pstmt.setDouble(1, pagamento.getnPctDesconto());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -196,8 +196,8 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE nValor = ?");
-            pstmt.setDouble(1, pagamento.getnValor());
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE nTotal = ?");
+            pstmt.setDouble(1, pagamento.getnTotal());
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -225,7 +225,7 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Anunciante = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Anunciante = ?");
             pstmt.setObject(1, pagamento.getuId_Anunciante());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -254,7 +254,7 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Plano = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Plano = ?");
             pstmt.setObject(1, pagamento.getuId_Plano());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -283,7 +283,7 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nValor, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Universitario = ?");
+            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Universitario = ?");
             pstmt.setObject(1, pagamento.getuId_Universitario());
 
             // Executa a instrução e guarda as linhas retornadas
@@ -313,11 +313,11 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nValor = ?, uId_Anunciante = ?, uId_Plano = ?, uId_Universitario = ? WHERE uId = ?");
+            pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Anunciante = ?, uId_Plano = ?, uId_Universitario = ? WHERE uId = ?");
             pstmt.setString(1, pagamento.getcAtivo());
-            pstmt.setString(2, pagamento.getdDtFim());
+            pstmt.setObject(2, pagamento.getdDtFim());
             pstmt.setDouble(3, pagamento.getnPctDesconto());
-            pstmt.setDouble(4, pagamento.getnValor());
+            pstmt.setDouble(4, pagamento.getnTotal());
             pstmt.setObject(5, pagamento.getuId_Anunciante());
             pstmt.setObject(6, pagamento.getuId_Plano());
             pstmt.setObject(7, pagamento.getuId_Universitario());
