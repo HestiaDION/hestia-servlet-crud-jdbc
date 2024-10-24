@@ -33,7 +33,8 @@
 <form action="Admin-Servlet"><button type="submit"><a>Admin</a></button> </form>
   <form action="Boost-Servlet"><button type="submit"><a>Boost</a></button> </form>
   <form action="Filtro-Servlet"><button type="submit"><a>Filtro</a></button> </form>
-<a href="Pagamento.jsp">Pagamento</a>
+  <form action="Pagamento-Servlet"><button type="submit"><a>Pagamento</a></button> </form>
+
 <a href="Plano.jsp">Plano</a>
 </div>
 </body>

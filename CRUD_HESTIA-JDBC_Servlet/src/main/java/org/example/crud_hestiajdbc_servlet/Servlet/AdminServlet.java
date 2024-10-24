@@ -18,11 +18,17 @@ import java.util.UUID;
 @WebServlet(name = "AdminServlet", value = "/Admin-Servlet")
 public class AdminServlet extends HttpServlet {
     private final AdminDAO adminDAO = new AdminDAO();
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        listAdmins(request, response);
+    }
+
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+            excluirAdmin(request, response);
             listAdmins(request, response);
+
 
     }
 
@@ -47,7 +53,55 @@ public class AdminServlet extends HttpServlet {
         request.getRequestDispatcher("page/Admin.jsp").forward(request, response);
     }
 
+    private void excluirAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String uId = request.getParameter("uId");
+        if (uId != null && !uId.isEmpty()) {
+            try {
+                Admin admin = new Admin();
+                admin.setuId(UUID.fromString(uId));
 
+                int isDeleted = adminDAO.removerAdmin(admin);
+                if (isDeleted == 1) {
+                    request.setAttribute("successMessage", "Admin excluído com sucesso!");
+                    request.getRequestDispatcher("page/Admin.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("errorMessage", "Erro ao excluir o admin.");
+                }
+            } catch (IllegalArgumentException e) {
+                request.setAttribute("errorMessage", "ID do admin inválido.");
+            }
+        } else {
+            request.setAttribute("errorMessage", "ID do admin não fornecido.");
+        }
+    }
+    private void inserirAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String nome = request.getParameter("cNome");
+        String email = request.getParameter("cEmail");
+        String senha = request.getParameter("cSenha");
+        UUID uId = UUID.randomUUID();
+
+
+
+        Admin admin = new Admin(uId,nome,email,senha);
+        adminDAO.adicionarAdmin(admin);
+
+        request.getRequestDispatcher("page/Admin.jsp");
+    }
+
+    private void editarAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String nome = request.getParameter("cNome");
+        String email = request.getParameter("cEmail");
+        String senha = request.getParameter("cSenha");
+
+        Admin admin = new Admin(nome, email, senha);
+        adminDAO.atualizarAdmin(admin);
+
+        request.getRequestDispatcher("page/Admin.jsp");
+    }
 
 }
+
+
+
+
 

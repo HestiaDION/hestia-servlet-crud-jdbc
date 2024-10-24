@@ -258,7 +258,7 @@ public class AdminDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE Admin WHERE uId = ?");
+            pstmt = conn.prepareStatement("DELETE FROM Admin WHERE uId = ?");
             pstmt.setObject(1, admin.getuId());
 
             // Executa a instrução e guarda as linhas afetadas

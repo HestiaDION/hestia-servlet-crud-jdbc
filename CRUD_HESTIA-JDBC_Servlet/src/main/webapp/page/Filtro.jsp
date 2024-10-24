@@ -47,8 +47,8 @@
 <div class="Header">
     <h1>PAINEL DE ADMINISTRAÇÃO</h1>
 </div>
-<form action="Admin-Servlet" method="get">
-    <h1>Tabela Admin</h1>
+<form action="Filtro-Servlet" method="get">
+    <h1>Tabela Filtro</h1>
     <a href="InsertAdmin.jsp" class="Botao">Criar</a>
     <table>
         <tr>
@@ -71,7 +71,10 @@
                 <a href="Filtro?action=edit&id=<%= filtro.getuId() %>">Editar</a>
             </td>
             <td>
-                <a href="Filtro?action=delete&id=<%= filtro.getuId() %>" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+                <form action="Filtro-Servlet" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                    <input type="hidden" name="uId" value="<%= filtro.getuId() %>" />
+                    <input type="submit" value="Excluir" />
+                </form>
             </td>
         </tr>
         <%

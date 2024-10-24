@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.crud_hestiajdbc_servlet.dao.BoostDAO;
+import org.example.crud_hestiajdbc_servlet.model.Admin;
 import org.example.crud_hestiajdbc_servlet.model.Boost;
 
 import java.io.IOException;
@@ -22,6 +23,13 @@ public class BoostServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        listarBoosts(request, response);
+
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        excluirBoost(request, response);
         listarBoosts(request, response);
 
     }
@@ -59,6 +67,27 @@ public class BoostServlet extends HttpServlet {
         }
         request.setAttribute("ListaBoost", boosts);
         request.getRequestDispatcher("page/Boost.jsp").forward(request, response);
+    }
+    private void excluirBoost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String uId = request.getParameter("uId");
+        if (uId != null && !uId.isEmpty()) {
+            try {
+                Boost boost = new Boost();
+                boost.setuId(UUID.fromString(uId));
+
+                int isDeleted = boostDAO.removerBoost(boost);
+                if (isDeleted == 1) {
+                    request.setAttribute("successMessage", "Boost excluído com sucesso!");
+                    request.getRequestDispatcher("page/Boost.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("errorMessage", "Erro ao excluir o Boost.");
+                }
+            } catch (IllegalArgumentException e) {
+                request.setAttribute("errorMessage", "ID do Boost inválido.");
+            }
+        } else {
+            request.setAttribute("errorMessage", "ID do Boost não fornecido.");
+        }
     }
 
 

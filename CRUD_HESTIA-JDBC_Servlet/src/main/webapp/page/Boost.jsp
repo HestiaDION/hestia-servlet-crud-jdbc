@@ -74,7 +74,10 @@
                 <a href="Boost?action=edit&id=<%= boost.getuId() %>">Editar</a>
             </td>
             <td>
-                <a href="Boost?action=delete&id=<%= boost.getuId() %>" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+                <form action="Boost-Servlet" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                    <input type="hidden" name="uId" value="<%= boost.getuId() %>" />
+                    <input type="submit" value="Excluir" />
+                </form>
             </td>
         </tr>
         <%

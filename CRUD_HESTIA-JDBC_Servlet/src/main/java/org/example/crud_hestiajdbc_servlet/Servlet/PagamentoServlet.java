@@ -28,7 +28,10 @@ public class PagamentoServlet extends HttpServlet {
 
     }
 
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    excluirPagamento(req, resp);
+    }
 
     private void listarPagamentos(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ResultSet rs = null;
@@ -40,21 +43,50 @@ public class PagamentoServlet extends HttpServlet {
             while (rs.next()) {
                 Pagamento pagamento = new Pagamento();
                 pagamento.setuId(UUID.fromString(rs.getString("uId")));
-                pagamento.
-                filtros.add(filtro);
+                pagamento.setcAtivo(rs.getString("cAtivo"));
+                pagamento.setdDtFim(String.valueOf(rs.getDate("dDtFim")));
+                pagamento.setnPctDesconto(rs.getDouble(("nPctDesconto")));
+                pagamento.setnValor(rs.getDouble(("nValor")));
+                pagamento.setuId_Anunciante(UUID.fromString(rs.getString("uId_Anunciante")));
+                pagamento.setuId_Plano(UUID.fromString(rs.getString("uId_Plano")));
+                pagamento.setuId_Universitario(UUID.fromString(rs.getString("uId_Universitario")));
+                pagamentos.add(pagamento);
             }
 
-        } catch (SQLException e) {
-            if (rs == null){
-                request.setAttribute("ListaFiltros", filtros);
-                request.getRequestDispatcher("ListaFiltros.jsp").forward(request, response);
+        }catch (NullPointerException e){
+                request.setAttribute("ListaPagamento", pagamentos);
+                request.getRequestDispatcher("page/Pagamento.jsp").forward(request, response);
+                return;
             }
-            request.setAttribute("errorMessage", "Erro ao obter dados do banco de dados.");
-            request.getRequestDispatcher("erro.html").forward(request, response);
-            return;
+        catch (SQLException e) {
+                request.setAttribute("errorMessage", "Erro ao obter dados do banco de dados.");
+                request.getRequestDispatcher("erro.html").forward(request, response);
+                return;
+            }
+
+        request.setAttribute("ListaPagamento", pagamentos);
+        request.getRequestDispatcher("page/Pagamento.jsp").forward(request, response);
+    }
+    private void excluirPagamento(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String uId = request.getParameter("uId");
+        if (uId != null && !uId.isEmpty()) {
+            try {
+                Pagamento pagamento = new Pagamento();
+                pagamento.setuId(UUID.fromString(uId));
+
+                int isDeleted = pagamentoDAO.removerPagamento(pagamento);
+                if (isDeleted == 1) {
+                    request.setAttribute("successMessage", "Pagamento excluído com sucesso!");
+                    request.getRequestDispatcher("page/Pagamento.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("errorMessage", "Erro ao excluir o Pagamento.");
+                }
+            } catch (IllegalArgumentException e) {
+                request.setAttribute("errorMessage", "ID do Pagamento inválido.");
+            }
+        } else {
+            request.setAttribute("errorMessage", "ID do Pagamento não fornecido.");
         }
-        request.setAttribute("ListaFiltro", filtros);
-        request.getRequestDispatcher("page/Filtro.jsp").forward(request, response);
     }
 
 }

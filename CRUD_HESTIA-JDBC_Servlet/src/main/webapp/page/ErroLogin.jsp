@@ -21,7 +21,7 @@
     <title>Title</title>
 </head>
 <body>
-<jsp:include page="index.html"/>
+<jsp:include page="../index.html"/>
 
 <p>Senha ou Email Incorreto</p>
 

@@ -70,7 +70,11 @@
                 <a href="Admin?action=edit&id=<%= adm.getuId() %>">Editar</a>
             </td>
             <td>
-                <a href="Admin?action=delete&id=<%= adm.getuId() %>" onclick="return confirm('Tem certeza que deseja excluir?');">Excluir</a>
+                <form action="Admin-Servlet" method="post" onsubmit="return confirm('Tem certeza que deseja excluir?');">
+                    <input type="hidden" name="acao" value="excluir"/>
+                    <input type="hidden" name="uId" value="<%= adm.getuId() %>" />
+                    <input type="submit" value="Excluir" />
+                </form>
             </td>
         </tr>
         <%

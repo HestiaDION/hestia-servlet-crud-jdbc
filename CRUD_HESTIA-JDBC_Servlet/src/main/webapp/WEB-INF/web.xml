@@ -5,10 +5,7 @@
          version="5.0">
 
 
-    <error-page>
-        <error-code>404</error-code>
-        <location>/page/erro.html</location>
-    </error-page>
+
 
 
 

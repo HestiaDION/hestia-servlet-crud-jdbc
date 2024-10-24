@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.example.crud_hestiajdbc_servlet.dao.FiltroDAO;
+import org.example.crud_hestiajdbc_servlet.model.Boost;
 import org.example.crud_hestiajdbc_servlet.model.Filtro;
 
 import java.io.IOException;
@@ -21,14 +22,14 @@ public class FiltroServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-
-                    listarFiltros(request, response);
-
-
+        listarFiltros(request, response);
     }
 
-
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        excluirFiltro(req, resp);
+        listarFiltros(req,resp);
+    }
 
     private void listarFiltros(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ResultSet rs = null;
@@ -57,9 +58,27 @@ public class FiltroServlet extends HttpServlet {
         request.setAttribute("ListaFiltro", filtros);
         request.getRequestDispatcher("page/Filtro.jsp").forward(request, response);
     }
+    private void excluirFiltro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String uId = request.getParameter("uId");
+        if (uId != null && !uId.isEmpty()) {
+            try {
+                Filtro filtro = new Filtro();
+                filtro.setuId(UUID.fromString(uId));
 
-
-
+                int isDeleted = filtroDAO.removerFiltro(filtro);
+                if (isDeleted == 1) {
+                    request.setAttribute("successMessage", "Filtro excluído com sucesso!");
+                    request.getRequestDispatcher("page/Filtro.jsp").forward(request, response);
+                } else {
+                    request.setAttribute("errorMessage", "Erro ao excluir o Filtro.");
+                }
+            } catch (IllegalArgumentException e) {
+                request.setAttribute("errorMessage", "ID do Filtro inválido.");
+            }
+        } else {
+            request.setAttribute("errorMessage", "ID do Filtro não fornecido.");
+        }
+    }
 
 
 }
