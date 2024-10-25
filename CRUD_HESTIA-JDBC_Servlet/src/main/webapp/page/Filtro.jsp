@@ -47,9 +47,9 @@
 <div class="Header">
     <h1>PAINEL DE ADMINISTRAÇÃO</h1>
 </div>
-<form action="Filtro-Servlet" method="get">
+<form action="Filtro-Servlet" method="get"></form>
     <h1>Tabela Filtro</h1>
-    <a href="InsertAdmin.jsp" class="Botao">Criar</a>
+    <form action="Inserir-Filtro-Servlet"><button class="Botao" type="submit"><a>Criar</a></button> </form>
     <table>
         <tr>
             <th>Id</th>

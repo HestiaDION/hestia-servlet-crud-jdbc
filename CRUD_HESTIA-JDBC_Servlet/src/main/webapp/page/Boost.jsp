@@ -48,9 +48,9 @@
 <div class="Header">
     <h1>PAINEL DE ADMINISTRAÇÃO</h1>
 </div>
-<form action="Boost-Servlet" method="get">
-    <h1>Tabela Admin</h1>
-    <a href="InsertBoost.jsp" class="Botao">Criar</a>
+<form action="Boost-Servlet" ></form>
+    <h1>Tabela Boost</h1>
+<form action="Inserir-Boost-Servlet"><button class="Botao" type="submit"><a>Criar</a></button> </form>
     <table>
         <tr>
             <th>Id</th>

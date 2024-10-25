@@ -44,9 +44,9 @@ public class PagamentoServlet extends HttpServlet {
                 Pagamento pagamento = new Pagamento();
                 pagamento.setuId(UUID.fromString(rs.getString("uId")));
                 pagamento.setcAtivo(rs.getString("cAtivo"));
-                pagamento.setdDtFim(String.valueOf(rs.getDate("dDtFim")));
+                pagamento.setdDtFim(rs.getDate("dDtFim"));
                 pagamento.setnPctDesconto(rs.getDouble(("nPctDesconto")));
-                pagamento.setnValor(rs.getDouble(("nValor")));
+                pagamento.setnTotal(rs.getDouble(("nTotal")));
                 pagamento.setuId_Anunciante(UUID.fromString(rs.getString("uId_Anunciante")));
                 pagamento.setuId_Plano(UUID.fromString(rs.getString("uId_Plano")));
                 pagamento.setuId_Universitario(UUID.fromString(rs.getString("uId_Universitario")));
