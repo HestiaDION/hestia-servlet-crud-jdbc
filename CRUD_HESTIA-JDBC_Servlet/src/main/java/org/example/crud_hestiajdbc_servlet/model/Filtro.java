@@ -10,7 +10,7 @@ public class Filtro {
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
     public Filtro(UUID uId, String cNome, String cCategoria) {
-        this.uId = UUID.randomUUID();
+        this.uId = uId;
         this.cNome = cNome;
         this.cCategoria = cCategoria;
     }

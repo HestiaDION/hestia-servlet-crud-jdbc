@@ -19,8 +19,8 @@ public class Boost {
         this.cDescricao = cDescricao;
     }
 
-    public Boost(String cTipoBoost, double nValor, double nPctBoost) {
-        this.cNmBoost = cTipoBoost;
+    public Boost(String cNmBoost, double nValor, double nPctBoost, String cDescricao) {
+        this.cNmBoost = cNmBoost;
         this.nValor = nValor;
         this.nPctBoost = nPctBoost;
     }

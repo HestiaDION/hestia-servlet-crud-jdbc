@@ -15,11 +15,10 @@ public class Plano_vantagemDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Plano_vantagem (uId, cVantagem, cAtivo, uId_Plano) VALUES (?, ?, ? ,?)");
-            pstmt.setObject(1, planoVantagem.getuId());
-            pstmt.setString(2, planoVantagem.getcVantagem());
-            pstmt.setInt(3, planoVantagem.getcAtivo());
-            pstmt.setObject(4, planoVantagem.getuId_Plano());
+            pstmt = conn.prepareStatement("INSERT INTO Plano_vantagem (cVantagem, cAtivo, uId_Plano) VALUES (?, ? ,?)");
+            pstmt.setString(1, planoVantagem.getcVantagem());
+            pstmt.setObject(2, planoVantagem.getcAtivo());
+            pstmt.setObject(3, planoVantagem.getuId_Plano());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
@@ -195,7 +194,7 @@ public class Plano_vantagemDAO extends Conexao {
             // Prepara a instrução SQL e define os seus argumentos
             pstmt = conn.prepareStatement("UPDATE Plano_vantagem SET cVantagem = ?, cAtivo = ?, uId_Plano = ? WHERE uId = ?");
             pstmt.setString(1, planoVantagem.getcVantagem());
-            pstmt.setInt(2, planoVantagem.getcAtivo());
+            pstmt.setObject(2, planoVantagem.getcAtivo());
             pstmt.setObject(3, planoVantagem.getuId_Plano());
             pstmt.setObject(4, planoVantagem.getuId());
 

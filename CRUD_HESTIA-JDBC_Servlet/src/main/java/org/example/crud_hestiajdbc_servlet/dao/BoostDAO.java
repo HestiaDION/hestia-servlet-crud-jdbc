@@ -15,12 +15,11 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Boost (uId, cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?, ?)");
-            pstmt.setObject(1, boost.getuId());
-            pstmt.setString(2, boost.getcNmBoost());
-            pstmt.setDouble(3, boost.getnValor());
-            pstmt.setDouble(4, boost.getnPctBoost());
-            pstmt.setString(5,boost.getcDescricao());
+            pstmt = conn.prepareStatement("INSERT INTO Boost ( cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?)");
+            pstmt.setString(1, boost.getcNmBoost());
+            pstmt.setDouble(2, boost.getnValor());
+            pstmt.setDouble(3, boost.getnPctBoost());
+            pstmt.setString(4,boost.getcDescricao());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

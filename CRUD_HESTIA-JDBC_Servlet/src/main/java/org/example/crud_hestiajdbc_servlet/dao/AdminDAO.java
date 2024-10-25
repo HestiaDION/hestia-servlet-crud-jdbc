@@ -16,11 +16,10 @@ public class AdminDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Admin (uId, cNome, cEmail, cSenha) VALUES (?, ?, ?, ?)");
-            pstmt.setObject(1, admin.getuId());
-            pstmt.setString(2, admin.getcNome());
-            pstmt.setString(3, admin.getcEmail());
-            pstmt.setString(4, admin.getcSenha());
+            pstmt = conn.prepareStatement("INSERT INTO Admin ( cNome, cEmail, cSenha) VALUES (?, ?, ?)");
+            pstmt.setString(1, admin.getcNome());
+            pstmt.setString(2, admin.getcEmail());
+            pstmt.setString(3, admin.getcSenha());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

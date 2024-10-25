@@ -306,7 +306,9 @@ public class PagamentoDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA ESPECÍFICA
-
+//    public ResultSet selecionarTodosAnunciantes()
+//    {
+//    }
 
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarPagamento(Pagamento pagamento)

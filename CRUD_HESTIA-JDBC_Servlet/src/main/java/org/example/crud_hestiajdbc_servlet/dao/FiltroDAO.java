@@ -15,10 +15,9 @@ public class FiltroDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Filtro (uId, cNome, cCategoria) VALUES (?, ?, ?)");
-            pstmt.setObject(1, filtro.getuId());
-            pstmt.setString(2, filtro.getcNome());
-            pstmt.setString(3, filtro.getcCategoria());
+            pstmt = conn.prepareStatement("INSERT INTO Filtro (cNome, cCategoria) VALUES (?, ?)");
+            pstmt.setString(1, filtro.getcNome());
+            pstmt.setString(2, filtro.getcCategoria());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
