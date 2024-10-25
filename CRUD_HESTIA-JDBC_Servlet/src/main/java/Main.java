@@ -83,10 +83,10 @@ public class Main {
 //            System.out.println("Não foi possível adicionar o pagamento");
 //        }
 
-        UUID uIdAnunciante = UUID.fromString();
-        UUID uIdPlano = UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a");
+//        UUID uIdAnunciante = UUID.fromString();
+//        UUID uIdPlano = UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a");
 
-        Pagamento pagamento = new Pagamento("1", Date.valueOf("2024-10-22"), 5, 16, uIdAnunciante, uIdPlano, null);
+//        Pagamento pagamento = new Pagamento("1", Date.valueOf("2024-10-22"), 5, 16, uIdAnunciante, uIdPlano, null);
 
         // Criar método para charmar FN para pegar FKs, mostrar username e selcionar FK
     }

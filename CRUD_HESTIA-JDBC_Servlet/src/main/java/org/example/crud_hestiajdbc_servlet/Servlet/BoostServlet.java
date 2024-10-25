@@ -21,20 +21,16 @@ public class BoostServlet extends HttpServlet {
     private BoostDAO boostDAO = new BoostDAO();
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         listarBoosts(request, response);
-
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         excluirBoost(request, response);
         listarBoosts(request, response);
-
     }
-
-
 
     private void listarBoosts(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ResultSet rs = null;
@@ -43,8 +39,8 @@ public class BoostServlet extends HttpServlet {
         try {
             rs = boostDAO.selecionarTodosBoosts();
 
-
-            while (rs.next()) {
+            while (rs.next())
+            {
                 Boost boost = new Boost();
                 boost.setuId(UUID.fromString(rs.getString("uId")));
                 boost.setcTipoBoost(rs.getString("cNmBoost"));
@@ -52,15 +48,15 @@ public class BoostServlet extends HttpServlet {
                 boost.setnPctBoost(rs.getDouble("nPctBoost"));
                 boosts.add(boost);
             }
-
-
         }
-        catch (NullPointerException e){
+        catch (NullPointerException e)
+        {
             request.setAttribute("ListaBoost", boosts);
             request.getRequestDispatcher("page/Boost.jsp").forward(request, response);
             return;
         }
-        catch (SQLException e) {
+        catch (SQLException e)
+        {
             request.setAttribute("errorMessage", "Erro ao obter dados do banco de dados.");
             request.getRequestDispatcher("erro.html").forward(request, response);
             return;
@@ -68,30 +64,37 @@ public class BoostServlet extends HttpServlet {
         request.setAttribute("ListaBoost", boosts);
         request.getRequestDispatcher("page/Boost.jsp").forward(request, response);
     }
-    private void excluirBoost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+    private void excluirBoost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+    {
         String uId = request.getParameter("uId");
-        if (uId != null && !uId.isEmpty()) {
-            try {
+
+        if (uId != null && !uId.isEmpty())
+        {
+            try
+            {
                 Boost boost = new Boost();
                 boost.setuId(UUID.fromString(uId));
 
                 int isDeleted = boostDAO.removerBoost(boost);
-                if (isDeleted == 1) {
+                if (isDeleted == 1)
+                {
                     request.setAttribute("successMessage", "Boost excluído com sucesso!");
                     request.getRequestDispatcher("page/Boost.jsp").forward(request, response);
-                } else {
+                }
+                else
+                {
                     request.setAttribute("errorMessage", "Erro ao excluir o Boost.");
                 }
-            } catch (IllegalArgumentException e) {
+            }
+            catch (IllegalArgumentException e)
+            {
                 request.setAttribute("errorMessage", "ID do Boost inválido.");
             }
-        } else {
+        }
+        else
+        {
             request.setAttribute("errorMessage", "ID do Boost não fornecido.");
         }
     }
-
-
-
-
 }
-
