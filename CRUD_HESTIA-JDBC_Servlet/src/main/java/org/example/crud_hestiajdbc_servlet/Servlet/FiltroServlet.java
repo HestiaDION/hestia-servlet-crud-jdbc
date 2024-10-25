@@ -79,6 +79,4 @@ public class FiltroServlet extends HttpServlet {
             request.setAttribute("errorMessage", "ID do Filtro não fornecido.");
         }
     }
-
-
 }
