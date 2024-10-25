@@ -15,15 +15,14 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Pagamento (uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            pstmt.setObject(1, pagamento.getuId());
-            pstmt.setString(2, pagamento.getcAtivo());
-            pstmt.setDate(3, pagamento.getdDtFim());
-            pstmt.setDouble(4, pagamento.getnPctDesconto());
-            pstmt.setDouble(5, pagamento.getnTotal());
-            pstmt.setObject(6, pagamento.getuId_Anunciante());
-            pstmt.setObject(7, pagamento.getuId_Plano());
-            pstmt.setObject(8, pagamento.getuId_Universitario());
+            pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            pstmt.setString(1, pagamento.getcAtivo());
+            pstmt.setDate(2, pagamento.getdDtFim());
+            pstmt.setDouble(3, pagamento.getnPctDesconto());
+            pstmt.setDouble(4, pagamento.getnTotal());
+            pstmt.setObject(5, pagamento.getuId_Anunciante());
+            pstmt.setObject(6, pagamento.getuId_Plano());
+            pstmt.setObject(7, pagamento.getuId_Universitario());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
@@ -305,7 +304,7 @@ public class PagamentoDAO extends Conexao {
         }
     }
 
-//    DEFINIÇÃO DOS MÉTODOS DE CONSULTA ESPECÍFICA
+//    DEFINIÇÃO DOS MÉTODOS DE CONSULTA ESPECÍFICA ---------FUNCTION
 //    public ResultSet selecionarTodosAnunciantes()
 //    {
 //    }

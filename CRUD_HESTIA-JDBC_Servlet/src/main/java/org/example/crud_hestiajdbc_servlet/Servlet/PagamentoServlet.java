@@ -46,11 +46,8 @@ public class PagamentoServlet extends HttpServlet {
                 pagamento.setcAtivo(rs.getString("cAtivo"));
                 pagamento.setdDtFim(rs.getDate("dDtFim"));
                 pagamento.setnPctDesconto(rs.getDouble(("nPctDesconto")));
-<<<<<<< Updated upstream
                 pagamento.setnTotal(rs.getDouble(("nTotal")));
-=======
                 pagamento.setnTotal(rs.getDouble(("nValor")));
->>>>>>> Stashed changes
                 pagamento.setuId_Anunciante(UUID.fromString(rs.getString("uId_Anunciante")));
                 pagamento.setuId_Plano(UUID.fromString(rs.getString("uId_Plano")));
                 pagamento.setuId_Universitario(UUID.fromString(rs.getString("uId_Universitario")));
