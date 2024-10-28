@@ -155,6 +155,34 @@ public class FiltroDAO extends Conexao {
         }
     }
 
+//    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
+    public UUID acharIdFiltro(String nmFiltro, String categoria)
+    {
+        UUID uuid = null;
+        try {
+            conectar();
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT FN_Filtro_Id(?, ?)");
+            pstmt.setString(1, nmFiltro);
+            pstmt.setString(2, categoria);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+
+            // Extrai o UUID da primeira linha, se existir
+            if (rs.next()) {
+                uuid = (UUID) rs.getObject(1);
+            }
+        } catch (SQLException sqle) {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+        } finally {
+            desconectar();
+        }
+        return uuid;
+    }
+
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarFiltro(Filtro filtro)
     {

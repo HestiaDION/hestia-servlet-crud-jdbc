@@ -19,13 +19,16 @@ public class PagamentoDAO extends Conexao {
 
             // Prepara a instrução SQL e define os seus argumentos
             pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
-                    "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, CURRENT_DATE + 30, ?, ?, ?, ?, ?)");
+                    "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, DEFAULT, ?, ?, FN_Anunciante_Id(?, ?), FN_Plano_Id(?), Fn_Universitario_Id(?, ?, ?))");
             pstmt.setString(1, pagamento.getcAtivo());
             pstmt.setDouble(2, pagamento.getnPctDesconto());
             pstmt.setDouble(3, pagamento.getnTotal());
-            pstmt.setObject(4, pagamento.getuId_Anunciante());
-            pstmt.setObject(5, pagamento.getuId_Plano());
-            pstmt.setObject(6, pagamento.getuId_Universitario());
+            pstmt.setString(4, pagamento.getcUserAnunciante());
+            pstmt.setString(5, pagamento.getcEmailAnunciante());
+            pstmt.setString(6, pagamento.getcNmPlano());
+            pstmt.setString(7, pagamento.getcUserUniversitario());
+            pstmt.setString(8, pagamento.getcEmailUniversitario());
+            pstmt.setString(9, pagamento.getcDNEUniversitario());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
@@ -360,10 +363,36 @@ public class PagamentoDAO extends Conexao {
         }
     }
 
-//    DEFINIÇÃO DOS MÉTODOS DE CONSULTA ESPECÍFICA ---------FUNCTION
-//    public ResultSet selecionarTodosAnunciantes()
-//    {
-//    }
+//    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
+    public UUID acharIdPagamento(UUID idUsuario, UUID idPlano, Date dtFim)
+    {
+        UUID uuid = null;
+        try {
+            conectar();
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT FN_Pagamento_Id(?, ?, ?)");
+            pstmt.setObject(1, idUsuario);
+            pstmt.setObject(2, idPlano);
+            pstmt.setDate(3, dtFim);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+
+            // Extrai o UUID da primeira linha, se existir
+            if (rs.next()) {
+                uuid = (UUID) rs.getObject(1);
+            }
+        } catch (SQLException sqle) {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+        } finally {
+            desconectar();
+        }
+        return uuid;
+    }
+
+
 
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarPagamento(Pagamento pagamento)
@@ -373,15 +402,18 @@ public class PagamentoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Anunciante = ?, uId_Plano = ?, uId_Universitario = ? WHERE uId = ?");
+            pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Anunciante = FN_Anunciante_Id(?, ?), uId_Plano = FN_Plano_Id(?), uId_Universitario = Fn_Universitario_Id(?, ?, ?) WHERE uId = ?");
             pstmt.setString(1, pagamento.getcAtivo());
             pstmt.setObject(2, pagamento.getdDtFim());
             pstmt.setDouble(3, pagamento.getnPctDesconto());
             pstmt.setDouble(4, pagamento.getnTotal());
-            pstmt.setObject(5, pagamento.getuId_Anunciante());
-            pstmt.setObject(6, pagamento.getuId_Plano());
-            pstmt.setObject(7, pagamento.getuId_Universitario());
-            pstmt.setObject(8, pagamento.getuId());
+            pstmt.setString(5, pagamento.getcUserAnunciante());
+            pstmt.setString(6, pagamento.getcEmailAnunciante());
+            pstmt.setString(7, pagamento.getcNmPlano());
+            pstmt.setString(8, pagamento.getcUserUniversitario());
+            pstmt.setString(9, pagamento.getcEmailUniversitario());
+            pstmt.setString(10, pagamento.getcDNEUniversitario());
+            pstmt.setObject(11, pagamento.getuId());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

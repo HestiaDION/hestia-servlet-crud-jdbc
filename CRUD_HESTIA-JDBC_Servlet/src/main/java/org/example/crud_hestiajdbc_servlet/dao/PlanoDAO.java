@@ -183,7 +183,34 @@ public class PlanoDAO extends Conexao {
         }
     }
 
-    //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
+//    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
+    public UUID acharIdBoost(String nmPlao)
+    {
+        UUID uuid = null;
+        try {
+            conectar();
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT FN_Plano_Id(?)");
+            pstmt.setString(1, nmPlao);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+
+            // Extrai o UUID da primeira linha, se existir
+            if (rs.next()) {
+                uuid = (UUID) rs.getObject(1);
+            }
+        } catch (SQLException sqle) {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+        } finally {
+            desconectar();
+        }
+        return uuid;
+    }
+
+//    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarPlano(Plano plano)
     {
         try

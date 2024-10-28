@@ -242,7 +242,8 @@ public class BoostDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
-    public UUID acharIdBoost(String nmBoost) {
+    public UUID acharIdBoost(String nmBoost)
+    {
         UUID uuid = null;
         try {
             conectar();

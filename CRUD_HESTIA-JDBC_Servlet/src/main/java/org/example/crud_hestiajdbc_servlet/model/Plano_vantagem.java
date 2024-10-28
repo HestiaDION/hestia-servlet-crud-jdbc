@@ -7,22 +7,22 @@ public class Plano_vantagem {
     private UUID uId;         // (UUID)
     private String cVantagem; // (VARCHAR(100))
     private char cAtivo;      // (CHAR(1))
-    private UUID uId_Plano;   // (UUID)
+    private String cNmPlano;  // (Parâmetro 1 do FN_Plano_Id)
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
-    public Plano_vantagem(UUID uId, String cVantagem, char cAtivo, UUID uId_Plano)
+    public Plano_vantagem(UUID uId, String cVantagem, char cAtivo, String cNmPlano)
     {
         this.uId = uId;
         this.cVantagem = cVantagem;
         this.cAtivo = cAtivo;
-        this.uId_Plano = uId_Plano;
+        this.cNmPlano = cNmPlano;
     }
 
-    public Plano_vantagem(String cVantagem, char cAtivo, UUID uId_Plano)
+    public Plano_vantagem(String cVantagem, char cAtivo, String cNmPlano)
     {
         this.cVantagem = cVantagem;
         this.cAtivo = cAtivo;
-        this.uId_Plano = uId_Plano;
+        this.cNmPlano = cNmPlano;
     }
 
     public Plano_vantagem()
@@ -45,31 +45,31 @@ public class Plano_vantagem {
         return cAtivo;
     }
 
-    public UUID getuId_Plano()
+    public String getcNmPlano()
     {
-        return uId_Plano;
+        return cNmPlano;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS setters
     public void setuId(UUID uId)
     {
         this.uId = uId;
-    } // Método Inútil Por Enquanto
+    } 
 
     public void setcVantagem(String cVantagem)
     {
         this.cVantagem = cVantagem;
-    } // Método Inútil Por Enquanto
+    } 
 
     public void setcAtivo(char cAtivo)
     {
         this.cAtivo = cAtivo;
-    } // Método Inútil Por Enquanto
+    } 
 
-    public void setuId_Plano(UUID uId_Plano)
+    public void setcNmPlano(String cNmPlano)
     {
-        this.uId_Plano = uId_Plano;
-    } // Método Inútil Por Enquanto
+        this.cNmPlano = cNmPlano;
+    } 
 
 //    DEFINIÇÃO DO MÉTODO toString
     @Override
@@ -78,6 +78,6 @@ public class Plano_vantagem {
         return "ID da Vantagem do Plano = " + this.uId +
                 "\nDefinição da Vantagem do Plano = " + this.cVantagem +
                 "\nAtividade da Vantagem do Plano = " + this.cAtivo +
-                "\nID do Plano da Vantagem = " + this.uId_Plano;
+                "\nID do Plano da Vantagem = " + this.cNmPlano;
     }
 }

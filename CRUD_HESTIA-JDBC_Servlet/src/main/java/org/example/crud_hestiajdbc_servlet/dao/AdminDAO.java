@@ -217,7 +217,8 @@ public class AdminDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
-    public UUID acharIdAdmin(String email) {
+    public UUID acharIdAdmin(String email)
+    {
     UUID uuid = null;
     try {
         conectar();
@@ -242,8 +243,7 @@ public class AdminDAO extends Conexao {
     return uuid;
 }
 
-
-    //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
+//    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarAdmin(Admin admin)
     {
         try
