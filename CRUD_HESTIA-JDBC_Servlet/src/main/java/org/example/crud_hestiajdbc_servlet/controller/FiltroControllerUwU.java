@@ -34,13 +34,13 @@ public class FiltroControllerUwU extends HttpServlet
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -68,13 +68,13 @@ public class FiltroControllerUwU extends HttpServlet
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -107,7 +107,7 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void readFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -196,7 +196,7 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updateFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -230,7 +230,7 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void deleteFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -254,6 +254,6 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 }

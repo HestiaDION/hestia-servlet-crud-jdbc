@@ -35,13 +35,13 @@ public class PlanoControllerUwU extends HttpServlet
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -69,13 +69,13 @@ public class PlanoControllerUwU extends HttpServlet
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -111,7 +111,7 @@ public class PlanoControllerUwU extends HttpServlet
         }
     
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
     
     private void readPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -229,7 +229,7 @@ public class PlanoControllerUwU extends HttpServlet
         }
         
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
     
     private void updatePlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -266,7 +266,7 @@ public class PlanoControllerUwU extends HttpServlet
         }
     
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
     
     private void deletePlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -290,6 +290,6 @@ public class PlanoControllerUwU extends HttpServlet
         }
     
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 }

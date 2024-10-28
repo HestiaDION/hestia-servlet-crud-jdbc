@@ -91,7 +91,8 @@
             </div>
             <div class="table-rows">
                 <%
-                    List<Admin> list = (List<Admin>) request.getAttribute("ListaAdmins");
+                    List<Admin> list = (List<Admin>) request.getAttribute("list");
+                    System.out.println(list);
 
                     if (list != null && !list.isEmpty()) {
                         for (Admin item : list) {

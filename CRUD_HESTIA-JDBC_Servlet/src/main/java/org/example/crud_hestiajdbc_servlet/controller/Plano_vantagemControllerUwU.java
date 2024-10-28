@@ -36,13 +36,13 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -71,13 +71,13 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -113,7 +113,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
     
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -221,7 +221,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updatePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -259,7 +259,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void deletePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -283,6 +283,6 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 }

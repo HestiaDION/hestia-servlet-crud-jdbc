@@ -35,13 +35,13 @@ public class PagamentoControllerUwU extends HttpServlet {
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -70,13 +70,13 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -124,7 +124,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void readPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -362,7 +362,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updatePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -411,7 +411,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void deletePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -435,6 +435,6 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 }

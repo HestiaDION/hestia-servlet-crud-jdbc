@@ -187,9 +187,9 @@ public class Main {
         }
 
         // DELETE pagamento
-        pagamento.removerPagamento(new Pagamento(UUID.fromString("43506f49-bb59-4e28-8cfa-af360b3a893e"),"0",Date.valueOf("2024-10-25"),0,16,
-                UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6"),UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"),
-                null));
+//        pagamento.removerPagamento(new Pagamento(UUID.fromString("43506f49-bb59-4e28-8cfa-af360b3a893e"),"0",Date.valueOf("2024-10-25"),0,16,
+//                UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6"),UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"),
+//                null));
 
         System.out.println("Fim");
     }

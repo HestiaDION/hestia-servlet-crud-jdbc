@@ -1,11 +1,17 @@
 package org.example.crud_hestiajdbc_servlet.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.example.crud_hestiajdbc_servlet.model.*;
 
+import javax.xml.transform.Result;
 import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class ValidationUtilsUwU
@@ -124,7 +130,173 @@ public class ValidationUtilsUwU
         return LocalDate.parse(value, formatter);
     }
 
-//    MÉTODOS DE VALIDAÇÃO E TRATAMENTO DE DADOS DO NEGÓCIO
+    public static List toAdminList(ResultSet resultSet)
+    {
+        List<Admin> adminList = new ArrayList<>();
+
+        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        try
+        {
+            while (resultSet.next())
+            {
+                Admin admin = new Admin();
+                admin.setuId   ((UUID) resultSet.getObject("uId"));
+                admin.setcNome (resultSet.getString("cNome"));
+                admin.setcEmail(resultSet.getString("cEmail"));
+                admin.setcSenha(resultSet.getString("cSenha"));
+
+                // Adiciona o objeto na lista
+                adminList.add(admin);
+            }
+        }
+        catch (SQLException sqle)
+        {
+            sqle.printStackTrace();
+        }
+
+        return adminList;
+    }
+
+    public static List toBoostList(ResultSet resultSet)
+    {
+        List<Boost> boostList = new ArrayList<>();
+
+        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        try
+        {
+            while (resultSet.next())
+            {
+                Boost boost = new Boost();
+                boost.setuId       ((UUID) resultSet.getObject("uId"));
+                boost.setcNmBoost  (resultSet.getString("cNmBoost"));
+                boost.setnValor    (resultSet.getDouble("nValor"));
+                boost.setnPctBoost (resultSet.getDouble("nPctBoost"));
+                boost.setcDescricao(resultSet.getString("cDescricao"));
+
+                // Adiciona o objeto na lista
+                boostList.add(boost);
+            }
+        }
+        catch (SQLException sqle)
+        {
+            sqle.printStackTrace();
+        }
+
+        return boostList;
+    }
+
+    public static List toFiltroList(ResultSet resultSet)
+    {
+        List<Filtro> filtroList = new ArrayList<>();
+
+        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        try
+        {
+            while (resultSet.next())
+            {
+                Filtro filtro = new Filtro();
+                filtro.setuId       ((UUID) resultSet.getObject("uId"));
+                filtro.setcNome     (resultSet.getString("cNome"));
+                filtro.setcCategoria(resultSet.getString("cCategoria"));
+
+                // Adiciona o objeto na lista
+                filtroList.add(filtro);
+            }
+        }
+        catch (SQLException sqle)
+        {
+            sqle.printStackTrace();
+        }
+
+        return filtroList;
+    }
+
+    public static List toPagamentoList(ResultSet resultSet)
+    {
+        List<Pagamento> pagamentoList = new ArrayList<>();
+
+        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        try
+        {
+            while (resultSet.next())
+            {
+                Pagamento pagamento = new Pagamento();
+                pagamento.setuId              ((UUID) resultSet.getObject("uId"));
+                pagamento.setcAtivo           (resultSet.getString("cAtivo"));
+                pagamento.setdDtFim           (resultSet.getDate("dDtFim"));
+                pagamento.setnPctDesconto     (resultSet.getDouble("nPctDesconto"));
+                pagamento.setnTotal           (resultSet.getDouble("nTotal"));
+                pagamento.setuId_Anunciante   ((UUID) resultSet.getObject("uId_Anunciante"));
+                pagamento.setuId_Plano        ((UUID) resultSet.getObject("uId_Plano"));
+                pagamento.setuId_Universitario((UUID) resultSet.getObject("uId_Universitario"));
+
+                // Adiciona o objeto na lista
+                pagamentoList.add(pagamento);
+            }
+        }
+        catch (SQLException sqle)
+        {
+            sqle.printStackTrace();
+        }
+
+        return pagamentoList;
+    }
+
+    public static List toPlanoList(ResultSet resultSet)
+    {
+        List<Plano> planoList = new ArrayList<>();
+
+        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        try
+        {
+            while (resultSet.next())
+            {
+                Plano plano = new Plano();
+                plano.setuId((UUID) resultSet.getObject("uId"));
+                plano.setcNome(resultSet.getString("cNome"));
+                plano.setnValor(resultSet.getDouble("nValor"));
+                plano.setcDescricao(resultSet.getString("cDescricao"));
+
+                // Adiciona o objeto na lista
+                planoList.add(plano);
+            }
+        }
+        catch (SQLException sqle)
+        {
+            sqle.printStackTrace();
+        }
+
+        return planoList;
+    }
+
+    public static List toPlano_vantagemList(ResultSet resultSet)
+    {
+        List<Plano_vantagem> plano_vantagemList = new ArrayList<>();
+
+        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        try
+        {
+            while (resultSet.next())
+            {
+                Plano_vantagem plano_vantagem = new Plano_vantagem();
+                plano_vantagem.setuId      ((UUID) resultSet.getObject("uId"));
+                plano_vantagem.setcVantagem(resultSet.getString("cVantagem"));
+                plano_vantagem.setcAtivo   (resultSet.getString("cAtivo").charAt(0));
+                plano_vantagem.setuId_Plano((UUID) resultSet.getObject("uId_Plano"));
+
+                // Adiciona o objeto na lista
+                plano_vantagemList.add(plano_vantagem);
+            }
+        }
+        catch (SQLException sqle)
+        {
+            sqle.printStackTrace();
+        }
+
+        return plano_vantagemList;
+    }
+
+    //    MÉTODOS DE VALIDAÇÃO E TRATAMENTO DE DADOS DO NEGÓCIO
     public static boolean isValidPorcentagem(String value)
     {
         return isValidDouble(value) && Double.parseDouble(value) <= 100 && 0 <= Double.parseDouble(value);
@@ -211,7 +383,7 @@ public class ValidationUtilsUwU
     public static void logSuccessfulReading(HttpServletRequest req)
     {
         req.setAttribute("success", true);
-        req.setAttribute("log", "O registro foi salvo com sucesso.");
+        req.setAttribute("log", "A busca foi realizada com sucesso.");
     }
 
     public static void logSuccessfulUpdate(HttpServletRequest req)
