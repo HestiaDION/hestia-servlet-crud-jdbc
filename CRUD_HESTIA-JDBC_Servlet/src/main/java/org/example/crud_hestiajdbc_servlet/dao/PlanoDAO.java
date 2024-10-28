@@ -5,6 +5,7 @@ import org.example.crud_hestiajdbc_servlet.model.Plano;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class PlanoDAO extends Conexao {
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
@@ -15,11 +16,10 @@ public class PlanoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Plano (uId, cNome, nValor, cDescricao) VALUES (?, ?, ?, ?)");
-            pstmt.setObject(1, plano.getuId());
-            pstmt.setString(2, plano.getcNome());
-            pstmt.setDouble(3, plano.getnValor());
-            pstmt.setString(4, plano.getcDescricao());
+            pstmt = conn.prepareStatement("INSERT INTO Plano (cNome, nValor, cDescricao) VALUES (?, ?, ?)");
+            pstmt.setString(1, plano.getcNome());
+            pstmt.setDouble(2, plano.getnValor());
+            pstmt.setString(3, plano.getcDescricao());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
@@ -41,7 +41,7 @@ public class PlanoDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodosPlanos(Plano plano)
+    public ResultSet selecionarTodosPlanos()
     {
         try
         {
@@ -69,7 +69,7 @@ public class PlanoDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarPlanosPorId(Plano plano)
+    public ResultSet selecionarPlanosPorId(UUID uId)
     {
         try
         {
@@ -77,7 +77,7 @@ public class PlanoDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE uId = ?");
-            pstmt.setObject(1, plano.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -98,7 +98,7 @@ public class PlanoDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarPlanosPorNome(Plano plano)
+    public ResultSet selecionarPlanosPorNome(String cNome)
     {
         try
         {
@@ -106,7 +106,7 @@ public class PlanoDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE cNome = ?");
-            pstmt.setString(1, plano.getcNome());
+            pstmt.setString(1, cNome);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -127,15 +127,14 @@ public class PlanoDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarPlanosPorValor(Plano plano)
+    public ResultSet selecionarPlanosPorValorCrescente()
     {
         try
         {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE nValor = ?");
-            pstmt.setDouble(1, plano.getnValor());
+            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano ORDER BY nValor");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -156,15 +155,14 @@ public class PlanoDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarPlanosPorDescricao(Plano plano)
+    public ResultSet selecionarPlanosPorValorDecrescente()
     {
         try
         {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE cDescricao = ?");
-            pstmt.setString(1, plano.getcDescricao());
+            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano ORDER BY nValor DESC");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -219,7 +217,7 @@ public class PlanoDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerPlano(Plano plano)
+    public int removerPlano(UUID uId)
     {
         try
         {
@@ -227,7 +225,7 @@ public class PlanoDAO extends Conexao {
 
             // Prepara a instrução SQL e define os seus argumentos
             pstmt = conn.prepareStatement("DELETE FROM Plano WHERE uId = ?");
-            pstmt.setObject(1, plano.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

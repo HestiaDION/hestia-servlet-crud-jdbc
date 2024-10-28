@@ -6,6 +6,7 @@ import org.example.crud_hestiajdbc_servlet.model.Admin;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class AdminDAO extends Conexao {
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
@@ -16,7 +17,7 @@ public class AdminDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Admin ( cNome, cEmail, cSenha) VALUES (?, ?, ?)");
+            pstmt = conn.prepareStatement("INSERT INTO Admin (cNome, cEmail, cSenha) VALUES (?, ?, ?)");
             pstmt.setString(1, admin.getcNome());
             pstmt.setString(2, admin.getcEmail());
             pstmt.setString(3, admin.getcSenha());
@@ -69,7 +70,7 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarAdminsPorId(Admin admin)
+    public ResultSet selecionarAdminsPorId(UUID uId)
     {
         try
         {
@@ -77,7 +78,7 @@ public class AdminDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE uId = ?");
-            pstmt.setObject(1, admin.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -98,7 +99,7 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarAdminsPorNome(Admin admin)
+    public ResultSet selecionarAdminsPorNome(String cNome)
     {
         try
         {
@@ -106,7 +107,7 @@ public class AdminDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cNome = ?");
-            pstmt.setString(1, admin.getcNome());
+            pstmt.setString(1, cNome);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -127,7 +128,7 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarAdminsPorEmail(Admin admin)
+    public ResultSet selecionarAdminsPorEmail(String cEmail)
     {
         try
         {
@@ -135,7 +136,7 @@ public class AdminDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ?");
-            pstmt.setString(1, admin.getcEmail());
+            pstmt.setString(1, cEmail);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -156,15 +157,15 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarAdminsPorSenha(Admin admin)
+    public ResultSet selecionarAdminsPorTamanhoSenha(int tamanhoSenha)
     {
         try
         {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cSenha = ?");
-            pstmt.setString(1, admin.getcSenha());
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE LENGTH(csenha) < ?");
+            pstmt.setInt(1, tamanhoSenha);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -185,17 +186,16 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public  ResultSet selecionarAdminsParaLogin(Admin admin)
+    public  ResultSet selecionarAdminsParaLogin(String cEmail, String cSenha)
     {
         try
         {
             conectar();
-
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ? AND cSenha = ?");
-            pstmt.setString(1, admin.getcEmail());
-            pstmt.setString(2, admin.getcSenha());
+            pstmt.setString(1, cEmail);
+            pstmt.setString(2, cSenha);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -250,7 +250,7 @@ public class AdminDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerAdmin(Admin admin)
+    public int removerAdmin(UUID uId)
     {
         try
         {
@@ -258,7 +258,7 @@ public class AdminDAO extends Conexao {
 
             // Prepara a instrução SQL e define os seus argumentos
             pstmt = conn.prepareStatement("DELETE FROM Admin WHERE uId = ?");
-            pstmt.setObject(1, admin.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

@@ -1,21 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
-  User: pietromedico-ieg
-  Date: 19/10/2024
-  Time: 16:33
+  User: lucaslaurente-ieg
+  Date: 25/10/2024
+  Time: 13:13
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Plano</title>
+    <title>Filtro</title>
 </head>
 <body>
-<div class="Header">
-    <h1>PAINEL DE ADMINISTRAÇÃO</h1>
-</div>
+    <form action="add-filtro">
 
-<h1>Tabela Plano</h1>
-
+    </form>
 </body>
 </html>

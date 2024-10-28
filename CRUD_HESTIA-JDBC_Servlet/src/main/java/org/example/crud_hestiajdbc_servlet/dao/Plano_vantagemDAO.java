@@ -5,6 +5,7 @@ import org.example.crud_hestiajdbc_servlet.model.Plano_vantagem;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class Plano_vantagemDAO extends Conexao {
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
@@ -40,7 +41,7 @@ public class Plano_vantagemDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodasVantagensPlano(Plano_vantagem planoVantagem)
+    public ResultSet selecionarTodasVantagensPlano()
     {
         try
         {
@@ -68,7 +69,7 @@ public class Plano_vantagemDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarVantagensPlanoPorId(Plano_vantagem planoVantagem)
+    public ResultSet selecionarVantagensPlanoPorId(UUID uId)
     {
         try
         {
@@ -76,7 +77,7 @@ public class Plano_vantagemDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cVantagem, cAtivo, uId_Plano FROM Plano_vantagem WHERE uId = ?");
-            pstmt.setObject(1, planoVantagem.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -97,36 +98,7 @@ public class Plano_vantagemDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarVantagensPlanoPorVantagem(Plano_vantagem planoVantagem)
-    {
-        try
-        {
-            conectar();
-
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cVantagem, cAtivo, uId_Plano FROM Plano_vantagem WHERE cVantagem = ?");
-            pstmt.setString(1, planoVantagem.getcVantagem());
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
-        }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
-
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
-    }
-
-    public ResultSet selecionarVantagensPlanoPorAtividade(Plano_vantagem planoVantagem)
+    public ResultSet selecionarVantagensPlanoPorAtividade(String cAtivo)
     {
         try
         {
@@ -134,7 +106,7 @@ public class Plano_vantagemDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cVantagem, cAtivo, uId_Plano FROM Plano_vantagem WHERE cAtivo = ?");
-            pstmt.setInt(1, planoVantagem.getcAtivo());
+            pstmt.setString(1, cAtivo);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -155,7 +127,7 @@ public class Plano_vantagemDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarVantagensPlanoPorIdPlano(Plano_vantagem planoVantagem)
+    public ResultSet selecionarVantagensPlanoPorIdPlano(UUID uId_Plano)
     {
         try
         {
@@ -163,7 +135,7 @@ public class Plano_vantagemDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cVantagem, cAtivo, uId_Plano FROM Plano_vantagem WHERE uId_Plano = ?");
-            pstmt.setObject(1, planoVantagem.getuId_Plano());
+            pstmt.setObject(1, uId_Plano);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -218,7 +190,7 @@ public class Plano_vantagemDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerPlanoVantagem(Plano_vantagem planoVantagem)
+    public int removerPlanoVantagem(UUID uId)
     {
         try
         {
@@ -226,7 +198,7 @@ public class Plano_vantagemDAO extends Conexao {
 
             // Prepara a instrução SQL e define os seus argumentos
             pstmt = conn.prepareStatement("DELETE FROM Plano_vantagem WHERE uId = ?");
-            pstmt.setObject(1, planoVantagem.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

@@ -5,6 +5,8 @@ import org.example.crud_hestiajdbc_servlet.model.Boost;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
+import java.util.UUID;
 
 public class BoostDAO extends Conexao {
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
@@ -15,7 +17,7 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Boost ( cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?)");
+            pstmt = conn.prepareStatement("INSERT INTO Boost (cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?)");
             pstmt.setString(1, boost.getcNmBoost());
             pstmt.setDouble(2, boost.getnValor());
             pstmt.setDouble(3, boost.getnPctBoost());
@@ -69,7 +71,7 @@ public class BoostDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarBoostsPorId(Boost boost)
+    public ResultSet selecionarBoostsPorId(UUID uId)
     {
         try
         {
@@ -77,7 +79,7 @@ public class BoostDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId = ?");
-            pstmt.setObject(1, boost.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -98,7 +100,7 @@ public class BoostDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarBoostsPorTipoBoost(Boost boost)
+    public ResultSet selecionarBoostsPorNome(String cNmBoost)
     {
         try
         {
@@ -106,7 +108,7 @@ public class BoostDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost = ?");
-            pstmt.setString(1, boost.getcNmBoost());
+            pstmt.setString(1, cNmBoost);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -127,15 +129,14 @@ public class BoostDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarBoostsPorValor(Boost boost)
+    public ResultSet selecionarBoostsPorValorCrescente()
     {
         try
         {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE nValor = ?");
-            pstmt.setDouble(1, boost.getnValor());
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -156,15 +157,70 @@ public class BoostDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarBoostsPorPctBoost(Boost boost)
+    public ResultSet selecionarBoostsPorValorDecrescente()
     {
         try
         {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE nPctBoost = ?");
-            pstmt.setDouble(1, boost.getnPctBoost());
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY DESC");
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+        }
+        catch (SQLException sqle)
+        {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+
+            // Atribuí um nulo para indentificação da exceção
+            rs = null;
+        }
+        finally
+        {
+            desconectar();
+
+            return rs;
+        }
+    }
+
+    public ResultSet selecionarBoostsPorPctBoostCrescente()
+    {
+        try
+        {
+            conectar();
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost");
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+        }
+        catch (SQLException sqle)
+        {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+
+            // Atribuí um nulo para indentificação da exceção
+            rs = null;
+        }
+        finally
+        {
+            desconectar();
+
+            return rs;
+        }
+    }
+
+    public ResultSet selecionarBoostsPorPctBoostDecrescente()
+    {
+        try
+        {
+            conectar();
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost DESC");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -219,7 +275,7 @@ public class BoostDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerBoost(Boost boost)
+    public int removerBoost(UUID uId)
     {
         try
         {
@@ -227,7 +283,7 @@ public class BoostDAO extends Conexao {
 
             // Prepara a instrução SQL e define os seus argumentos
             pstmt = conn.prepareStatement("DELETE FROM Boost WHERE uId = ?");
-            pstmt.setObject(1, boost.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

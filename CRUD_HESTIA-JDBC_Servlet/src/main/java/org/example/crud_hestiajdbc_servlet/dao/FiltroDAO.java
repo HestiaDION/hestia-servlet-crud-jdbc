@@ -5,6 +5,7 @@ import org.example.crud_hestiajdbc_servlet.model.Filtro;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 
 public class FiltroDAO extends Conexao {
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
@@ -67,7 +68,7 @@ public class FiltroDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarFiltrosPorId(Filtro filtro)
+    public ResultSet selecionarFiltrosPorId(UUID uId)
     {
         try
         {
@@ -75,7 +76,7 @@ public class FiltroDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE uId = ?");
-            pstmt.setObject(1, filtro.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -96,7 +97,7 @@ public class FiltroDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarFiltrosPorNome(Filtro filtro)
+    public ResultSet selecionarFiltrosPorNome(String cNome)
     {
         try
         {
@@ -104,7 +105,7 @@ public class FiltroDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cNome = ?");
-            pstmt.setString(1, filtro.getcNome());
+            pstmt.setString(1, cNome);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -125,7 +126,7 @@ public class FiltroDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarFiltrosPorCategoria(Filtro filtro)
+    public ResultSet selecionarFiltrosPorCategoria(String cCategoria)
     {
         try
         {
@@ -133,7 +134,7 @@ public class FiltroDAO extends Conexao {
 
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cCategoria = ?");
-            pstmt.setString(1, filtro.getcCategoria());
+            pstmt.setString(1, cCategoria);
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
@@ -187,7 +188,7 @@ public class FiltroDAO extends Conexao {
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerFiltro(Filtro filtro)
+    public int removerFiltro(UUID uId)
     {
         try
         {
@@ -195,7 +196,7 @@ public class FiltroDAO extends Conexao {
 
             // Prepara a instrução SQL e define os seus argumentos
             pstmt = conn.prepareStatement("DELETE FROM Filtro WHERE uId = ?");
-            pstmt.setObject(1, filtro.getuId());
+            pstmt.setObject(1, uId);
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
