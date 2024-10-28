@@ -13,18 +13,23 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Plano (cNome, nValor, cDescricao) VALUES (?, ?, ?)");
+                pstmt.setString(1, plano.getcNome());
+                pstmt.setDouble(2, plano.getnValor());
+                pstmt.setString(3, plano.getcDescricao());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Plano (cNome, nValor, cDescricao) VALUES (?, ?, ?)");
-            pstmt.setString(1, plano.getcNome());
-            pstmt.setDouble(2, plano.getnValor());
-            pstmt.setString(3, plano.getcDescricao());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -45,13 +50,18 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -73,14 +83,19 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -102,14 +117,19 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE cNome = ?");
+                pstmt.setString(1, cNome);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano WHERE cNome = ?");
-            pstmt.setString(1, cNome);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -131,13 +151,18 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano ORDER BY nValor");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano ORDER BY nValor");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -159,13 +184,18 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano ORDER BY nValor DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, nValor, cDescricao FROM Plano ORDER BY nValor DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -188,19 +218,24 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Plano SET cNome = ?, nValor = ?, cDescricao = ? WHERE uId = ?");
+                pstmt.setString(1, plano.getcNome());
+                pstmt.setDouble(2, plano.getnValor());
+                pstmt.setString(3, plano.getcDescricao());
+                pstmt.setObject(4, plano.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Plano SET cNome = ?, nValor = ?, cDescricao = ? WHERE uId = ?");
-            pstmt.setString(1, plano.getcNome());
-            pstmt.setDouble(2, plano.getnValor());
-            pstmt.setString(3, plano.getcDescricao());
-            pstmt.setObject(4, plano.getuId());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -221,16 +256,21 @@ public class PlanoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Plano WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Plano WHERE uId = ?");
-            pstmt.setObject(1, uId);
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {

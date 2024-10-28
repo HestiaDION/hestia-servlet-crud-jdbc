@@ -13,17 +13,22 @@ public class FiltroDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Filtro (cNome, cCategoria) VALUES (?, ?)");
+                pstmt.setString(1, filtro.getcNome());
+                pstmt.setString(2, filtro.getcCategoria());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Filtro (cNome, cCategoria) VALUES (?, ?)");
-            pstmt.setString(1, filtro.getcNome());
-            pstmt.setString(2, filtro.getcCategoria());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -44,13 +49,18 @@ public class FiltroDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -72,14 +82,19 @@ public class FiltroDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -101,14 +116,19 @@ public class FiltroDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cNome = ?");
+                pstmt.setString(1, cNome);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cNome = ?");
-            pstmt.setString(1, cNome);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -130,14 +150,19 @@ public class FiltroDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cCategoria = ?");
+                pstmt.setString(1, cCategoria);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cCategoria = ?");
-            pstmt.setString(1, cCategoria);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -160,18 +185,23 @@ public class FiltroDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Filtro SET cNome = ?, cCategoria = ? WHERE uId = ?");
+                pstmt.setString(1, filtro.getcNome());
+                pstmt.setString(2, filtro.getcCategoria());
+                pstmt.setObject(3, filtro.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Filtro SET cNome = ?, cCategoria = ? WHERE uId = ?");
-            pstmt.setString(1, filtro.getcNome());
-            pstmt.setString(2, filtro.getcCategoria());
-            pstmt.setObject(3, filtro.getuId());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -192,16 +222,21 @@ public class FiltroDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Filtro WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Filtro WHERE uId = ?");
-            pstmt.setObject(1, uId);
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {

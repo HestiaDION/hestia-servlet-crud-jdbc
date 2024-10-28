@@ -1,13 +1,13 @@
-import org.example.crud_hestiajdbc_servlet.dao.*;
-import org.example.crud_hestiajdbc_servlet.model.*;
-
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.UUID;
-
-public class Main {
-    public static void main(String[] args) throws SQLException {
+//import org.example.crud_hestiajdbc_servlet.dao.*;
+//import org.example.crud_hestiajdbc_servlet.model.*;
+//
+//import java.sql.Date;
+//import java.sql.ResultSet;
+//import java.sql.SQLException;
+//import java.util.UUID;
+//
+//public class Main {
+//    public static void main(String[] args) throws SQLException {
 //        **************************************************************************************************************
 //         CLASSE ADMIN - rever update
 //        **************************************************************************************************************
@@ -260,7 +260,7 @@ public class Main {
 //        **************************************************************************************************************
 //        CLASSE PAGAMENTO
 //        **************************************************************************************************************
-        PagamentoDAO pagamento = new PagamentoDAO();
+//        PagamentoDAO pagamento = new PagamentoDAO();
 
         //INSERT pagamento
 //        if (pagamento.adicionarPagamento(new Pagamento("0",Date.valueOf("2024-10-25"),0,16,
@@ -271,8 +271,13 @@ public class Main {
 //        else {
 //            System.out.println("Pagamento adicionado com sucesso!");
 //        }
+<<<<<<< HEAD
 
         // SELECT * ,pagamento - falta testar os outros selects
+=======
+//
+//        // SELECT * pagamento - falta testar os outros selects
+>>>>>>> e657f7810319cbed6cf6a9abcf5c71cda3113563
 //        ResultSet rs = pagamento.selecionarTodosPagamentos();
 //        while (rs.next()) {
 //            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
@@ -286,7 +291,14 @@ public class Main {
 //        pagamento.removerPagamento(new Pagamento(UUID.fromString("43506f49-bb59-4e28-8cfa-af360b3a893e"),"0",Date.valueOf("2024-10-25"),0,16,
 //                UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6"),UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"),
 //                null));
+<<<<<<< HEAD
 
         System.out.println("Fim");
     }
 }
+=======
+//
+//        System.out.println("Fim");
+//    }
+//}
+>>>>>>> e657f7810319cbed6cf6a9abcf5c71cda3113563
