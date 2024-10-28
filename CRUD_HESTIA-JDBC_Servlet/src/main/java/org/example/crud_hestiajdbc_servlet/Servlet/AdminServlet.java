@@ -53,7 +53,11 @@ public class AdminServlet extends HttpServlet {
         }
         System.out.println(admins);
         request.setAttribute("ListaAdmins", admins);
-        request.getRequestDispatcher("page/Admin.jsp").forward(request, response);
+        request.setAttribute("success", true);
+        request.setAttribute("log", "Busca realizada com sucesso.");
+//        request.setAttribute("success", false);
+//        request.setAttribute("log", "Ocorreu um erro ao tentar realizar a busca.");
+        request.getRequestDispatcher("page/AdminPage.jsp").forward(request, response);
     }
 
     private void excluirAdmin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
