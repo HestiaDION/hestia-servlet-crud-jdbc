@@ -7,10 +7,12 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>$Title$</title>
-  </head>
-  <body>
-  $END$
-  </body>
+<head>
+    <title>Filtro</title>
+</head>
+<body>
+    <form action="add-filtro">
+
+    </form>
+</body>
 </html>

@@ -12,8 +12,6 @@ public class Main {
         FiltroDAO filtroDAO = new FiltroDAO();
         AdminDAO adminDAO = new AdminDAO();
 
-
-
          ResultSet rs = filtroDAO.selecionarTodosFiltros();
          try {
              while (rs.next()) {
@@ -33,7 +31,5 @@ public class Main {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
-
     }
 }

@@ -16,7 +16,8 @@ public class Pagamento {
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
     public Pagamento(UUID uId, String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
-                     UUID uId_Anunciante, UUID uId_Plano, UUID uId_Universitario) {
+                     UUID uId_Anunciante, UUID uId_Plano, UUID uId_Universitario)
+    {
         this.uId = uId;
         this.cAtivo = cAtivo;
         this.dDtFim = dDtFim;
@@ -28,7 +29,8 @@ public class Pagamento {
     }
 
     public Pagamento(String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
-                     UUID uId_Anunciante, UUID uId_Plano, UUID uId_Universitario) {
+                     UUID uId_Anunciante, UUID uId_Plano, UUID uId_Universitario)
+    {
         this.cAtivo = cAtivo;
         this.dDtFim = dDtFim;
         this.nPctDesconto = nPctDesconto;
@@ -37,80 +39,97 @@ public class Pagamento {
         this.uId_Plano = uId_Plano;
         this.uId_Universitario = uId_Universitario;
     }
+
     public Pagamento()
     {
-
     }
 
 //    DEFINIÇÃO DOS MÉTODOS getters
-    public UUID getuId() {
+    public UUID getuId()
+    {
         return uId;
     }
 
-    public String getcAtivo() {
+    public String getcAtivo()
+    {
         return cAtivo;
     }
 
-    public Date getdDtFim() {
+    public Date getdDtFim()
+    {
         return dDtFim;
     }
 
-    public double getnPctDesconto() {
+    public double getnPctDesconto()
+    {
         return nPctDesconto;
     }
 
-    public double getnTotal() {
+    public double getnTotal()
+    {
         return nTotal;
     }
 
-    public UUID getuId_Anunciante() {
+    public UUID getuId_Anunciante()
+    {
         return uId_Anunciante;
     }
 
-    public UUID getuId_Plano() {
+    public UUID getuId_Plano()
+    {
         return uId_Plano;
     }
 
-    public UUID getuId_Universitario() {
+    public UUID getuId_Universitario()
+    {
         return uId_Universitario;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId) {
+    public void setuId(UUID uId)
+    {
         this.uId = uId;
     } // Método Inútil Por Enquanto
 
-    public void setcAtivo(String cAtivo) {
+    public void setcAtivo(String cAtivo)
+    {
         this.cAtivo = cAtivo;
     } // Método Inútil Por Enquanto
 
-    public void setdDtFim(Date dDtFim) {
+    public void setdDtFim(Date dDtFim)
+    {
         this.dDtFim = dDtFim;
     } // Método Inútil Por Enquanto
 
-    public void setnPctDesconto(double nPctDesconto) {
+    public void setnPctDesconto(double nPctDesconto)
+    {
         this.nPctDesconto = nPctDesconto;
     } // Método Inútil Por Enquanto
 
-    public void setnTotal(double nTotal) {
+    public void setnTotal(double nTotal)
+    {
         this.nTotal = nTotal;
     } // Método Inútil Por Enquanto
 
-    public void setuId_Anunciante(UUID uId_Anunciante) {
+    public void setuId_Anunciante(UUID uId_Anunciante)
+    {
         this.uId_Anunciante = uId_Anunciante;
     } // Método Inútil Por Enquanto
 
-    public void setuId_Plano(UUID uId_Plano) {
+    public void setuId_Plano(UUID uId_Plano)
+    {
         this.uId_Plano = uId_Plano;
     } // Método Inútil Por Enquanto
 
-    public void setuId_Universitario(UUID uId_Universitario) {
+    public void setuId_Universitario(UUID uId_Universitario)
+    {
         this.uId_Universitario = uId_Universitario;
     } // Método Inútil Por Enquanto
 
 //    DEFINIÇÃO DO MÉTODO toString
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "ID do Pagamento = " + this.uId + "\nAtividade do Pagamento = " + this.cAtivo +
                 "\nData de Validade do Pagamento = " + this.dDtFim +
                 "\nPorcentagem de Desconto do Pagamento = " + this.nPctDesconto +

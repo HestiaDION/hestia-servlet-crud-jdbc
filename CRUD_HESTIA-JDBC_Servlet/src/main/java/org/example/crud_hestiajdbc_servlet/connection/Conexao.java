@@ -42,7 +42,7 @@ public class Conexao {
         try
         {
             // Fecha a conexão caso ela exista e esteja ativa
-            if (!conn.isClosed() && conn != null)
+            if (conn != null && !conn.isClosed())
             {
                 // Finaliza a conexão após verificar que ela está ativa
                 conn.close();

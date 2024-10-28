@@ -9,50 +9,59 @@ public class Filtro {
     private String cCategoria; // (VARCHAR(100))
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
-    public Filtro(UUID uId, String cNome, String cCategoria) {
+    public Filtro(UUID uId, String cNome, String cCategoria)
+    {
         this.uId = UUID.randomUUID();
         this.cNome = cNome;
         this.cCategoria = cCategoria;
     }
 
-    public Filtro(String cNome, String cCategoria) {
+    public Filtro(String cNome, String cCategoria)
+    {
         this.cNome = cNome;
         this.cCategoria = cCategoria;
     }
 
-    public Filtro() {
-
+    public Filtro()
+    {
     }
 
 //    DEFINIÇÃO DOS MÉTODOS getters
-    public UUID getuId() {
+    public UUID getuId()
+    {
         return uId;
     }
 
-    public String getcNome() {
+    public String getcNome()
+    {
         return cNome;
     }
 
-    public String getcCategoria() {
+    public String getcCategoria()
+    {
         return cCategoria;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId) {
+    public void setuId(UUID uId)
+    {
         this.uId = uId;
     } // Método Inútil Por Enquanto
 
-    public void setcNome(String cNome) {
+    public void setcNome(String cNome)
+    {
         this.cNome = cNome;
     } // Método Inútil Por Enquanto
 
-    public void setcCategoria(String cCategoria) {
+    public void setcCategoria(String cCategoria)
+    {
         this.cCategoria = cCategoria;
     } // Método Inútil Por Enquanto
 
 //    DEFINIÇÃO DO MÉTODO toString
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "ID do Filtro = " + this.uId + "\nNome do Filtro = " + this.cNome +
                 "\nCategoria do Filtro = " + this.cCategoria;
     }

@@ -10,60 +10,71 @@ public class Admin {
     private String cSenha; // (VARCHAR(100))
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
-    public Admin(UUID uId, String cNome, String cEmail, String cSenha) {
+    public Admin(UUID uId, String cNome, String cEmail, String cSenha)
+    {
         this.uId = uId;
         this.cNome = cNome;
         this.cEmail = cEmail;
         this.cSenha = cSenha;
     }
 
-    public Admin(String cNome, String cEmail, String cSenha) {
+    public Admin(String cNome, String cEmail, String cSenha)
+    {
         this.cNome = cNome;
         this.cEmail = cEmail;
         this.cSenha = cSenha;
     }
 
-    public Admin() {
-
+    public Admin()
+    {
     }
 
 //    DEFINIÇÃO MÉTODOS getters
-    public UUID getuId() {
+    public UUID getuId()
+    {
         return uId;
     }
 
-    public String getcNome() {
+    public String getcNome()
+    {
         return cNome;
     }
 
-    public String getcEmail() {
+    public String getcEmail()
+    {
         return cEmail;
     }
 
-    public String getcSenha() {
+    public String getcSenha()
+    {
         return cSenha;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId) {
+    public void setuId(UUID uId)
+    {
         this.uId = uId;
     } // Método Inútil Por Enquanto
 
-    public void setcNome(String cNome) {
+    public void setcNome(String cNome)
+    {
         this.cNome = cNome;
     } // Método Inútil Por Enquanto
 
-    public void setcEmail(String cEmail) {
+    public void setcEmail(String cEmail)
+    {
         this.cEmail = cEmail;
     } // Método Inútil Por Enquanto
 
-    public void setcSenha(String cSenha) {
+    public void setcSenha(String cSenha)
+    {
         this.cSenha = cSenha;
     } // Método Inútil Por Enquanto
 
 //    DEFINIÇÃO DO MÉTODO toString
     @Override
-    public String toString() {
+    public String toString()
+    {
         return "ID do Admin = " + this.uId + "\nNome do Admin = " + this.cNome +
                 "\nE-mail do Admin = " + this.cEmail + "\nSenha do Admin = " + this.cSenha;
     }
