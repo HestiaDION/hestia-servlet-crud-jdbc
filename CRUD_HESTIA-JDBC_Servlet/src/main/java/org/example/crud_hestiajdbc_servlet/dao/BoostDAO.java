@@ -14,19 +14,24 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Boost (cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?)");
+                pstmt.setString(1, boost.getcNmBoost());
+                pstmt.setDouble(2, boost.getnValor());
+                pstmt.setDouble(3, boost.getnPctBoost());
+                pstmt.setString(4, boost.getcDescricao());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Boost (cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?)");
-            pstmt.setString(1, boost.getcNmBoost());
-            pstmt.setDouble(2, boost.getnValor());
-            pstmt.setDouble(3, boost.getnPctBoost());
-            pstmt.setString(4,boost.getcDescricao());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -47,13 +52,18 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -75,14 +85,19 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -104,14 +119,19 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost = ?");
+                pstmt.setString(1, cNmBoost);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost = ?");
-            pstmt.setString(1, cNmBoost);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -133,13 +153,18 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -161,13 +186,18 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -189,13 +219,18 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -217,13 +252,18 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -246,19 +286,24 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Boost SET cNmBoost = ?, nValor = ?, nPctBoost = ? WHERE uId = ?");
+                pstmt.setString(1, boost.getcNmBoost());
+                pstmt.setDouble(2, boost.getnValor());
+                pstmt.setDouble(3, boost.getnPctBoost());
+                pstmt.setObject(4, boost.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Boost SET cNmBoost = ?, nValor = ?, nPctBoost = ? WHERE uId = ?");
-            pstmt.setString(1, boost.getcNmBoost());
-            pstmt.setDouble(2, boost.getnValor());
-            pstmt.setDouble(3, boost.getnPctBoost());
-            pstmt.setObject(4, boost.getuId());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -279,16 +324,21 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Boost WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Boost WHERE uId = ?");
-            pstmt.setObject(1, uId);
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {

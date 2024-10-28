@@ -15,22 +15,27 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
+                        "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, CURRENT_DATE + 30, ?, ?, ?, ?, ?)");
+                pstmt.setString(1, pagamento.getcAtivo());
+                pstmt.setDouble(2, pagamento.getnPctDesconto());
+                pstmt.setDouble(3, pagamento.getnTotal());
+                pstmt.setObject(4, pagamento.getuId_Anunciante());
+                pstmt.setObject(5, pagamento.getuId_Plano());
+                pstmt.setObject(6, pagamento.getuId_Universitario());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
-                    "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, CURRENT_DATE + 30, ?, ?, ?, ?, ?)");
-            pstmt.setString(1, pagamento.getcAtivo());
-            pstmt.setDouble(2, pagamento.getnPctDesconto());
-            pstmt.setDouble(3, pagamento.getnTotal());
-            pstmt.setObject(4, pagamento.getuId_Anunciante());
-            pstmt.setObject(5, pagamento.getuId_Plano());
-            pstmt.setObject(6, pagamento.getuId_Universitario());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -51,13 +56,18 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -79,14 +89,19 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -108,14 +123,19 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE cAtivo = ?");
+                pstmt.setString(1, cAtivo);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE cAtivo = ?");
-            pstmt.setString(1, cAtivo);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -137,13 +157,18 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE dDtFim > CURRENT_DATE");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE dDtFim > CURRENT_DATE");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -165,13 +190,18 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nPctDesconto");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nPctDesconto");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -193,13 +223,18 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nPctDesconto DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nPctDesconto DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -221,13 +256,18 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nTotal");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nTotal");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -249,13 +289,18 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nTotal DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nTotal DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -277,14 +322,19 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Anunciante = ?");
+                pstmt.setObject(1, uId_Anunciante);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Anunciante = ?");
-            pstmt.setObject(1, uId_Anunciante);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -306,14 +356,19 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Plano = ?");
+                pstmt.setObject(1, uId_Plano);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Plano = ?");
-            pstmt.setObject(1, uId_Plano);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -335,14 +390,19 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Universitario = ?");
+                pstmt.setObject(1, uId_Universitario);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Universitario = ?");
-            pstmt.setObject(1, uId_Universitario);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            else
+            {
+                rs = null;
+            }
         }
         catch (SQLException sqle)
         {
@@ -360,33 +420,34 @@ public class PagamentoDAO extends Conexao {
         }
     }
 
-//    DEFINIÇÃO DOS MÉTODOS DE CONSULTA ESPECÍFICA ---------FUNCTION
-//    public ResultSet selecionarTodosAnunciantes()
-//    {
-//    }
 
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarPagamento(Pagamento pagamento)
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Anunciante = ?, uId_Plano = ?, uId_Universitario = ? WHERE uId = ?");
+                pstmt.setString(1, pagamento.getcAtivo());
+                pstmt.setObject(2, pagamento.getdDtFim());
+                pstmt.setDouble(3, pagamento.getnPctDesconto());
+                pstmt.setDouble(4, pagamento.getnTotal());
+                pstmt.setObject(5, pagamento.getuId_Anunciante());
+                pstmt.setObject(6, pagamento.getuId_Plano());
+                pstmt.setObject(7, pagamento.getuId_Universitario());
+                pstmt.setObject(8, pagamento.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Anunciante = ?, uId_Plano = ?, uId_Universitario = ? WHERE uId = ?");
-            pstmt.setString(1, pagamento.getcAtivo());
-            pstmt.setObject(2, pagamento.getdDtFim());
-            pstmt.setDouble(3, pagamento.getnPctDesconto());
-            pstmt.setDouble(4, pagamento.getnTotal());
-            pstmt.setObject(5, pagamento.getuId_Anunciante());
-            pstmt.setObject(6, pagamento.getuId_Plano());
-            pstmt.setObject(7, pagamento.getuId_Universitario());
-            pstmt.setObject(8, pagamento.getuId());
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
@@ -407,16 +468,21 @@ public class PagamentoDAO extends Conexao {
     {
         try
         {
-            conectar();
+            if (conectar())
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Pagamento WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Pagamento WHERE uId = ?");
-            pstmt.setObject(1, uId);
+                // Executa a instrução e guarda as linhas afetadas
+                int linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            else
+            {
+                return -1;
+            }
         }
         catch (SQLException sqle)
         {
