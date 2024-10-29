@@ -1,5 +1,6 @@
 package org.example.crud_hestiajdbc_servlet.connection;
 
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,7 +22,7 @@ public class Conexao {
             Class.forName("org.postgresql.Driver");
 
             // Estabelece a conexão com o banco de dados
-            conn = DriverManager.getConnection("jdbc:postgresql://pg-aplicativo-hestia24.k.aivencloud.com:23986/hestia", "avnadmin", "AVNS_3URGOb6MG5fTz7u4pnP");
+            conn = DriverManager.getConnection(System.getenv("urlBD"), System.getenv("userBD"), System.getenv("passwordBD"));
 
             // Retornar true ao estabelecer a conexão
             return true;
