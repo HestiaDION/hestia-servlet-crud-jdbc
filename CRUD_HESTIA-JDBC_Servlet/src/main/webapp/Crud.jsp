@@ -11,7 +11,8 @@
     <title>Crud</title>
     <link rel="stylesheet" href="css/style.css"/>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 <body style="--white: #fdfdfd; --dark-blue: #00224d; --red: #e20a3d; --light-red: #ff3263; --light-blue: #f4f8ff; --blue: #195198; background-color: #00285a;">
 <div class="crud background">
@@ -19,14 +20,14 @@
         boolean success = (boolean) request.getAttribute("success");
         String log = (String) request.getAttribute("log");
 
-        if (log != null)
-        {
+        if (log != null) {
     %>
     <div class="alert" style="--alert-color: <%= success ? "#37c87b" : "#e20a3d" %>">
         <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">
             <%= success ? "check_circle" : "error" %>
         </span>
-        <p><%= log %></p>
+        <p><%= log %>
+        </p>
         <div class="close-alert">
             <i class="material-icons">close</i>
         </div>
@@ -34,6 +35,57 @@
     <%
         }
     %>
+    <%--    <div id="form-container">--%>
+    <%--        <%--%>
+    <%--            request.setAttribute("action", "create");--%>
+    <%--        %>--%>
+    <%--        <form action="login" method="post">--%>
+    <%--            <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">--%>
+    <%--            <div class="form-title">--%>
+    <%--                <h3>Create Admin</h3>--%>
+    <%--                <i class="material-icons" id="close-form">close</i>--%>
+    <%--            </div>--%>
+    <%--            <div class="input-container">--%>
+    <%--                <input--%>
+    <%--                        type="text"--%>
+    <%--                        name="cNome"--%>
+    <%--                        id="cNome"--%>
+    <%--                        pattern="^[A-Za-z]{1,8}$"--%>
+    <%--                        placeholder=""--%>
+    <%--                        required--%>
+    <%--                />--%>
+    <%--                <label for="cNome">Name</label>--%>
+    <%--            </div>--%>
+    <%--            <div class="input-container">--%>
+    <%--                <input--%>
+    <%--                        type="text"--%>
+    <%--                        name="cEmail"--%>
+    <%--                        id="cEmail"--%>
+    <%--                        pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,}$"--%>
+    <%--                        placeholder=""--%>
+    <%--                        required--%>
+    <%--                />--%>
+    <%--                <label for="cEmail">E-mail</label>--%>
+    <%--            </div>--%>
+    <%--            <div class="input-container">--%>
+    <%--                <input--%>
+    <%--                        type="password"--%>
+    <%--                        name="cSenha"--%>
+    <%--                        pattern=".{8,}"--%>
+    <%--                        id="cSenha"--%>
+    <%--                        placeholder=""--%>
+    <%--                        required--%>
+    <%--                />--%>
+    <%--                <label for="cSenha">Senha</label>--%>
+    <%--            </div>--%>
+    <%--            <input type="submit" value="Entrar" />--%>
+    <%--        </form>--%>
+    <%--    </div>--%>
+    <jsp:include page="components/create-form.jsp">
+        <jsp:param name="fieldNames" value="Nome,Email,Senha"/>
+        <jsp:param name="fieldTypes" value="cNome,cEmail,cSenha"/>
+        <jsp:param name="regexIds" value="0,1,2"/>
+    </jsp:include>
     <div class="nav" id="crud-nav">
         <div class="header-title">
             <img src="images/icons/hestia.svg" alt="" id="logo"/>
@@ -74,7 +126,8 @@
 
         <div class="table" style="--field-quantity: <%= fields.length %>">
             <div class="table-title">
-                <h3><%= Admin.class.getSimpleName() %></h3>
+                <h3><%= Admin.class.getSimpleName() %>
+                </h3>
                 <div class="blue-button">Criar</div>
             </div>
             <div class="table-header">
@@ -83,7 +136,8 @@
                     for (Field field : fields) {
                         String fieldName = field.getName();
                 %>
-                <h3><%= fieldName.substring(1) %></h3>
+                <h3><%= fieldName.substring(1) %>
+                </h3>
                 <%
                     }
                 %>
@@ -106,7 +160,8 @@
                                 Object value = getterMethod.invoke(item);
                                 if (value != null) {
                     %>
-                    <p><%= value.toString() %></p>
+                    <p><%= value.toString() %>
+                    </p>
                     <%
                     } else {
                     %>
@@ -135,8 +190,16 @@
     </div>
 </div>
 <script>
-    document.querySelector('.close-alert').addEventListener('click', function() {
+    document.querySelector('.close-alert').addEventListener('click', function () {
         document.querySelector('.alert').classList.add('hide-alert');
+    });
+
+    const closeForm = document.getElementById("close-form");
+    const formContainer = document.getElementById("form-container");
+
+    closeForm.addEventListener("click", () => {
+        formContainer.classList.add("closed-form");
+        document.body.classList.add("scrolling-allowed");
     });
 </script>
 </body>

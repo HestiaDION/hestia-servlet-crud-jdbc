@@ -50,7 +50,7 @@ public class AdminControllerUwU extends HttpServlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))

@@ -527,9 +527,13 @@ loadedAnimation {
     }
 }
 
+#close-form {
+    color: var(--dark-blue);
+}
+
 #form-container form {
     background-color: var(--white);
-    width: 40%;
+    width: 40rem;
     border-radius: 0.8rem;
     padding: 1.6rem;
     display: flex;
@@ -577,7 +581,7 @@ close-form {
     padding: 0rem 0.8rem;
     box-sizing: border-box;
     color: var(--dark-blue);
-    border: 0.2rem var(--dark-blue) solid;
+    border: none;
     font-size: 1.4rem;
     box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
 }
@@ -589,17 +593,14 @@ close-form {
 #form-container form .input-container input:focus  {
     outline: none;
     color: var(--dark-blue);
-    border-color: var(--dark-blue);
 }
 
 #form-container form .input-container input:invalid {
     color: var(--red);
-    border-color: var(--red);
 }
 
 #form-container form .input-container input:placeholder-shown {
     color: var(--dark-blue);
-    border-color: var(--dark-blue);
 }
 
 #form-container form .input-container label {

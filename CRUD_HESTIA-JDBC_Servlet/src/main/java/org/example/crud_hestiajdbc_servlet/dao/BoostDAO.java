@@ -158,13 +158,11 @@ public class BoostDAO extends Conexao {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY");
 
-<<<<<<< HEAD
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
-=======
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
             }
@@ -172,7 +170,6 @@ public class BoostDAO extends Conexao {
             {
                 rs = null;
             }
->>>>>>> e657f7810319cbed6cf6a9abcf5c71cda3113563
         }
         catch (SQLException sqle)
         {
@@ -199,13 +196,11 @@ public class BoostDAO extends Conexao {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY DESC");
 
-<<<<<<< HEAD
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor DESC");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();
-=======
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
             }
@@ -213,7 +208,6 @@ public class BoostDAO extends Conexao {
             {
                 rs = null;
             }
->>>>>>> e657f7810319cbed6cf6a9abcf5c71cda3113563
         }
         catch (SQLException sqle)
         {
