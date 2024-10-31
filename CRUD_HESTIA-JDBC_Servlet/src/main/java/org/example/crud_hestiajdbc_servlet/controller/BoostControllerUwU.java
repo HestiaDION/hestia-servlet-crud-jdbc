@@ -35,13 +35,13 @@ public class BoostControllerUwU extends HttpServlet
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -70,13 +70,13 @@ public class BoostControllerUwU extends HttpServlet
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/BoostUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/BoostUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -115,7 +115,7 @@ public class BoostControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/BoostUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void readBoost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -265,7 +265,7 @@ public class BoostControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/BoostUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updateBoost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -305,7 +305,7 @@ public class BoostControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/BoostUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void deleteBoost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -329,6 +329,6 @@ public class BoostControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/BoostUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 }
