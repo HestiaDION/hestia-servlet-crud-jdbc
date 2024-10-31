@@ -11,7 +11,8 @@ public class Boost {
     private String cDescricao; // (TEXT)
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
-    public Boost(UUID uId, String cNmBoost, double nValor, double nPctBoost, String cDescricao) {
+    public Boost(UUID uId, String cNmBoost, double nValor, double nPctBoost, String cDescricao)
+    {
         this.uId = uId;
         this.cNmBoost = cNmBoost;
         this.nValor = nValor;
@@ -19,7 +20,8 @@ public class Boost {
         this.cDescricao = cDescricao;
     }
 
-    public Boost(String cNmBoost, double nValor, double nPctBoost, String cDescricao) {
+    public Boost(String cNmBoost, double nValor, double nPctBoost, String cDescricao)
+    {
         this.cNmBoost = cNmBoost;
         this.nValor = nValor;
         this.nPctBoost = nPctBoost;
@@ -61,6 +63,11 @@ public class Boost {
     {
         this.uId = uId;
     } // Método Inútil Por Enquanto
+
+    public void setcNmBoost(String cNmBoost)
+    {
+        this.cNmBoost = cNmBoost;
+    }
 
     public void setcTipoBoost(String cTipoBoost)
     {

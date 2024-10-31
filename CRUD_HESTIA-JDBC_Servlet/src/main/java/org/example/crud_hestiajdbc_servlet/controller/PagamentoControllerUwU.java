@@ -24,7 +24,7 @@ public class PagamentoControllerUwU extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -35,13 +35,13 @@ public class PagamentoControllerUwU extends HttpServlet {
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -49,7 +49,7 @@ public class PagamentoControllerUwU extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -70,13 +70,13 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -124,7 +124,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void readPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -150,7 +150,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -174,7 +174,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -194,7 +194,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                     if (list != null)
                     {
-                        req.setAttribute("list", list);
+                        req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                         ValidationUtilsUwU.logSuccessfulReading(req);
                     }
                     else
@@ -223,7 +223,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -257,7 +257,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -281,7 +281,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -305,7 +305,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -328,7 +328,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -352,7 +352,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
             if (list != null)
             {
-                req.setAttribute("list", list);
+                req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
             else
@@ -362,7 +362,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updatePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -411,7 +411,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void deletePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -435,6 +435,6 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 }
