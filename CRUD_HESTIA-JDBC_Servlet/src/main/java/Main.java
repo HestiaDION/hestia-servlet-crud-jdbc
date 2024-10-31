@@ -1,13 +1,14 @@
-//import org.example.crud_hestiajdbc_servlet.dao.*;
-//import org.example.crud_hestiajdbc_servlet.model.*;
-//
-//import java.sql.Date;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.UUID;
-//
-//public class Main {
-//    public static void main(String[] args) throws SQLException {
+import org.example.crud_hestiajdbc_servlet.dao.*;
+import org.example.crud_hestiajdbc_servlet.model.*;
+
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.UUID;
+
+public class Main {
+    public static void main(String[] args) throws SQLException {
 //        **************************************************************************************************************
 //         CLASSE ADMIN - rever update
 //        **************************************************************************************************************
@@ -170,65 +171,65 @@
 //        **************************************************************************************************************
 //        CLASSE FILTRO - falta testas os outros selects
 //        **************************************************************************************************************
-        FiltroDAO filtro = new FiltroDAO();
+//        FiltroDAO filtro = new FiltroDAO();
+////
+//         // INSERT filtro
+//        System.out.println("\nINSERINDO FILTRO");
 //
-         // INSERT filtro
-        System.out.println("\nINSERINDO FILTRO");
-
-        if (filtro.adicionarFiltro(new Filtro("Exótico", "Animal")) == -1) {
-            System.out.println("Não foi possível adicionar o filtro");
-        }
-        else {
-            System.out.println("Filtro adicionado com sucesso!");
-        }
-
-        // SELECT * filtro
-        System.out.println("\nMOSTRANDO TODOS OS FILTROS");
-
-        ResultSet rs = filtro.selecionarTodosFiltros();
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
-            System.out.println(linha);
-        }
-
-        // SELECT por ID
-        System.out.println("\nFILTRANDO FILTROS POR ID");
-
-        rs = filtro.selecionarFiltrosPorId(UUID.fromString("e61f0f96-713d-4f53-b4f0-639dce9d1743"));
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
-            System.out.println(linha);
-        }
-
-        // SELECT por categoria
-        System.out.println("\nFILTRANDO FILTROS POR CATEGORIA");
-
-        rs = filtro.selecionarFiltrosPorCategoria("animal");
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
-            System.out.println(linha);
-        }
-
-        // SELECT por nome
-        System.out.println("\nFILTRANDO FILTROS POR CATEGORIA");
-
-        rs = filtro.selecionarFiltrosPorNome("Gato");
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
-            System.out.println(linha);
-        }
-
-//         DELETE filtro
-        System.out.println("\nDELETANDO FILTRO");
-        if (filtro.removerFiltro(filtro.selecionarUid()) == -1) {
-            System.out.println("Não foi possível remover o filtro");
-        }
-        else {
-            System.out.println("Filtro removido com sucesso!");
-        }
+//        if (filtro.adicionarFiltro(new Filtro("Exótico", "Animal")) == -1) {
+//            System.out.println("Não foi possível adicionar o filtro");
+//        }
+//        else {
+//            System.out.println("Filtro adicionado com sucesso!");
+//        }
+//
+//        // SELECT * filtro
+//        System.out.println("\nMOSTRANDO TODOS OS FILTROS");
+//
+//        ResultSet rs = filtro.selecionarTodosFiltros();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
+//            System.out.println(linha);
+//        }
+//
+//        // SELECT por ID
+//        System.out.println("\nFILTRANDO FILTROS POR ID");
+//
+//        rs = filtro.selecionarFiltrosPorId(UUID.fromString("e61f0f96-713d-4f53-b4f0-639dce9d1743"));
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
+//            System.out.println(linha);
+//        }
+//
+//        // SELECT por categoria
+//        System.out.println("\nFILTRANDO FILTROS POR CATEGORIA");
+//
+//        rs = filtro.selecionarFiltrosPorCategoria("animal");
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
+//            System.out.println(linha);
+//        }
+//
+//        // SELECT por nome
+//        System.out.println("\nFILTRANDO FILTROS POR CATEGORIA");
+//
+//        rs = filtro.selecionarFiltrosPorNome("Gato");
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("ccategoria");
+//            System.out.println(linha);
+//        }
+//
+////         DELETE filtro
+//        System.out.println("\nDELETANDO FILTRO");
+//        if (filtro.removerFiltro(filtro.selecionarUid()) == -1) {
+//            System.out.println("Não foi possível remover o filtro");
+//        }
+//        else {
+//            System.out.println("Filtro removido com sucesso!");
+//        }
 
 //        **************************************************************************************************************
-//        // CLASSE PLANO_VANTAGEM - falta testar os outros selects
+//        CLASSE PLANO_VANTAGEM - falta testar os outros selects
 //        **************************************************************************************************************
 //        Plano_vantagemDAO plano_vantagem = new Plano_vantagemDAO();
 //
@@ -242,7 +243,7 @@
 //            System.out.println("Vantagem do plano adicionada com sucesso!");
 //        }
 //
-//        // UPDATE plano_vantagem
+//        // UPDATE plano_vantagem | DESCONSIDERAR
 //        // usar function do banco
 //        if (plano_vantagem.atualizarPlanoVantagem(new Plano_vantagem(UUID.fromString("662d0911-a23f-4632-9cad-a320d31b3b3b"),
 //                "Desconto na publicação de anúncios",'1',uIdPlano)) == -1) {
@@ -260,10 +261,12 @@
 //        **************************************************************************************************************
 //        CLASSE PAGAMENTO
 //        **************************************************************************************************************
-//        PagamentoDAO pagamento = new PagamentoDAO();
+        PagamentoDAO pagamento = new PagamentoDAO();
 
-        //INSERT pagamento
-//        if (pagamento.adicionarPagamento(new Pagamento("0",Date.valueOf("2024-10-25"),0,16,
+        // INSERT pagamento
+//        System.out.println("\nINSERINDO PAGAMENTO");
+//
+//        if (pagamento.adicionarPagamento(new Pagamento("0",,0,16,
 //                UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6"),UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"),
 //                null)) == -1) {
 //            System.out.println("Não foi possível adicionar pagamento");
@@ -271,14 +274,11 @@
 //        else {
 //            System.out.println("Pagamento adicionado com sucesso!");
 //        }
-<<<<<<< HEAD
 
-        // SELECT * ,pagamento - falta testar os outros selects
-=======
-//
-//        // SELECT * pagamento - falta testar os outros selects
->>>>>>> e657f7810319cbed6cf6a9abcf5c71cda3113563
-//        ResultSet rs = pagamento.selecionarTodosPagamentos();
+        // SELECT * pagamento - falta testar os outros selects
+//        System.out.println("\nMOSTRANDO TODOS OS PAGAMENTOS");
+
+        ResultSet rs = pagamento.selecionarTodosPagamentos();
 //        while (rs.next()) {
 //            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
 //                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
@@ -286,19 +286,84 @@
 //                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
 //            System.out.println(linha);
 //        }
+
+        // SELECT por ID
+//        System.out.println("\nFILTRANDO PAGAMENTOS POR ID");
+
+//        rs = pagamento.selecionarPagamentosPorId();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
+//                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
+//                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
+//                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
+//            System.out.println(linha);
+//        }
+
+        // SELECT por cativo
+//        System.out.println("\nFILTRANDO PAGAMENTOS POR ATIVIDADE");
+
+//        rs = pagamento.selecionarPagamentosPorAtividade("0");
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
+//                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
+//                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
+//                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
+//            System.out.println(linha);
+//        }
+
+        // SELECT por uid_plano
+//        System.out.println("\nFILTRANDO PAGAMENTOS PELO PLANO");
 //
-//        // DELETE pagamento
-//        pagamento.removerPagamento(new Pagamento(UUID.fromString("43506f49-bb59-4e28-8cfa-af360b3a893e"),"0",Date.valueOf("2024-10-25"),0,16,
-//                UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6"),UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"),
-//                null));
-<<<<<<< HEAD
+//        rs = pagamento.selecionarPagamentosPorIdPlano(UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"));
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
+//                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
+//                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
+//                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
+//            System.out.println(linha);
+//        }
+
+        // SELECT por uid_anunciante
+//        System.out.println("\nFILTRANDO PAGAMENTOS PELO ANUNCIANTE");
+//
+//        rs = pagamento.selecionarPagamentosPorIdAnunciante(UUID.fromString("9ea77ba5-459e-4c54-b905-77538ca7de85"));
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
+//                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
+//                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
+//                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
+//            System.out.println(linha);
+//        }
+
+        // SELECT por uid_universitario
+//        System.out.println("\nFILTRANDO PAGAMENTOS PELO UNIVERSITÁRIO");
+//
+//        rs = pagamento.selecionarPagamentosPorIdUniversitario(UUID.fromString("e41213f7-825d-44f6-913e-68db5a7b772d"));
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
+//                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
+//                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
+//                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
+//            System.out.println(linha);
+//        }
+
+        // SELECT por ddt_fim
+        System.out.println("\nMOSTRANDO PAGAMENTOS QUE TEM A DATA DE FIM DEPOIS DE HOJE");
+
+        rs = pagamento.selecionarPagamentosPorDtFimFutura();
+        while (rs.next()) {
+            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
+                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
+                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
+                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
+            System.out.println(linha);
+        }
+
+        // DELETE pagamento
+//        if (pagamento.removerPagamento(pagamento.selecionarUid()) == -1){
+//
+//        }
 
         System.out.println("Fim");
     }
 }
-=======
-//
-//        System.out.println("Fim");
-//    }
-//}
->>>>>>> e657f7810319cbed6cf6a9abcf5c71cda3113563
