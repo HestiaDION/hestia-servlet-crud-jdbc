@@ -30,6 +30,8 @@ public class LoginController extends HttpServlet {
 
             if (rs != null && rs.next())
             {
+                //Alterando o status do login do usuário para '1' (Ativo)
+                adminDAO.atualizarAdminLogin(email);
 
                 ValidationUtilsUwU.logSuccessfulLogin(req);
 
