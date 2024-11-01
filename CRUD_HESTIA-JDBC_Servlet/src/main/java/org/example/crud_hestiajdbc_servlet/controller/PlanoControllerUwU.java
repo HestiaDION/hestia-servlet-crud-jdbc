@@ -26,6 +26,9 @@ public class PlanoControllerUwU extends HttpServlet
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
 
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "plano");
+
         if (ValidationUtilsUwU.isValidString(action))
         {
             if (action.equals("read"))
@@ -49,6 +52,9 @@ public class PlanoControllerUwU extends HttpServlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "plano");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -289,7 +295,8 @@ public class PlanoControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
+
+        req.setAttribute("tableName", "Plano");
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
     }

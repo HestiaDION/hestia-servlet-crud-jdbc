@@ -26,6 +26,9 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
 
+        // Espefica com a classe do objeto que está sendo enviado, que é um agregado de plano
+        req.setAttribute("aggregate-table-identifier", "plano-vantagem");
+
         if (ValidationUtilsUwU.isValidString(action))
         {
             if (action.equals("read"))
@@ -50,6 +53,9 @@ public class Plano_vantagemControllerUwU extends HttpServlet
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado, que é um agregado de plano
+        req.setAttribute("aggregate-table-identifier", "plano-vantagem");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))

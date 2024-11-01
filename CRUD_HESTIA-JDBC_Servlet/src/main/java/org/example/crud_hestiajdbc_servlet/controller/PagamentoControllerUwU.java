@@ -26,6 +26,9 @@ public class PagamentoControllerUwU extends HttpServlet {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
 
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "pagamento");
+
         if (ValidationUtilsUwU.isValidString(action))
         {
             if (action.equals("read"))
@@ -50,6 +53,9 @@ public class PagamentoControllerUwU extends HttpServlet {
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "pagamento");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -457,6 +463,7 @@ public class PagamentoControllerUwU extends HttpServlet {
             ValidationUtilsUwU.logInputSetback(req);
         }
 
+        req.setAttribute("tableName", "Pagamento");
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
     }

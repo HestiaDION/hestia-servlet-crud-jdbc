@@ -21,6 +21,7 @@ public class Conexao {
             // Define qual driver deve ser utilizado para a conexão
             Class.forName("org.postgresql.Driver");
 
+            System.out.println(System.getenv("urlBD"));
             // Estabelece a conexão com o banco de dados
             conn = DriverManager.getConnection(System.getenv("urlBD"), System.getenv("userBD"), System.getenv("passwordBD"));
 

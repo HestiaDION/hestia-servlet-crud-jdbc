@@ -14,7 +14,7 @@
     <%
         request.setAttribute("action", "read");
     %>
-    <form action="boost" method="get">
+    <form action="admin" method="get">
         <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
         <input type="submit" value="Enviar">
     </form>
