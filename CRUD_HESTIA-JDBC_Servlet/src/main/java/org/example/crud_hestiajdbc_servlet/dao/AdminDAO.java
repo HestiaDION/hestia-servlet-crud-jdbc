@@ -186,6 +186,74 @@ public class AdminDAO extends Conexao {
         }
     }
 
+    public ResultSet selecionarAdminsLogin(String cLogin)
+    {
+        try
+        {
+            conectar();
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cLogin = ?");
+            pstmt.setString(1, cLogin);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+        }
+        catch (SQLException sqle)
+        {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+
+            // Atribuí um nulo para indentificação da exceção
+            rs = null;
+        }
+        finally
+        {
+            desconectar();
+
+            return rs;
+        }
+    }
+
+    public int verificarAdminLogin(String cEmail){
+        int atividade = -1;
+        try
+        {
+            conectar();
+
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT cLogin FROM Admin WHERE cEmail = ?");
+            pstmt.setString(1, cEmail);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
+
+            //Adiciona 1 se o admin estiver logado e 0 se não
+            if(rs.next()){
+                if (rs.getString("cLogin").equals('1')){
+                    atividade = 1;
+                }
+                else{
+                    atividade = 0;
+                }
+            }
+        }
+        catch (SQLException sqle)
+        {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+
+            // Atribuí um nulo para indentificação da exceção
+            atividade = -1;
+        }
+        finally
+        {
+            desconectar();
+            // Retorna a atividade atual do usuário
+            return atividade;
+        }
+    }
+
     public  ResultSet selecionarAdminsParaLogin(String cEmail, String cSenha)
     {
         ResultSet rs = null;
@@ -256,6 +324,36 @@ public class AdminDAO extends Conexao {
             pstmt.setString(2, admin.getcEmail());
             pstmt.setString(3, admin.getcSenha());
             pstmt.setObject(4, admin.getuId());
+
+            // Executa a instrução e guarda as linhas afetadas
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            return linhasAfetadas;
+        }
+        catch (SQLException sqle)
+        {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+
+            // Retorna -1 se ocorrer algum erro
+            return -1;
+        }
+        finally
+        {
+            desconectar();
+        }
+    }
+
+    public int atualizarAdminLogin(String cEmail)
+    {
+        try
+        {
+            conectar();
+
+            // Prepara a instrução SQL e define os seus argumentos
+            pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '1' WHERE cEmail = ?");
+            pstmt.setString(1, cEmail);
+
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

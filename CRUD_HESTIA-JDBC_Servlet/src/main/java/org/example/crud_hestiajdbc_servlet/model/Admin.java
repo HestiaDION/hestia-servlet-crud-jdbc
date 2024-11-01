@@ -8,6 +8,7 @@ public class Admin {
     private String cNome;  // (VARCHAR(100))
     private String cEmail; // (VARCHAR(266))
     private String cSenha; // (VARCHAR(100))
+    private char   cLogin; // (CHAR)
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
     public Admin(UUID uId, String cNome, String cEmail, String cSenha)
@@ -50,7 +51,11 @@ public class Admin {
         return cSenha;
     }
 
-//    DEFINIÇÃO DOS MÉTODOS setters
+    public char getcLogin() {
+        return cLogin;
+    }
+
+    //    DEFINIÇÃO DOS MÉTODOS setters
     public void setuId(UUID uId)
     {
         this.uId = uId;
@@ -75,7 +80,11 @@ public class Admin {
     @Override
     public String toString()
     {
-        return "ID do Admin = " + this.uId + "\nNome do Admin = " + this.cNome +
-                "\nE-mail do Admin = " + this.cEmail + "\nSenha do Admin = " + this.cSenha;
+
+        return "ID do Admin = " + this.uId +
+                "\nNome do Admin = " + this.cNome +
+                "\nE-mail do Admin = " + this.cEmail +
+                "\nSenha do Admin = " + this.cSenha +
+                "\nLogin do Admin = " + this.cLogin;
     }
 }
