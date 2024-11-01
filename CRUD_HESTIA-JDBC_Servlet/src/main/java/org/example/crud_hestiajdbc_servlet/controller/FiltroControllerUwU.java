@@ -23,7 +23,7 @@ public class FiltroControllerUwU extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -34,20 +34,20 @@ public class FiltroControllerUwU extends HttpServlet
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -68,13 +68,13 @@ public class FiltroControllerUwU extends HttpServlet
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -107,7 +107,7 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void readFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -129,7 +129,7 @@ public class FiltroControllerUwU extends HttpServlet
                         list = filtroDAO.selecionarFiltrosPorId(codigo);
 
                         if (list != null) {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         } else {
                             ValidationUtilsUwU.logDatabaseIssue(req);
@@ -147,7 +147,7 @@ public class FiltroControllerUwU extends HttpServlet
                         list = filtroDAO.selecionarFiltrosPorNome(nome);
 
                         if (list != null) {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         } else {
                             ValidationUtilsUwU.logDatabaseIssue(req);
@@ -165,7 +165,7 @@ public class FiltroControllerUwU extends HttpServlet
                         list = filtroDAO.selecionarFiltrosPorCategoria(categoria);
 
                         if (list != null) {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         } else {
                             ValidationUtilsUwU.logDatabaseIssue(req);
@@ -186,7 +186,7 @@ public class FiltroControllerUwU extends HttpServlet
 
             if (list != null)
             {
-                req.setAttribute("list", list);
+                req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
             else
@@ -196,7 +196,7 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updateFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -230,7 +230,7 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void deleteFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -254,6 +254,6 @@ public class FiltroControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/FiltroUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 }

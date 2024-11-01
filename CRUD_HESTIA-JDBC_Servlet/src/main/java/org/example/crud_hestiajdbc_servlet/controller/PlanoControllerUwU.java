@@ -24,7 +24,7 @@ public class PlanoControllerUwU extends HttpServlet
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -48,7 +48,7 @@ public class PlanoControllerUwU extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -83,9 +83,10 @@ public class PlanoControllerUwU extends HttpServlet
     private void createPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String nomeParameter      = req.getParameter("cNome");
-        String valorParameter     = req.getParameter("nValor");
-        String descricaoParameter = req.getParameter("cDescricao");
+        String nomeParameter             = req.getParameter("cNome");
+        String tipoUsuarioParameter      = req.getParameter("cTipoUsuario");
+        String valorParameter            = req.getParameter("nValor");
+        String descricaoParameter        = req.getParameter("cDescricao");
     
         // Verifica se os parâmetros retornaram valores válidos
         if
@@ -137,7 +138,7 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -161,7 +162,7 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -195,7 +196,7 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -219,7 +220,7 @@ public class PlanoControllerUwU extends HttpServlet
     
             if (list != null)
             {
-                req.setAttribute("list", list);
+                req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
             else

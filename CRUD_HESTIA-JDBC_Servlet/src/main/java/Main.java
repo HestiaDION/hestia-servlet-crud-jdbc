@@ -14,7 +14,7 @@ public class Main {
 //        **************************************************************************************************************
 //         CLASSE ADMIN - rever update
 //        **************************************************************************************************************
-//        AdminDAO admin = new AdminDAO();
+        AdminDAO admin = new AdminDAO();
 //
 //        // INSERT admin
 //        System.out.println("INSERINDO ADMIN");
@@ -30,6 +30,14 @@ public class Main {
 //        admin.atualizarAdmin(new Admin(UUID.fromString("8a56e275-31fa-4498-9a2c-caae5858c42c"), "Maria Júlia","maria.dawla@germinare.org.br","456def"));
 //
 //        // SELECT * admin
+//        ResultSet rs = admin.selecionarTodosAdmins();
+//        while(rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cemail") + " " + rs.getString("csenha");
+//            System.out.println(linha);
+//        }
+
+        // SELECT por ID
+//        ResultSet rs = admin.selecionarAdminsPorId(new Admin(UUID.fromString("8a56e275-31fa-4498-9a2c-caae5858c42c"),"Pietro","pietro.medico@germinare.org.com","1234"));
 //        System.out.println("\nMOSTRANDO TODOS OS ADMINS");
 //
 //        ResultSet rs = admin.selecionarTodosAdmins();
@@ -174,10 +182,10 @@ public class Main {
 //        CLASSE FILTRO - falta testas os outros selects
 //        **************************************************************************************************************
 //        FiltroDAO filtro = new FiltroDAO();
-////
+
 //         // INSERT filtro
 //        System.out.println("\nINSERINDO FILTRO");
-//
+
 //        if (filtro.adicionarFiltro(new Filtro("Exótico", "Animal")) == -1) {
 //            System.out.println("Não foi possível adicionar o filtro");
 //        }
@@ -259,7 +267,9 @@ public class Main {
 
 //        rs = plano.selecionarPlanosPorId(UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"));
 //        while (rs.next()) {
-//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+
+////                    rs.getString("ctipousuario" +" "+ rs.getString("cdescricao"));
+////            System.out.println(linha);
 //            System.out.println(linha);
 //        }
 
@@ -268,7 +278,9 @@ public class Main {
 
 //        rs = plano.selecionarPlanosPorNome("Chamas Douradas");
 //        while (rs.next()) {
-//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+
+////                    rs.getString("ctipousuario" +" "+ rs.getString("cdescricao"));
+////            System.out.println(linha);
 //            System.out.println(linha);
 //        }
 
@@ -277,7 +289,9 @@ public class Main {
 
 //        rs = plano.selecionarPlanosPorValorCrescente();
 //        while (rs.next()) {
-//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+
+////                    rs.getString("ctipousuario" +" "+ rs.getString("cdescricao"));
+////            System.out.println(linha);
 //            System.out.println(linha);
 //        }
 
@@ -286,19 +300,19 @@ public class Main {
 
 //        rs = plano.selecionarPlanosPorValorDecrescente();
 //        while (rs.next()) {
-//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+
+////                    rs.getString("ctipousuario" +" "+ rs.getString("cdescricao"));
+////            System.out.println(linha);
 //            System.out.println(linha);
 //        }
 
 //        **************************************************************************************************************
-//        CLASSE PLANO_VANTAGEM - falta testar os selects
+//        CLASSE PLANO_VANTAGEM
 //        **************************************************************************************************************
         Plano_vantagemDAO plano_vantagem = new Plano_vantagemDAO();
 
-        UUID uIdPlano = UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"); //FN functionpra pegar o ID
-//
 //        // INSERT plano_vantagem
-        if (plano_vantagem.adicionarPlanoVantagem(new Plano_vantagem("Desconto no anúncio", '1', uIdPlano)) == -1) {
+        if (plano_vantagem.adicionarPlanoVantagem(new Plano_vantagem("Desconto no anúncio", '1', "Chamas Douradas")) == -1) {
             System.out.println("Não foi possível adicionar a vantagem do plano.");
         }
         else {
@@ -306,8 +320,8 @@ public class Main {
         }
 
         // SELECT * plano_vantagem
-//        System.out.println("\nMOSTRANDO TODAS AS VANTAGENS DOS PLANOS");
-//
+        System.out.println("\nMOSTRANDO TODAS AS VANTAGENS DOS PLANOS");
+
         ResultSet rs = plano_vantagem.selecionarTodasVantagensPlano();
         while (rs.next()) {
             String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
@@ -346,6 +360,7 @@ public class Main {
         }
 
             // DELETE plano_vantagem
+
         // tem que ser construtor com o ID (usar function do banco)
 //        plano_vantagem.removerPlanoVantagem(new Plano_vantagem(UUID.fromString("662d0911-a23f-4632-9cad-a320d31b3b3b"),
 //                "Desconto na publicação de anúncios",'1',uIdPlano));
@@ -452,12 +467,12 @@ public class Main {
 //        }
 
         // DELETE pagamento
-        if (pagamento.removerPagamento(pagamento.selecionarUid()) == -1){
-            System.out.println("Não foi possível remover o pagamento");
-        }
-        else {
-            System.out.println("Pagamento removido com sucesso!");
-        }
+//        if (pagamento.removerPagamento(pagamento.selecionarUid()) == -1){
+//            System.out.println("Não foi possível remover o pagamento");
+//        }
+//        else {
+//            System.out.println("Pagamento removido com sucesso!");
+//        }
 
         System.out.println("Fim");
     }

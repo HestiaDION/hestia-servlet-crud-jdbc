@@ -62,7 +62,7 @@ public class Boost {
         this.uId = uId;
     } // Método Inútil Por Enquanto
 
-    public void setcTipoBoost(String cTipoBoost)
+    public void setcNmBoost(String cTipoBoost)
     {
         this.cNmBoost = cTipoBoost;
     } // Método Inútil Por Enquanto
