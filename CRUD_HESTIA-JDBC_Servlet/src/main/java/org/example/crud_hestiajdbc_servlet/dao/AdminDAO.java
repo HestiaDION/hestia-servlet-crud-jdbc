@@ -188,6 +188,7 @@ public class AdminDAO extends Conexao {
 
     public  ResultSet selecionarAdminsParaLogin(String cEmail, String cSenha)
     {
+        ResultSet rs = null;
         try
         {
             conectar();
@@ -211,9 +212,8 @@ public class AdminDAO extends Conexao {
         finally
         {
             desconectar();
-
-            return rs;
         }
+        return rs;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS

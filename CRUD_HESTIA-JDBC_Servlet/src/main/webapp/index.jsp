@@ -1,22 +1,25 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: mateusaraujo-ieg
-  Date: 28/10/2024
-  Time: 09:24
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-    <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Login</title>
 </head>
 <body>
+    <h2>Formulário de Login</h2>
     <%
         request.setAttribute("action", "read");
     %>
-    <form action="admin" method="get">
+    <form action="login" method="post">
+
         <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
-        <input type="submit" value="Enviar">
+        <label for="email">Usuário:</label>
+        <input type="text" id="email" name="email" required>
+        <br>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+        <button type="submit">Entrar</button>
     </form>
 </body>
 </html>
