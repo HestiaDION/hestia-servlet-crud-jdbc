@@ -5,14 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.crud_hestiajdbc_servlet.dao.PlanoDAO;
-import org.example.crud_hestiajdbc_servlet.dao.Plano_vantagemDAO;
-import org.example.crud_hestiajdbc_servlet.model.Boost;
-import org.example.crud_hestiajdbc_servlet.model.Plano_vantagem;
 
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.util.UUID;
+
+import org.example.crud_hestiajdbc_servlet.dao.Plano_vantagemDAO;
+import org.example.crud_hestiajdbc_servlet.model.Plano_vantagem;
 
 @WebServlet(name = "plano_vantagem", value = "/plano_vantagem")
 public class Plano_vantagemControllerUwU extends HttpServlet
@@ -25,7 +24,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -50,7 +49,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -139,7 +138,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -163,7 +162,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -187,7 +186,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -211,7 +210,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
             if (list != null)
             {
-                req.setAttribute("list", list);
+                req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
             else

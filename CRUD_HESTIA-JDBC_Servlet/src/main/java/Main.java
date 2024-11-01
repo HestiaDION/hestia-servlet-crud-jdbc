@@ -1,17 +1,17 @@
-//import org.example.crud_hestiajdbc_servlet.dao.*;
-//import org.example.crud_hestiajdbc_servlet.model.*;
+import org.example.crud_hestiajdbc_servlet.dao.*;
+import org.example.crud_hestiajdbc_servlet.model.*;
+
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
 //
-//import java.sql.Date;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.util.UUID;
-//
-//public class Main {
-//    public static void main(String[] args) throws SQLException {
+public class Main {
+    public static void main(String[] args) throws SQLException {
 //        **************************************************************************************************************
 //         CLASSE ADMIN - rever update
 //        **************************************************************************************************************
-//        AdminDAO admin = new AdminDAO();
+        AdminDAO admin = new AdminDAO();
 //
 //        // INSERT admin
 //        System.out.println("INSERINDO ADMIN");
@@ -27,6 +27,14 @@
 //        admin.atualizarAdmin(new Admin(UUID.fromString("8a56e275-31fa-4498-9a2c-caae5858c42c"), "Maria Júlia","maria.dawla@germinare.org.br","456def"));
 //
 //        // SELECT * admin
+        ResultSet rs = admin.selecionarTodosAdmins();
+        while(rs.next()) {
+            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cemail") + " " + rs.getString("csenha");
+            System.out.println(linha);
+        }
+
+        // SELECT por ID
+//        ResultSet rs = admin.selecionarAdminsPorId(new Admin(UUID.fromString("8a56e275-31fa-4498-9a2c-caae5858c42c"),"Pietro","pietro.medico@germinare.org.com","1234"));
 //        System.out.println("\nMOSTRANDO TODOS OS ADMINS");
 //
 //        ResultSet rs = admin.selecionarTodosAdmins();
@@ -286,7 +294,7 @@
 //        pagamento.removerPagamento(new Pagamento(UUID.fromString("43506f49-bb59-4e28-8cfa-af360b3a893e"),"0",Date.valueOf("2024-10-25"),0,16,
 //                UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6"),UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"),
 //                null));
-        // SELECT * ,pagamento - falta testar os outros selects
+
 //
 //        // SELECT * pagamento - falta testar os outros selects
 //        ResultSet rs = pagamento.selecionarTodosPagamentos();
@@ -302,11 +310,7 @@
 //        pagamento.removerPagamento(new Pagamento(UUID.fromString("43506f49-bb59-4e28-8cfa-af360b3a893e"),"0",Date.valueOf("2024-10-25"),0,16,
 //                UUID.fromString("b7f82603-9065-4fd1-a39a-0365036b21f6"),UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"),
 //                null));
-
-//        System.out.println("Fim");
-//    }
-//}
 //
 //        System.out.println("Fim");
-//    }
-//}
+    }
+}

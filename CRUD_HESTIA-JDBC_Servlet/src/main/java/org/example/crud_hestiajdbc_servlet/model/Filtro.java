@@ -9,7 +9,8 @@ public class Filtro {
     private String cCategoria; // (VARCHAR(100))
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
-    public Filtro(UUID uId, String cNome, String cCategoria) {
+    public Filtro(UUID uId, String cNome, String cCategoria)
+    {
         this.uId = uId;
         this.cNome = cNome;
         this.cCategoria = cCategoria;

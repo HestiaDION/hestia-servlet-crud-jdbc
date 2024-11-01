@@ -13,8 +13,7 @@ import java.util.UUID;
 import org.example.crud_hestiajdbc_servlet.dao.AdminDAO;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
 
-@WebServlet(name = "login", value = "/login")
-//@WebServlet(name = "admin", value = "/admin")
+@WebServlet(name = "admin", value = "/admin")
 public class AdminControllerUwU extends HttpServlet
 {
 //    DECLARAÇÃO E INSTANCIAÇÃO DE OBJETO ESTÁTICO PARA MEDIAR A INTERAÇÃO COM O BANCO DE DADOS
@@ -26,6 +25,9 @@ public class AdminControllerUwU extends HttpServlet
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("class-identifier", "Admin");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -50,7 +52,7 @@ public class AdminControllerUwU extends HttpServlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -139,7 +141,7 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminList(list));
+                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -163,7 +165,7 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminList(list));
+                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -187,7 +189,7 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminList(list));
+                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -212,7 +214,7 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminList(list));
+                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -236,7 +238,7 @@ public class AdminControllerUwU extends HttpServlet
 
             if (list != null)
             {
-                req.setAttribute("list", ValidationUtilsUwU.toAdminList(list));
+                req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
             else
