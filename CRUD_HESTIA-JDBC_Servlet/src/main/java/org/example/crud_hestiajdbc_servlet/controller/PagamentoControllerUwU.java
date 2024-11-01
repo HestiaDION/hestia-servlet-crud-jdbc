@@ -38,13 +38,13 @@ public class PagamentoControllerUwU extends HttpServlet {
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+                req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
         }
     }
 
@@ -76,13 +76,13 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+                    req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
         }
     }
 
@@ -94,30 +94,42 @@ public class PagamentoControllerUwU extends HttpServlet {
         String dataParameter                = req.getParameter("dDtFim");
         String porcentagemParameter         = req.getParameter("nPctDesconto");
         String totalParameter               = req.getParameter("nTotal");
-        String codigoAnuncianteParameter    = req.getParameter("uId_Anunciante");
-        String codigoPlanoParameter         = req.getParameter("uId_Plano");
-        String codigoUniversitarioParameter = req.getParameter("uId_Universitario");
+        String userAnuncianteParameter      = req.getParameter("cUserAnunciante");
+        String emailAnuncianteParameter     = req.getParameter("cEmailAnunciante");
+        String nomePlanoParameter           = req.getParameter("cNmPlano");
+        String userUniversitarioParameter   = req.getParameter("cUserUniversitario");
+        String emailUniversitarioParameter  = req.getParameter("cEmailUniversitario");
+        String dneUniversitarioParameter    = req.getParameter("cDNEUniversitario");
+
 
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidStringAtivo(ativoParameter)        &&
-                ValidationUtilsUwU.isValidDate(dataParameter)                &&
-                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter)  &&
-                ValidationUtilsUwU.isValidDouble(totalParameter)             &&
-                ValidationUtilsUwU.isValidUUID(codigoAnuncianteParameter)    &&
-                ValidationUtilsUwU.isValidUUID(codigoPlanoParameter)         &&
-                ValidationUtilsUwU.isValidUUID(codigoUniversitarioParameter)
+                ValidationUtilsUwU.isValidStringAtivo(ativoParameter)         &&
+                ValidationUtilsUwU.isValidDate(dataParameter)                 &&
+                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter)   &&
+                ValidationUtilsUwU.isValidDouble(totalParameter)              &&
+                ValidationUtilsUwU.isValidString(userAnuncianteParameter)     &&
+                ValidationUtilsUwU.isValidString(emailAnuncianteParameter)    &&
+                ValidationUtilsUwU.isValidString(nomePlanoParameter)          &&
+                ValidationUtilsUwU.isValidString(userUniversitarioParameter)  &&
+                ValidationUtilsUwU.isValidString(emailUniversitarioParameter) &&
+                ValidationUtilsUwU.isValidString(dneUniversitarioParameter)
         )
         {
-            String ativo             = ativoParameter;
-            Date data                = Date.valueOf(ValidationUtilsUwU.toLocalDate(dataParameter));
-            Double porcentagem       = Double.parseDouble(porcentagemParameter);
-            Double total             = Double.parseDouble(totalParameter);
-            UUID codigoAnunciante    = UUID.fromString(codigoAnuncianteParameter);
-            UUID codigoPlano         = UUID.fromString(codigoPlanoParameter);
-            UUID codigoUniversitario = UUID.fromString(codigoUniversitarioParameter);
-            Pagamento pagamento = new Pagamento(ativo, data, porcentagem, total, codigoAnunciante, codigoPlano, codigoUniversitario);
+            String ativo              = ativoParameter;
+            Date data                 = Date.valueOf(ValidationUtilsUwU.toLocalDate(dataParameter));
+            Double porcentagem        = Double.parseDouble(porcentagemParameter);
+            Double total              = Double.parseDouble(totalParameter);
+            String userAnunciante     = userAnuncianteParameter;
+            String emailAnunciante    = emailAnuncianteParameter;
+            String dnePlano           = nomePlanoParameter;
+            String userUniversitario  = userUniversitarioParameter;
+            String emailUniversitario = emailUniversitarioParameter;
+            String dneUniversitario   = dneUniversitarioParameter;
+
+
+            Pagamento pagamento = new Pagamento(ativo, data, porcentagem, total, userAnunciante, emailAnunciante, dnePlano, userUniversitario, emailUniversitario, dneUniversitario);
 
             if (pagamentoDAO.adicionarPagamento(pagamento) > 0)
                 ValidationUtilsUwU.logSuccessfulCreation(req);
@@ -130,7 +142,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
     }
 
     private void readPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -368,7 +380,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
     }
 
     private void updatePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -379,32 +391,43 @@ public class PagamentoControllerUwU extends HttpServlet {
         String dataParameter                = req.getParameter("dDtFim");
         String porcentagemParameter         = req.getParameter("nPctDesconto");
         String totalParameter               = req.getParameter("nTotal");
-        String codigoAnuncianteParameter    = req.getParameter("uId_Anunciante");
-        String codigoPlanoParameter         = req.getParameter("uId_Plano");
-        String codigoUniversitarioParameter = req.getParameter("uId_Universitario");
+        String userAnuncianteParameter      = req.getParameter("cUserAnunciante");
+        String emailAnuncianteParameter     = req.getParameter("cEmailAnunciante");
+        String nomePlanoParameter           = req.getParameter("cNmPlano");
+        String userUniversitarioParameter   = req.getParameter("cUserUniversitario");
+        String emailUniversitarioParameter  = req.getParameter("cEmailUniversitario");
+        String dneUniversitarioParameter    = req.getParameter("cDNEUniversitario");
 
         // Verifica se os parâmetros têm valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParametro)              &&
-                ValidationUtilsUwU.isValidStringAtivo(ativoParameter)        &&
-                ValidationUtilsUwU.isValidDate(dataParameter)                &&
-                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter)  &&
-                ValidationUtilsUwU.isValidDouble(totalParameter)             &&
-                ValidationUtilsUwU.isValidUUID(codigoAnuncianteParameter)    &&
-                ValidationUtilsUwU.isValidUUID(codigoPlanoParameter)         &&
-                ValidationUtilsUwU.isValidUUID(codigoUniversitarioParameter)
+                ValidationUtilsUwU.isValidUUID(codigoParametro)               &&
+                ValidationUtilsUwU.isValidStringAtivo(ativoParameter)         &&
+                ValidationUtilsUwU.isValidDate(dataParameter)                 &&
+                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter)   &&
+                ValidationUtilsUwU.isValidDouble(totalParameter)              &&
+                ValidationUtilsUwU.isValidString(userAnuncianteParameter)     &&
+                ValidationUtilsUwU.isValidString(emailAnuncianteParameter)    &&
+                ValidationUtilsUwU.isValidString(nomePlanoParameter)          &&
+                ValidationUtilsUwU.isValidString(userUniversitarioParameter)  &&
+                ValidationUtilsUwU.isValidString(emailUniversitarioParameter) &&
+                ValidationUtilsUwU.isValidString(dneUniversitarioParameter)
         )
         {
             UUID codigo              = UUID.fromString(codigoParametro);
-            String ativo             = ativoParameter;
-            Date data                = Date.valueOf(ValidationUtilsUwU.toLocalDate(dataParameter));
-            Double porcentagem       = Double.parseDouble(porcentagemParameter);
-            Double total             = Double.parseDouble(totalParameter);
-            UUID codigoAnunciante    = UUID.fromString(codigoAnuncianteParameter);
-            UUID codigoPlano         = UUID.fromString(codigoPlanoParameter);
-            UUID codigoUniversitario = UUID.fromString(codigoUniversitarioParameter);
-            Pagamento pagamento = new Pagamento(codigo, ativo, data, porcentagem, total, codigoAnunciante, codigoPlano, codigoUniversitario);
+            String ativo              = ativoParameter;
+            Date data                 = Date.valueOf(ValidationUtilsUwU.toLocalDate(dataParameter));
+            Double porcentagem        = Double.parseDouble(porcentagemParameter);
+            Double total              = Double.parseDouble(totalParameter);
+            String userAnunciante     = userAnuncianteParameter;
+            String emailAnunciante    = emailAnuncianteParameter;
+            String dnePlano           = nomePlanoParameter;
+            String userUniversitario  = userUniversitarioParameter;
+            String emailUniversitario = emailUniversitarioParameter;
+            String dneUniversitario   = dneUniversitarioParameter;
+
+
+            Pagamento pagamento = new Pagamento(codigo, ativo, data, porcentagem, total, userAnunciante, emailAnunciante, dnePlano, userUniversitario, emailUniversitario, dneUniversitario);
 
             if (pagamentoDAO.atualizarPagamento(pagamento) > 0)
                 ValidationUtilsUwU.logSuccessfulUpdate(req);
@@ -417,7 +440,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
     }
 
     private void deletePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -442,6 +465,6 @@ public class PagamentoControllerUwU extends HttpServlet {
 
         req.setAttribute("tableName", "Pagamento");
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
     }
 }

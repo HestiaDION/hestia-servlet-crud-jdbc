@@ -38,13 +38,13 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             else
             {
                 ValidationUtilsUwU.logActionManagerSetback(req);
-                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+                req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+            req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
         }
     }
 
@@ -76,13 +76,13 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                 default:
                     ValidationUtilsUwU.logActionManagerSetback(req);
-                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+                    req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
             }
         }
         else
         {
             ValidationUtilsUwU.logServerIssue(req);
-            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+            req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
         }
     }
 
@@ -92,20 +92,20 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
         String vantagemParameter    = req.getParameter("cVantagem");
         String ativoParameter       = req.getParameter("cAtivo");
-        String codigoPlanoParameter = req.getParameter("uId_Plano");
+        String nomePlanoParameter = req.getParameter("cNmPlano");
     
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
                 ValidationUtilsUwU.isValidString(vantagemParameter) &&
                 ValidationUtilsUwU.isValidCharAtivo(ativoParameter) &&
-                ValidationUtilsUwU.isValidUUID(codigoPlanoParameter)
+                ValidationUtilsUwU.isValidString(nomePlanoParameter)
         )
         {
             String vantagem  = vantagemParameter;
             char ativo       = ativoParameter.charAt(0);
-            UUID codigoPlano = UUID.fromString(codigoPlanoParameter);
-            Plano_vantagem planoVantagem = new Plano_vantagem(vantagem, ativo, codigoPlano);
+            String nmPlano   = nomePlanoParameter;
+            Plano_vantagem planoVantagem = new Plano_vantagem(vantagem, ativo, nmPlano);
 
             if (planoVantagemDAO.adicionarPlanoVantagem(planoVantagem) > 0)
                 ValidationUtilsUwU.logSuccessfulCreation(req);
@@ -118,7 +118,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
     
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
     }
 
     private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -226,7 +226,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
     }
 
     private void updatePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -236,7 +236,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         String codigoParameter      = req.getParameter("uId");
         String vantagemParameter    = req.getParameter("cVantagem");
         String ativoParameter       = req.getParameter("cAtivo");
-        String codigoPlanoParameter = req.getParameter("uId_Plano");
+        String nomePlanoParameter = req.getParameter("cNmPlano");
 
         // Verifica se os parâmetros têm valores válidos
         if
@@ -244,14 +244,14 @@ public class Plano_vantagemControllerUwU extends HttpServlet
                 ValidationUtilsUwU.isValidUUID(codigoParameter)      &&
                 ValidationUtilsUwU.isValidString(vantagemParameter)  &&
                 ValidationUtilsUwU.isValidCharAtivo(ativoParameter)  &&
-                ValidationUtilsUwU.isValidUUID(codigoPlanoParameter)
+                ValidationUtilsUwU.isValidString(nomePlanoParameter)
         )
         {
             UUID codigo      = UUID.fromString(codigoParameter);
             String vantagem  = vantagemParameter;
             char ativo       = ativoParameter.charAt(0);
-            UUID codigoPlano = UUID.fromString(codigoPlanoParameter);
-            Plano_vantagem planoVantagem = new Plano_vantagem(codigo, vantagem, ativo, codigoPlano);
+            String nmPlano = nomePlanoParameter;
+            Plano_vantagem planoVantagem = new Plano_vantagem(codigo, vantagem, ativo, nmPlano);
 
             if (planoVantagemDAO.atualizarPlanoVantagem(planoVantagem) > 0)
                 ValidationUtilsUwU.logSuccessfulUpdate(req);
@@ -264,7 +264,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
     }
 
     private void deletePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -288,6 +288,6 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
     }
 }

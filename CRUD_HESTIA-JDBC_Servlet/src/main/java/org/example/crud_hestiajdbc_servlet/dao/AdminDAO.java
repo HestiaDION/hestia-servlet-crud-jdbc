@@ -14,23 +14,18 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar())
-            {
-                // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("INSERT INTO Admin (cNome, cEmail, cSenha) VALUES (?, ?, ?)");
-                pstmt.setString(1, admin.getcNome());
-                pstmt.setString(2, admin.getcEmail());
-                pstmt.setString(3, admin.getcSenha());
+            conectar();
 
-                // Executa a instrução e guarda as linhas afetadas
-                int linhasAfetadas = pstmt.executeUpdate();
+            // Prepara a instrução SQL e define os seus argumentos
+            pstmt = conn.prepareStatement("INSERT INTO Admin (cNome, cEmail, cSenha) VALUES (?, ?, ?)");
+            pstmt.setString(1, admin.getcNome());
+            pstmt.setString(2, admin.getcEmail());
+            pstmt.setString(3, admin.getcSenha());
 
-                return linhasAfetadas;
-            }
-            else
-            {
-                return -1;
-            }
+            // Executa a instrução e guarda as linhas afetadas
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            return linhasAfetadas;
         }
         catch (SQLException sqle)
         {
@@ -51,17 +46,13 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar()) {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin");
+            conectar();
 
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            else
-            {
-                rs = null;
-            }
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin");
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
         }
         catch (SQLException sqle)
         {
@@ -83,19 +74,14 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar())
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE uId = ?");
-                pstmt.setObject(1, uId);
+            conectar();
 
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            else
-            {
-                rs = null;
-            }
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE uId = ?");
+            pstmt.setObject(1, uId);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
         }
         catch (SQLException sqle)
         {
@@ -117,19 +103,14 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar())
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cNome = ?");
-                pstmt.setString(1, cNome);
+            conectar();
 
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            else
-            {
-                rs = null;
-            }
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cNome = ?");
+            pstmt.setString(1, cNome);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
         }
         catch (SQLException sqle)
         {
@@ -151,19 +132,14 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar())
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ?");
-                pstmt.setString(1, cEmail);
+            conectar();
 
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            else
-            {
-                rs = null;
-            }
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ?");
+            pstmt.setString(1, cEmail);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
         }
         catch (SQLException sqle)
         {
@@ -185,19 +161,14 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar())
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE LENGTH(csenha) < ?");
-                pstmt.setInt(1, tamanhoSenha);
+            conectar();
 
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            else
-            {
-                rs = null;
-            }
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE LENGTH(csenha) < ?");
+            pstmt.setInt(1, tamanhoSenha);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
         }
         catch (SQLException sqle)
         {
@@ -219,19 +190,15 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar()) {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ? AND cSenha = ?");
-                pstmt.setString(1, cEmail);
-                pstmt.setString(2, cSenha);
+            conectar();
 
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            else
-            {
-                rs = null;
-            }
+            // Prepara a instrução SQL
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ? AND cSenha = ?");
+            pstmt.setString(1, cEmail);
+            pstmt.setString(2, cSenha);
+
+            // Executa a instrução e guarda as linhas retornadas
+            rs = pstmt.executeQuery();
         }
         catch (SQLException sqle)
         {
@@ -249,29 +216,51 @@ public class AdminDAO extends Conexao {
         }
     }
 
+//    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
+    public UUID acharIdAdmin(String email)
+    {
+    UUID uuid = null;
+    try {
+        conectar();
+
+        // Prepara a instrução SQL
+        pstmt = conn.prepareStatement("SELECT FN_Admin_Id(?)");
+        pstmt.setString(1, email);
+
+        // Executa a instrução e guarda as linhas retornadas
+        rs = pstmt.executeQuery();
+
+        // Extrai o UUID da primeira linha, se existir
+        if (rs.next()) {
+            uuid = (UUID) rs.getObject(1);
+        }
+    } catch (SQLException sqle) {
+        // Imprime a exceção no console
+        sqle.printStackTrace();
+    } finally {
+        desconectar();
+    }
+    return uuid;
+}
+
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
     public int atualizarAdmin(Admin admin)
     {
         try
         {
-            if (conectar())
-            {
-                // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ? WHERE uId = ?");
-                pstmt.setString(1, admin.getcNome());
-                pstmt.setString(2, admin.getcEmail());
-                pstmt.setString(3, admin.getcSenha());
-                pstmt.setObject(4, admin.getuId());
+            conectar();
 
-                // Executa a instrução e guarda as linhas afetadas
-                int linhasAfetadas = pstmt.executeUpdate();
+            // Prepara a instrução SQL e define os seus argumentos
+            pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ? WHERE uId = ?");
+            pstmt.setString(1, admin.getcNome());
+            pstmt.setString(2, admin.getcEmail());
+            pstmt.setString(3, admin.getcSenha());
+            pstmt.setObject(4, admin.getuId());
 
-                return linhasAfetadas;
-            }
-            else
-            {
-                return -1;
-            }
+            // Executa a instrução e guarda as linhas afetadas
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            return linhasAfetadas;
         }
         catch (SQLException sqle)
         {
@@ -292,21 +281,16 @@ public class AdminDAO extends Conexao {
     {
         try
         {
-            if (conectar())
-            {
-                // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("DELETE FROM Admin WHERE uId = ?");
-                pstmt.setObject(1, uId);
+            conectar();
 
-                // Executa a instrução e guarda as linhas afetadas
-                int linhasAfetadas = pstmt.executeUpdate();
+            // Prepara a instrução SQL e define os seus argumentos
+            pstmt = conn.prepareStatement("DELETE FROM Admin WHERE uId = ?");
+            pstmt.setObject(1, uId);
 
-                return linhasAfetadas;
-            }
-            else
-            {
-                return -1;
-            }
+            // Executa a instrução e guarda as linhas afetadas
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            return linhasAfetadas;
         }
         catch (SQLException sqle)
         {
