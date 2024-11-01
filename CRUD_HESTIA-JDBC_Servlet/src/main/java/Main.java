@@ -9,6 +9,8 @@ import java.util.UUID;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
+        //TESTAR OS UPDATES; REVER DEFAULTS;
+
 //        **************************************************************************************************************
 //         CLASSE ADMIN - rever update
 //        **************************************************************************************************************
@@ -229,31 +231,121 @@ public class Main {
 //        }
 
 //        **************************************************************************************************************
-//        CLASSE PLANO_VANTAGEM - falta testar os outros selects
+//        CLASSE PLANO
 //        **************************************************************************************************************
-//        Plano_vantagemDAO plano_vantagem = new Plano_vantagemDAO();
-//
-//        UUID uIdPlano = UUID.fromString("8abb0f0a-2531-410b-97a7-cd2aae422f2a"); //FN functionpra pegar o ID
-//
-//        // INSERT plano_vantagem
-//        if (plano_vantagem.adicionarPlanoVantagem(new Plano_vantagem("Desconto no anúncio", '1', uIdPlano)) == -1) {
-//            System.out.println("Não foi possível adicionar a vantagem do plano.");
+//        PlanoDAO plano = new PlanoDAO();
+
+        // INSERT plano
+//        if (plano.adicionarPlano(new Plano("Chamas Douradas", "Anunciante", 16,
+//                "Plano do anunciante, com descontos e vantagens exclusivas")) == -1) {
+//            System.out.println("Não foi possível adicionar o novo plano.");
 //        }
 //        else {
-//            System.out.println("Vantagem do plano adicionada com sucesso!");
-//        }
-//
-//        // UPDATE plano_vantagem | DESCONSIDERAR
-//        // usar function do banco
-//        if (plano_vantagem.atualizarPlanoVantagem(new Plano_vantagem(UUID.fromString("662d0911-a23f-4632-9cad-a320d31b3b3b"),
-//                "Desconto na publicação de anúncios",'1',uIdPlano)) == -1) {
-//            System.out.println("Não foi possível atualizar a vantagem do plano.");
-//        }
-//        else {
-//            System.out.println("Vantagem do plano atualizada com sucesso!");
+//            System.out.println("Novo plano adicionado com sucesso!");
 //        }
 
-        // DELETE plano_vantagem
+         // SELECT * plano
+//        System.out.println("\nMOSTRANDO TODOS OS PLANOS");
+
+//        ResultSet rs = plano.selecionarTodosPlanos();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+
+//                    rs.getString("ctipousuario" +" "+ rs.getString("cdescricao"));
+//            System.out.println(linha);
+//        }
+
+        // SELECT por ID
+//        System.out.println("\nFILTRANDO PLANOS POR ID");
+
+//        rs = plano.selecionarPlanosPorId(UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"));
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            System.out.println(linha);
+//        }
+
+        // SELECT por nome
+//        System.out.println("\nFILTRANDO PLANOS POR NOME");
+
+//        rs = plano.selecionarPlanosPorNome("Chamas Douradas");
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            System.out.println(linha);
+//        }
+
+        // SELECT ordenando pelo valor (ordem crescente)
+//        System.out.println("\nORDENANDO PLANOS POR VALOR TOTAL (ORDEM CRESCENTE)");
+
+//        rs = plano.selecionarPlanosPorValorCrescente();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            System.out.println(linha);
+//        }
+
+        // SELECT ordenando pelo valor (ordem decrescente)
+//        System.out.println("\nORDENANDO PLANOS POR VALOR TOTAL (ORDEM DECRESCENTE)");
+
+//        rs = plano.selecionarPlanosPorValorDecrescente();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cnome") +" "+ rs.getString("cdescricao");
+//            System.out.println(linha);
+//        }
+
+//        **************************************************************************************************************
+//        CLASSE PLANO_VANTAGEM - falta testar os selects
+//        **************************************************************************************************************
+        Plano_vantagemDAO plano_vantagem = new Plano_vantagemDAO();
+
+        UUID uIdPlano = UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"); //FN functionpra pegar o ID
+//
+//        // INSERT plano_vantagem
+        if (plano_vantagem.adicionarPlanoVantagem(new Plano_vantagem("Desconto no anúncio", '1', uIdPlano)) == -1) {
+            System.out.println("Não foi possível adicionar a vantagem do plano.");
+        }
+        else {
+            System.out.println("Vantagem do plano adicionada com sucesso!");
+        }
+
+        // SELECT * plano_vantagem
+//        System.out.println("\nMOSTRANDO TODAS AS VANTAGENS DOS PLANOS");
+//
+        ResultSet rs = plano_vantagem.selecionarTodasVantagensPlano();
+        while (rs.next()) {
+            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+            System.out.println(linha);
+        }
+
+        // SELECT por ID
+        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR ID");
+
+        rs = plano_vantagem.selecionarVantagensPlanoPorId(UUID.fromString("a3e4b572-6069-4ee5-8b0f-0a1a930df057"));
+        while (rs.next()) {
+            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+            System.out.println(linha);
+        }
+
+        // SELECT por id_plano
+        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR PLANO");
+
+        rs = plano_vantagem.selecionarVantagensPlanoPorIdPlano(UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"));
+        while (rs.next()) {
+            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+            System.out.println(linha);
+        }
+
+        // SELECT por cativo
+        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR ATIVIDADE");
+
+        rs = plano_vantagem.selecionarVantagensPlanoPorAtividade("1");
+        while (rs.next()) {
+            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+            System.out.println(linha);
+        }
+
+            // DELETE plano_vantagem
         // tem que ser construtor com o ID (usar function do banco)
 //        plano_vantagem.removerPlanoVantagem(new Plano_vantagem(UUID.fromString("662d0911-a23f-4632-9cad-a320d31b3b3b"),
 //                "Desconto na publicação de anúncios",'1',uIdPlano));
@@ -261,7 +353,7 @@ public class Main {
 //        **************************************************************************************************************
 //        CLASSE PAGAMENTO
 //        **************************************************************************************************************
-        PagamentoDAO pagamento = new PagamentoDAO();
+//        PagamentoDAO pagamento = new PagamentoDAO();
 
         // INSERT pagamento
 //        System.out.println("\nINSERINDO PAGAMENTO");
@@ -278,7 +370,7 @@ public class Main {
         // SELECT * pagamento - falta testar os outros selects
 //        System.out.println("\nMOSTRANDO TODOS OS PAGAMENTOS");
 
-        ResultSet rs = pagamento.selecionarTodosPagamentos();
+//        ResultSet rs = pagamento.selecionarTodosPagamentos();
 //        while (rs.next()) {
 //            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
 //                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
@@ -348,21 +440,24 @@ public class Main {
 //        }
 
         // SELECT por ddt_fim
-        System.out.println("\nMOSTRANDO PAGAMENTOS QUE TEM A DATA DE FIM DEPOIS DE HOJE");
-
-        rs = pagamento.selecionarPagamentosPorDtFimFutura();
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
-                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
-                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
-                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
-            System.out.println(linha);
-        }
+//        System.out.println("\nMOSTRANDO PAGAMENTOS QUE TÊM A DATA DE FIM DEPOIS DE HOJE");
+//
+//        rs = pagamento.selecionarPagamentosPorDtFimFutura();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cativo") +" "+
+//                    rs.getDate("ddtfim") +" "+ rs.getDouble("npctdesconto") +" "+
+//                    rs.getDouble("ntotal") +" "+ rs.getObject("uid_anunciante") +" "+
+//                    rs.getObject("uid_plano") +" "+ rs.getObject("uid_universitario");
+//            System.out.println(linha);
+//        }
 
         // DELETE pagamento
-//        if (pagamento.removerPagamento(pagamento.selecionarUid()) == -1){
-//
-//        }
+        if (pagamento.removerPagamento(pagamento.selecionarUid()) == -1){
+            System.out.println("Não foi possível remover o pagamento");
+        }
+        else {
+            System.out.println("Pagamento removido com sucesso!");
+        }
 
         System.out.println("Fim");
     }
