@@ -24,7 +24,10 @@ public class BoostControllerUwU extends HttpServlet
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException 
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "boost");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -49,7 +52,10 @@ public class BoostControllerUwU extends HttpServlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
-        String action = (String) req.getAttribute("action");
+        String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "boost");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -114,6 +120,8 @@ public class BoostControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
+        req.setAttribute("tableName", "boost");
+
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
@@ -141,7 +149,7 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -165,7 +173,7 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -198,7 +206,7 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -231,7 +239,7 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", list);
+                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
                         else
@@ -255,7 +263,7 @@ public class BoostControllerUwU extends HttpServlet
 
             if (list != null)
             {
-                req.setAttribute("list", list);
+                req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
             else
@@ -263,6 +271,9 @@ public class BoostControllerUwU extends HttpServlet
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
+
+        //
+        req.setAttribute("tableName", "boost");
 
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("Crud.jsp").forward(req, resp);

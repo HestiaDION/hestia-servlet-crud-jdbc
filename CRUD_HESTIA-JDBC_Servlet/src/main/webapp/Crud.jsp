@@ -1,8 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.lang.reflect.Field" %>
-<%@ page import="java.lang.reflect.Method" %>
-<%@ page import="org.example.crud_hestiajdbc_servlet.model.Admin" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,6 +16,35 @@
     <%
         boolean success = (boolean) request.getAttribute("success");
         String log = (String) request.getAttribute("log");
+        String tableIdentifier = (String) request.getAttribute("table-identifier");
+        String fieldNames;
+        String ignoreField;
+        String regexIds;
+        String fieldTypes;
+
+        switch (tableIdentifier)
+        {
+            case "boost":
+                fieldNames = "Id,Nome,Valor,Percentual,Descrição";
+                fieldTypes = "uId,cNmBoost,nValor,nPctBoost,cDescricao";
+                ignoreField = "true,false,false,false,false";
+                regexIds = "null,4,3,3,4";
+                break;
+
+            case "filtro":
+                fieldNames = "Id,Nome,Categoria";
+                fieldTypes = "uId,cNome,cCategoria";
+                ignoreField = "true,false,false";
+                regexIds = "null,0,0";
+                break;
+
+            default:
+                fieldNames = "Id,Nome,Email,Senha";
+                fieldTypes = "uId,cNome,cEmail,cSenha";
+                ignoreField = "true,false,false,false";
+                regexIds = "null,0,1,2";
+                break;
+        }
 
         if (log != null) {
     %>
@@ -35,56 +61,12 @@
     <%
         }
     %>
-    <%--    <div id="form-container">--%>
-    <%--        <%--%>
-    <%--            request.setAttribute("action", "create");--%>
-    <%--        %>--%>
-    <%--        <form action="login" method="post">--%>
-    <%--            <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">--%>
-    <%--            <div class="form-title">--%>
-    <%--                <h3>Create Admin</h3>--%>
-    <%--                <i class="material-icons" id="close-form">close</i>--%>
-    <%--            </div>--%>
-    <%--            <div class="input-container">--%>
-    <%--                <input--%>
-    <%--                        type="text"--%>
-    <%--                        name="cNome"--%>
-    <%--                        id="cNome"--%>
-    <%--                        pattern="^[A-Za-z]{1,8}$"--%>
-    <%--                        placeholder=""--%>
-    <%--                        required--%>
-    <%--                />--%>
-    <%--                <label for="cNome">Name</label>--%>
-    <%--            </div>--%>
-    <%--            <div class="input-container">--%>
-    <%--                <input--%>
-    <%--                        type="text"--%>
-    <%--                        name="cEmail"--%>
-    <%--                        id="cEmail"--%>
-    <%--                        pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,}$"--%>
-    <%--                        placeholder=""--%>
-    <%--                        required--%>
-    <%--                />--%>
-    <%--                <label for="cEmail">E-mail</label>--%>
-    <%--            </div>--%>
-    <%--            <div class="input-container">--%>
-    <%--                <input--%>
-    <%--                        type="password"--%>
-    <%--                        name="cSenha"--%>
-    <%--                        pattern=".{8,}"--%>
-    <%--                        id="cSenha"--%>
-    <%--                        placeholder=""--%>
-    <%--                        required--%>
-    <%--                />--%>
-    <%--                <label for="cSenha">Senha</label>--%>
-    <%--            </div>--%>
-    <%--            <input type="submit" value="Entrar" />--%>
-    <%--        </form>--%>
-    <%--    </div>--%>
     <jsp:include page="components/create-form.jsp">
-        <jsp:param name="fieldNames" value="Nome,Email,Senha"/>
-        <jsp:param name="fieldTypes" value="cNome,cEmail,cSenha"/>
-        <jsp:param name="regexIds" value="0,1,2"/>
+        <jsp:param name="table-identifier" value="<%=tableIdentifier%>"/>
+        <jsp:param name="fieldNames" value="<%=fieldNames%>"/>
+        <jsp:param name="fieldTypes" value="<%=fieldTypes%>"/>
+        <jsp:param name="ignoreField" value="<%=ignoreField%>"/>
+        <jsp:param name="regexIds" value="<%=regexIds%>"/>
     </jsp:include>
     <div class="nav" id="crud-nav">
         <div class="header-title">
@@ -108,35 +90,31 @@
                 <i class="material-symbols-outlined" id="open-sidebar">data_table</i>
                 <h3>Tabelas</h3>
             </div>
-            <ul>
-                <li style="--position: 1">Admin</li>
-                <li style="--position: 2">Boost</li>
-                <li style="--position: 3">Filtros</li>
-                <li style="--position: 4">Pagamento</li>
-                <li style="--position: 5">Plano</li>
-            </ul>
+            <%
+                request.setAttribute("action", "read");
+            %>
+            <form id="sidebar-form" method="get">
+                <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
+                <button style="--position: 1" type="button" onclick="changeTable('admin')">Admin</button>
+                <button style="--position: 2" type="button" onclick="changeTable('boost')">Boost</button>
+                <button style="--position: 3" type="button" onclick="changeTable('filtro')">Filtro</button>
+                <button style="--position: 4" type="button" onclick="changeTable('pagamento')">Pagamento</button>
+                <button style="--position: 5" type="button" onclick="changeTable('plano')">Plano</button>
+            </form>
         </div>
 
-        <%
-            Field[] fields;
-            // Using reflection to get the fields of the classes
-            fields = Admin.class.getDeclaredFields();
-//            fields = Boost.class.getDeclaredFields();
-        %>
-
-        <div class="table" style="--field-quantity: <%= fields.length %>">
+        <div class="table">
             <div class="table-title">
-                <h3><%= Admin.class.getSimpleName() %>
+                <h3><%= tableIdentifier %>
                 </h3>
-                <div class="blue-button">Criar</div>
+                <div class="blue-button" id="create">Criar</div>
             </div>
             <div class="table-header">
                 <%
                     // Dynamically create headers from the field names
-                    for (Field field : fields) {
-                        String fieldName = field.getName();
+                    for (String fieldName : fieldNames.split(",")) {
                 %>
-                <h3><%= fieldName.substring(1) %>
+                <h3><%= fieldName %>
                 </h3>
                 <%
                     }
@@ -145,37 +123,30 @@
             </div>
             <div class="table-rows">
                 <%
-                    List<Admin> list = (List<Admin>) request.getAttribute("list");
-                    System.out.println(list);
-
+                    List<String[]> list = (List<String[]>) request.getAttribute("list");
                     if (list != null && !list.isEmpty()) {
-                        for (Admin item : list) {
+
+                %>
+                <%
+
+                    for (int i = 0; i < list.size(); i++) {
                 %>
                 <div class="row">
                     <%
-                        for (Field field : fields) {
-                            String getterMethodName = "get" + field.getName();
-                            try {
-                                Method getterMethod = Admin.class.getMethod(getterMethodName);
-                                Object value = getterMethod.invoke(item);
-                                if (value != null) {
+                        for (int j = 0; j < list.get(i).length; j++) {
                     %>
-                    <p><%= value.toString() %>
+                    <p><%= list.get(i)[j] %>
                     </p>
                     <%
-                    } else {
-                    %>
-                    <p class="null">null</p>
-                    <%
-                                }
-                            } catch (NoSuchMethodException e) {
-                                // Handle the case where the getter method is not found
-                                e.printStackTrace();
-                            }
                         }
                     %>
-                    <i class="material-symbols-outlined" id="edit">edit</i>
-                    <i class="material-symbols-outlined" id="delete">delete</i>
+                    <form id="edit-delete-form<%=i%>" method="post" action="<%= tableIdentifier %>">
+                        <input type="hidden" name="action" value="delete">
+                        <input type="hidden" name="uId" value="<%= list.get(i)[0] %>">
+                        <i class="material-symbols-outlined" id="edit">edit</i>
+                        <i class="material-symbols-outlined" id="delete"
+                           onclick="editOrDelete('edit-delete-form<%=i%>')">delete</i>
+                    </form>
                 </div>
                 <%
                     }
@@ -194,13 +165,41 @@
         document.querySelector('.alert').classList.add('hide-alert');
     });
 
-    const closeForm = document.getElementById("close-form");
-    const formContainer = document.getElementById("form-container");
+    const creationForm = document.querySelector(".creation-form");
 
-    closeForm.addEventListener("click", () => {
-        formContainer.classList.add("closed-form");
-        document.body.classList.add("scrolling-allowed");
+    document.querySelectorAll('#close-form').forEach(close => {
+        close.addEventListener('click', () => {
+            console.log('bbb')
+            document.querySelectorAll('#form-container').forEach(element => {
+                console.log('aaaaaaa')
+                element.classList.add("closed-form")
+            });
+        });
+    })
+
+    document.querySelectorAll('#create').forEach(element => {
+        element.addEventListener('click', () => {
+            creationForm.classList.remove("closed-form")
+        });
     });
+
+    document.querySelectorAll('#delete').forEach(element => {
+        element.addEventListener('click', () => {
+
+        });
+    });
+
+    function changeTable(table) {
+        // Set the form action to the desired servlet
+        document.getElementById("sidebar-form").action = table;
+        // Submit the form
+        document.getElementById("sidebar-form").submit();
+    }
+
+    function editOrDelete(formId) {
+        document.getElementById(formId).submit();
+    }
+
 </script>
 </body>
 </html>

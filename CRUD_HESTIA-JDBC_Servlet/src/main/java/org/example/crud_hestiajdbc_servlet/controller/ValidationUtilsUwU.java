@@ -130,23 +130,26 @@ public class ValidationUtilsUwU
         return LocalDate.parse(value, formatter);
     }
 
-    public static List toAdminList(ResultSet resultSet)
+    public static List<String[]> toAdminStringList(ResultSet resultSet)
     {
-        List<Admin> adminList = new ArrayList<>();
+        // Criamos uma lista para guardar cada registro da tabela
+        List<String[]> listPlanoVantagem = new ArrayList<>();
 
-        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings
         try
         {
             while (resultSet.next())
             {
-                Admin admin = new Admin();
-                admin.setuId   ((UUID) resultSet.getObject("uId"));
-                admin.setcNome (resultSet.getString("cNome"));
-                admin.setcEmail(resultSet.getString("cEmail"));
-                admin.setcSenha(resultSet.getString("cSenha"));
+                String[] registerPlanoVantagem = new String[4];
 
-                // Adiciona o objeto na lista
-                adminList.add(admin);
+                // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null/
+                registerPlanoVantagem[0] = String.valueOf(resultSet.getObject("uId"));
+                registerPlanoVantagem[1] = String.valueOf(resultSet.getString("cNome"));
+                registerPlanoVantagem[2] = String.valueOf(resultSet.getString("cEmail"));
+                registerPlanoVantagem[3] = String.valueOf(resultSet.getString("cSenha"));
+
+                // Adiciona o vetor de Strings na lista
+                listPlanoVantagem.add(registerPlanoVantagem);
             }
         }
         catch (SQLException sqle)
@@ -154,27 +157,31 @@ public class ValidationUtilsUwU
             sqle.printStackTrace();
         }
 
-        return adminList;
+        // Retornamos a lista
+        return listPlanoVantagem;
     }
 
-    public static List toBoostList(ResultSet resultSet)
+    public static List<String[]> toBoostStringList(ResultSet resultSet)
     {
-        List<Boost> boostList = new ArrayList<>();
+        // Criamos uma lista para guardar cada registro da tabela
+        List<String[]> boostList = new ArrayList<>();
 
-        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings
         try
         {
             while (resultSet.next())
             {
-                Boost boost = new Boost();
-                boost.setuId       ((UUID) resultSet.getObject("uId"));
-                boost.setcNmBoost  (resultSet.getString("cNmBoost"));
-                boost.setnValor    (resultSet.getDouble("nValor"));
-                boost.setnPctBoost (resultSet.getDouble("nPctBoost"));
-                boost.setcDescricao(resultSet.getString("cDescricao"));
+                String[] boostRegister = new String[5];
 
-                // Adiciona o objeto na lista
-                boostList.add(boost);
+                // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null/
+                boostRegister[0] = String.valueOf(resultSet.getObject("uId"));
+                boostRegister[1] = String.valueOf(resultSet.getString("cNmBoost"));
+                boostRegister[2] = String.valueOf(resultSet.getDouble("nValor"));
+                boostRegister[3] = String.valueOf(resultSet.getDouble("nPctBoost"));
+                boostRegister[4] = String.valueOf(resultSet.getString("cDescricao"));
+
+                // Adiciona o vetor de Strings na lista
+                boostList.add(boostRegister);
             }
         }
         catch (SQLException sqle)
@@ -182,25 +189,29 @@ public class ValidationUtilsUwU
             sqle.printStackTrace();
         }
 
+        // Retornamos a lista
         return boostList;
     }
 
-    public static List toFiltroList(ResultSet resultSet)
+    public static List<String[]> toFiltroStringList(ResultSet resultSet)
     {
-        List<Filtro> filtroList = new ArrayList<>();
+        // Criamos uma lista para guardar cada registro da tabela
+        List<String[]> filtroList = new ArrayList<>();
 
-        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings
         try
         {
             while (resultSet.next())
             {
-                Filtro filtro = new Filtro();
-                filtro.setuId       ((UUID) resultSet.getObject("uId"));
-                filtro.setcNome     (resultSet.getString("cNome"));
-                filtro.setcCategoria(resultSet.getString("cCategoria"));
+                String[] filtroRegister = new String[3];
 
-                // Adiciona o objeto na lista
-                filtroList.add(filtro);
+                // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
+                filtroRegister[0] = String.valueOf(resultSet.getObject("uId")) ;
+                filtroRegister[1] = String.valueOf(resultSet.getString("cNome"));
+                filtroRegister[2] = String.valueOf(resultSet.getString("cCategoria"));
+
+                // Adiciona o vetor de Strings na lista
+                filtroList.add(filtroRegister);
             }
         }
         catch (SQLException sqle)
@@ -208,30 +219,34 @@ public class ValidationUtilsUwU
             sqle.printStackTrace();
         }
 
+        // Retornamos a lista
         return filtroList;
     }
 
-    public static List toPagamentoList(ResultSet resultSet)
+    public static List<String[]> toPagamentoStringList(ResultSet resultSet)
     {
-        List<Pagamento> pagamentoList = new ArrayList<>();
+        // Criamos uma lista para guardar cada registro da tabela
+        List<String[]> pagamentoList = new ArrayList<>();
 
-        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings
         try
         {
             while (resultSet.next())
             {
-                Pagamento pagamento = new Pagamento();
-                pagamento.setuId              ((UUID) resultSet.getObject("uId"));
-                pagamento.setcAtivo           (resultSet.getString("cAtivo"));
-                pagamento.setdDtFim           (resultSet.getDate("dDtFim"));
-                pagamento.setnPctDesconto     (resultSet.getDouble("nPctDesconto"));
-                pagamento.setnTotal           (resultSet.getDouble("nTotal"));
-                pagamento.setuId_Anunciante   ((UUID) resultSet.getObject("uId_Anunciante"));
-                pagamento.setuId_Plano        ((UUID) resultSet.getObject("uId_Plano"));
-                pagamento.setuId_Universitario((UUID) resultSet.getObject("uId_Universitario"));
+                String[] pagamentoRegister = new String[8];
 
-                // Adiciona o objeto na lista
-                pagamentoList.add(pagamento);
+                // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
+                pagamentoRegister[0] = String.valueOf(resultSet.getObject("uId")) ;
+                pagamentoRegister[1] = String.valueOf(resultSet.getString("cAtivo"));
+                pagamentoRegister[2] = String.valueOf(resultSet.getDate("dDtFim"));
+                pagamentoRegister[3] = String.valueOf(resultSet.getDouble("nPctDesconto"));
+                pagamentoRegister[4] = String.valueOf(resultSet.getDouble("nTotal"));
+                pagamentoRegister[5] = String.valueOf(resultSet.getObject("uId_Anunciante"));
+                pagamentoRegister[6] = String.valueOf(resultSet.getObject("uId_Plano"));
+                pagamentoRegister[7] = String.valueOf(resultSet.getObject("uId_Universitario"));
+
+                // Adiciona o vetor de Strings na lista
+                pagamentoList.add(pagamentoRegister);
             }
         }
         catch (SQLException sqle)
@@ -239,26 +254,30 @@ public class ValidationUtilsUwU
             sqle.printStackTrace();
         }
 
+        // Retornamos a lista
         return pagamentoList;
     }
 
-    public static List toPlanoList(ResultSet resultSet)
+    public static List<String[]> toPlanoStringList(ResultSet resultSet)
     {
-        List<Plano> planoList = new ArrayList<>();
+        // Criamos uma lista para guardar cada registro da tabela
+        List<String[]> planoList = new ArrayList<>();
 
-        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings
         try
         {
             while (resultSet.next())
             {
-                Plano plano = new Plano();
-                plano.setuId((UUID) resultSet.getObject("uId"));
-                plano.setcNome(resultSet.getString("cNome"));
-                plano.setnValor(resultSet.getDouble("nValor"));
-                plano.setcDescricao(resultSet.getString("cDescricao"));
+                String[] planoRegister = new String[4];
 
-                // Adiciona o objeto na lista
-                planoList.add(plano);
+                // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
+                planoRegister[0] = String.valueOf(resultSet.getObject("uId"));
+                planoRegister[1] = String.valueOf(resultSet.getString("cNome"));
+                planoRegister[2] = String.valueOf(resultSet.getDouble("nValor"));
+                planoRegister[3] = String.valueOf(resultSet.getString("cDescricao"));
+
+                // Adiciona o vetor de Strings na lista
+                planoList.add(planoRegister);
             }
         }
         catch (SQLException sqle)
@@ -266,26 +285,30 @@ public class ValidationUtilsUwU
             sqle.printStackTrace();
         }
 
+        // Retornamos a lista
         return planoList;
     }
 
-    public static List toPlano_vantagemList(ResultSet resultSet)
+    public static List<String[]> toPlano_vantagemStringList(ResultSet resultSet)
     {
-        List<Plano_vantagem> plano_vantagemList = new ArrayList<>();
+        // Criamos uma lista para guardar cada registro da tabela
+        List<String[]> planoVantagemList = new ArrayList<>();
 
-        // Cria um novo objeto Admin e define os campos com base nas colunas do ResultSet
+        // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings
         try
         {
             while (resultSet.next())
             {
-                Plano_vantagem plano_vantagem = new Plano_vantagem();
-                plano_vantagem.setuId      ((UUID) resultSet.getObject("uId"));
-                plano_vantagem.setcVantagem(resultSet.getString("cVantagem"));
-                plano_vantagem.setcAtivo   (resultSet.getString("cAtivo").charAt(0));
-                plano_vantagem.setuId_Plano((UUID) resultSet.getObject("uId_Plano"));
+                String[] planoVantagemRegister = new String[4];
 
-                // Adiciona o objeto na lista
-                plano_vantagemList.add(plano_vantagem);
+                // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
+                planoVantagemRegister[0] = String.valueOf(resultSet.getObject("uId"));
+                planoVantagemRegister[1] = String.valueOf(resultSet.getString("cVantagem"));
+                planoVantagemRegister[2] = String.valueOf(resultSet.getString("cAtivo").charAt(0));
+                planoVantagemRegister[3] = String.valueOf(resultSet.getObject("uId_Plano"));
+
+                // Adiciona o vetor de Strings na lista
+                planoVantagemList.add(planoVantagemRegister);
             }
         }
         catch (SQLException sqle)
@@ -293,7 +316,8 @@ public class ValidationUtilsUwU
             sqle.printStackTrace();
         }
 
-        return plano_vantagemList;
+        // Retornamos a lista
+        return planoVantagemList;
     }
 
     //    MÉTODOS DE VALIDAÇÃO E TRATAMENTO DE DADOS DO NEGÓCIO
