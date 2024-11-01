@@ -133,8 +133,6 @@ public class BoostDAO extends Conexao {
     {
         try
         {
-            conectar();
-
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor");
 
@@ -163,6 +161,7 @@ public class BoostDAO extends Conexao {
         try
         {
             conectar();
+
             // Prepara a instrução SQL
             pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor DESC");
 

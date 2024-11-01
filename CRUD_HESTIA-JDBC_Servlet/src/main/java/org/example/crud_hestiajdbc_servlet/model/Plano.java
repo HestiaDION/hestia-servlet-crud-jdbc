@@ -6,11 +6,12 @@ public class Plano {
 //    DEFINIÇÃO DOS ATRIBUTOS DA CLASSE
     private UUID uId;          // (UUID)
     private String cNome;      // (VARCHAR(100))
+    private String cTipoUsuario;
     private double nValor;     // (DECIMAL(10,2))
     private String cDescricao; // (VARCHAR(MAX))
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
-    public Plano(UUID uId, String cNome, double nValor, String cDescricao)
+    public Plano(UUID uId, String cNome, String cTipoUsuario, double nValor, String cDescricao)
     {
         this.uId = uId;
         this.cNome = cNome;
@@ -18,7 +19,7 @@ public class Plano {
         this.cDescricao = cDescricao;
     }
 
-    public Plano(String cNome, double nValor, String cDescricao)
+    public Plano(String cNome, String cTipoUsuario, double nValor, String cDescricao)
     {
         this.cNome = cNome;
         this.nValor = nValor;
@@ -38,6 +39,10 @@ public class Plano {
     public String getcNome()
     {
         return cNome;
+    }
+
+    public String getcTipoUsuario() {
+        return cTipoUsuario;
     }
 
     public double getnValor()
@@ -61,6 +66,10 @@ public class Plano {
         this.cNome = cNome;
     } // Método Inútil Por Enquanto
 
+    public void setcTipoUsuario(String cTipoUsuario) {
+        this.cTipoUsuario = cTipoUsuario;
+    } // Método Inútil Por Enquanto
+
     public void setnValor(double nValor)
     {
         this.nValor = nValor;
@@ -75,7 +84,7 @@ public class Plano {
     @Override
     public String toString()
     {
-        return "ID do Plano = " + this.uId + "\nNome do Plano = " + this.cNome +
-                "\nValor do Plano = " + this.nValor + "\nDescrição do Plano = " + this.cDescricao;
+        return "ID do Plano = " + this.uId + "\nNome do Plano = " + this.cNome + "\nTipo de usuário do plano = "
+                + this.cTipoUsuario + "\nValor do Plano = " + this.nValor + "\nDescrição do Plano = " + this.cDescricao;
     }
 }

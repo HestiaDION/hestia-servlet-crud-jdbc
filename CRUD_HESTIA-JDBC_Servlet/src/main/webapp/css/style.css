@@ -527,9 +527,13 @@ loadedAnimation {
     }
 }
 
+#close-form {
+    color: var(--dark-blue);
+}
+
 #form-container form {
     background-color: var(--white);
-    width: 40%;
+    width: 40rem;
     border-radius: 0.8rem;
     padding: 1.6rem;
     display: flex;
@@ -558,6 +562,10 @@ close-form {
     align-items: center;
     justify-content: space-between;
     color: var(--dark-blue);
+
+    h3 {
+        text-transform: capitalize;
+    }
 }
 
 #form-container form .form-title i {
@@ -577,7 +585,7 @@ close-form {
     padding: 0rem 0.8rem;
     box-sizing: border-box;
     color: var(--dark-blue);
-    border: 0.2rem var(--dark-blue) solid;
+    border: none;
     font-size: 1.4rem;
     box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
 }
@@ -589,17 +597,14 @@ close-form {
 #form-container form .input-container input:focus  {
     outline: none;
     color: var(--dark-blue);
-    border-color: var(--dark-blue);
 }
 
 #form-container form .input-container input:invalid {
     color: var(--red);
-    border-color: var(--red);
 }
 
 #form-container form .input-container input:placeholder-shown {
     color: var(--dark-blue);
-    border-color: var(--dark-blue);
 }
 
 #form-container form .input-container label {
@@ -639,7 +644,7 @@ close-form {
 }
 
 #form-container form input[type=submit]{
-    background: linear-gradient(135deg, var(--light-red), var(--red));
+    background: linear-gradient(135deg, var(--blue), var(--dark-blue));
     color: var(--white);
     border-radius: 0.8rem;
     border: none;
@@ -995,14 +1000,14 @@ close-form {
     font-size: 2.4rem;
     font-weight: 900;
     text-transform: uppercase;
-    width: calc(100% / (var(--field-quantity)));
+    flex: 1;
     padding-right: 1.6rem;
 }
 
 .row p {
     font-size: 1.6rem;
     font-weight: 500;
-    width: calc((100% / (var(--field-quantity))));
+    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 1.6rem;
@@ -1029,6 +1034,10 @@ close-form {
     align-items: center;
     margin-bottom: 3rem;
     color: var(--white);
+
+    h3 {
+        text-transform: capitalize;
+    }
 }
 
 ul {
@@ -1162,4 +1171,31 @@ button:hover {
     100% {
         transform: translateX(0%);
     }
+}
+
+#sidebar-form button{
+    background-color: transparent;
+    display: block;
+    border: none;
+
+    color: var(--white);
+    text-transform: uppercase;
+    font-family: 'Poppins', serif;
+    font-size: 2rem;
+    transition: 0.25s cubic-bezier(.175,.885,.32,1.3);
+    width: max-content;
+    text-shadow: 0 0 0 var(--white);
+    cursor: pointer;
+    position: relative;
+    right: 20rem;
+    margin-bottom: 1rem;
+}
+
+#sidebar-form button:hover {
+    letter-spacing: 0.5rem;
+    text-shadow: 0 0 0.2rem var(--white);
+}
+
+#check:checked ~ .content .sidebar #sidebar-form button {
+    animation: reveal-sidebar-text 0.5s cubic-bezier(.175,.885,.32,1.3) calc(var(--position) * 0.2s + 0.6s) both;
 }

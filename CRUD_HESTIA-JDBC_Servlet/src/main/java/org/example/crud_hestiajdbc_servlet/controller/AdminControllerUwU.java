@@ -27,7 +27,7 @@ public class AdminControllerUwU extends HttpServlet
         String action = (String) req.getParameter("action");
 
         // Espefica com a classe do objeto que está sendo enviado
-        req.setAttribute("class-identifier", "Admin");
+        req.setAttribute("table-identifier", "admin");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -53,6 +53,9 @@ public class AdminControllerUwU extends HttpServlet
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "admin");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -96,7 +99,7 @@ public class AdminControllerUwU extends HttpServlet
         (
                 ValidationUtilsUwU.isValidString(nomeParameter) &&
                 ValidationUtilsUwU.isValidString(emailParamter) &&
-                ValidationUtilsUwU.isValidDouble(senhaParamter)
+                ValidationUtilsUwU.isValidString(senhaParamter)
         )
         {
             String nome  = nomeParameter;
@@ -114,8 +117,12 @@ public class AdminControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        req.setAttribute("tableName", "admin");
+
+//        // Redireciona a requisição e resposta de volta à página de administração
+//        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+
+        readAdmin(req, resp);
     }
 
     private void readAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -234,18 +241,27 @@ public class AdminControllerUwU extends HttpServlet
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = adminDAO.selecionarTodosAdmins();
 
-            if (list != null)
+            if (list != null && action.equals("read"))
             {
                 req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
+            }
+            else if (list != null && !action.equals("read"))
+            {
+                req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
             }
             else
             {
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
+
+        req.setAttribute("tableName", "admin");
 
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("Crud.jsp").forward(req, resp);
@@ -265,7 +281,7 @@ public class AdminControllerUwU extends HttpServlet
                 ValidationUtilsUwU.isValidUUID(codigoParameter) &&
                 ValidationUtilsUwU.isValidString(nomeParameter) &&
                 ValidationUtilsUwU.isValidString(emailParamter) &&
-                ValidationUtilsUwU.isValidDouble(senhaParamter)
+                ValidationUtilsUwU.isValidString(senhaParamter)
         )
         {
             UUID codigo  = UUID.fromString(codigoParameter);
@@ -309,7 +325,10 @@ public class AdminControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
+        req.setAttribute("tableName", "admin");
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+//        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+
+        readAdmin(req, resp);
     }
 }

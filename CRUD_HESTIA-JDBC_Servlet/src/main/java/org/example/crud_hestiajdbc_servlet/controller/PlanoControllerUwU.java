@@ -26,6 +26,9 @@ public class PlanoControllerUwU extends HttpServlet
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
 
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "plano");
+
         if (ValidationUtilsUwU.isValidString(action))
         {
             if (action.equals("read"))
@@ -49,6 +52,9 @@ public class PlanoControllerUwU extends HttpServlet
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "plano");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -83,9 +89,10 @@ public class PlanoControllerUwU extends HttpServlet
     private void createPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String nomeParameter      = req.getParameter("cNome");
-        String valorParameter     = req.getParameter("nValor");
-        String descricaoParameter = req.getParameter("cDescricao");
+        String nomeParameter             = req.getParameter("cNome");
+        String tipoUsuarioParameter      = req.getParameter("cTipoUsuario");
+        String valorParameter            = req.getParameter("nValor");
+        String descricaoParameter        = req.getParameter("cDescricao");
     
         // Verifica se os parâmetros retornaram valores válidos
         if
@@ -288,7 +295,8 @@ public class PlanoControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
+
+        req.setAttribute("tableName", "Plano");
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
     }

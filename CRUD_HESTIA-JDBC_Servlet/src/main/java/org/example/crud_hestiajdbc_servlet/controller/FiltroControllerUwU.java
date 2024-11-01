@@ -21,9 +21,13 @@ public class FiltroControllerUwU extends HttpServlet
 
 //    DEFINIÇÃO DOS MÉTODOS GET E POST PARA GERENCIAR AS AÇÕES DENTRO DO BANCO DE DADOS
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "filtro");
 
         if (ValidationUtilsUwU.isValidString(action))
         {
@@ -45,9 +49,13 @@ public class FiltroControllerUwU extends HttpServlet
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "filtro");
 
         // Faz a validação do atributo
         if (ValidationUtilsUwU.isValidString(action))
@@ -253,6 +261,7 @@ public class FiltroControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
+        req.setAttribute("tableName", "Filtro");
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }

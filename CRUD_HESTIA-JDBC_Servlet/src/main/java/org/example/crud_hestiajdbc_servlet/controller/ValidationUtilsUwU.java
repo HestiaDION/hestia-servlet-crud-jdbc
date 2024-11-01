@@ -171,7 +171,7 @@ public class ValidationUtilsUwU
         {
             while (resultSet.next())
             {
-                String[] boostRegister = new String[4];
+                String[] boostRegister = new String[5];
 
                 // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null/
                 boostRegister[0] = String.valueOf(resultSet.getObject("uId"));
@@ -203,7 +203,7 @@ public class ValidationUtilsUwU
         {
             while (resultSet.next())
             {
-                String[] filtroRegister = new String[4];
+                String[] filtroRegister = new String[3];
 
                 // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
                 filtroRegister[0] = String.valueOf(resultSet.getObject("uId")) ;
@@ -233,7 +233,7 @@ public class ValidationUtilsUwU
         {
             while (resultSet.next())
             {
-                String[] pagamentoRegister = new String[4];
+                String[] pagamentoRegister = new String[8];
 
                 // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
                 pagamentoRegister[0] = String.valueOf(resultSet.getObject("uId")) ;
