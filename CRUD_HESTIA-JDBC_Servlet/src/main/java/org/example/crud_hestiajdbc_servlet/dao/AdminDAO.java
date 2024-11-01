@@ -344,35 +344,34 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public int atualizarAdminLogin(String cEmail)
-    {
-        try
-        {
-            conectar();
-
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '1' WHERE cEmail = ?");
-            pstmt.setString(1, cEmail);
-
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
-        }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
-
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
-    }
+//    public int atualizarAdminLogin(String cEmail)
+//    {
+//        try
+//        {
+//            conectar();
+//
+//            // Prepara a instrução SQL e define os seus argumentos
+//            pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '1' WHERE cEmail = ?");
+//            pstmt.setString(1, cEmail);
+//
+//            // Executa a instrução e guarda as linhas afetadas
+//            int linhasAfetadas = pstmt.executeUpdate();
+//
+//            return linhasAfetadas;
+//        }
+//        catch (SQLException sqle)
+//        {
+//            // Imprime a exceção no console
+//            sqle.printStackTrace();
+//
+//            // Retorna -1 se ocorrer algum erro
+//            return -1;
+//        }
+//        finally
+//        {
+//            desconectar();
+//        }
+//    }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
     public int removerAdmin(UUID uId)

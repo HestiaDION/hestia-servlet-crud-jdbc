@@ -21,59 +21,40 @@ public class LoginController extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
 
+        req.setAttribute("action", "read"); // Define a ação como "read"
+
+        AdminControllerUwU adminControllerUwU = new AdminControllerUwU();
         AdminDAO adminDAO = new AdminDAO();
         ResultSet rs = null;
 
-        try
-        {
+//        try
+//        {
             rs = adminDAO.selecionarAdminsParaLogin(email, password);
 
-            if (rs != null && rs.next())
+            if (rs != null)
             {
                 //Alterando o status do login do usuário para '1' (Ativo)
-                adminDAO.atualizarAdminLogin(email);
+//                adminDAO.atualizarAdminLogin(email);
 
                 ValidationUtilsUwU.logSuccessfulLogin(req);
 
                 req.setAttribute("table-identifier", "admin");
-                req.setAttribute("action", "read"); // Define a ação como "read"
 
-                AdminControllerUwU adminControllerUwU = new AdminControllerUwU();
-
+                // Continua a requisição
                 adminControllerUwU.readAdmin(req, resp);
             }
             else
             {
                 // Login falhou
-                req.setAttribute("success", false);
-                req.setAttribute("log", "Usuário ou senha incorretos.");
-                req.setAttribute("table-identifier", "admin");
-                req.setAttribute("action", "read");
-
-                req.getRequestDispatcher("login.jsp").forward(req, resp);
+                ValidationUtilsUwU.logInputSetback(req);
             }
-        }
-        catch (SQLException e)
-        {
-            e.printStackTrace();
-            req.setAttribute("success", false);
-            req.setAttribute("log", "Erro ao acessar o banco de dados: " + e.getMessage());
-            req.setAttribute("action", "read");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
-        } 
-        finally 
-        {
-            if (rs != null) 
-            {
-                try 
-                {
-                    rs.close();
-                } 
-                catch (SQLException e) 
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
+//        }
+//        catch (SQLException sqle)
+//        {
+//            sqle.printStackTrace();
+//
+//            ValidationUtilsUwU.logDatabaseIssue(req);
+//            req.getRequestDispatcher("login.jsp").forward(req, resp);
+//        }
     }
 }
