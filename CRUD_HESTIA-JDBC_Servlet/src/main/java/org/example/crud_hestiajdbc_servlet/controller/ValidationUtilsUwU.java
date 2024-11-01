@@ -221,14 +221,17 @@ public class ValidationUtilsUwU
             while (resultSet.next())
             {
                 Pagamento pagamento = new Pagamento();
-                pagamento.setuId              ((UUID) resultSet.getObject("uId"));
-                pagamento.setcAtivo           (resultSet.getString("cAtivo"));
-                pagamento.setdDtFim           (resultSet.getDate("dDtFim"));
-                pagamento.setnPctDesconto     (resultSet.getDouble("nPctDesconto"));
-                pagamento.setnTotal           (resultSet.getDouble("nTotal"));
-                pagamento.setuId_Anunciante   ((UUID) resultSet.getObject("uId_Anunciante"));
-                pagamento.setuId_Plano        ((UUID) resultSet.getObject("uId_Plano"));
-                pagamento.setuId_Universitario((UUID) resultSet.getObject("uId_Universitario"));
+                pagamento.setuId                ((UUID) resultSet.getObject("uId"));
+                pagamento.setcAtivo             (resultSet.getString("cAtivo"));
+                pagamento.setdDtFim             (resultSet.getDate("dDtFim"));
+                pagamento.setnPctDesconto       (resultSet.getDouble("nPctDesconto"));
+                pagamento.setnTotal             (resultSet.getDouble("nTotal"));
+                pagamento.setcUserAnunciante    (resultSet.getString("cUserAnunciante"));
+                pagamento.setcEmailAnunciante   (resultSet.getString("cEmailAnunciante"));
+                pagamento.setcNmPlano           (resultSet.getString("cNmPlano"));
+                pagamento.setcUserUniversitario (resultSet.getString("cUserUniversitario"));
+                pagamento.setcEmailAnunciante   (resultSet.getString("cEmailAnunciante"));
+                pagamento.setcDNEUniversitario  (resultSet.getString("cDNEUniversitario"));
 
                 // Adiciona o objeto na lista
                 pagamentoList.add(pagamento);
