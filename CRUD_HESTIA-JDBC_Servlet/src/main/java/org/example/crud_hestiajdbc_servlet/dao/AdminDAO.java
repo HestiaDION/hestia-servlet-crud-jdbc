@@ -215,8 +215,10 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public int verificarAdminLogin(String cEmail){
+    public int verificarAdminLogin(String cEmail)
+    {
         int atividade = -1;
+
         try
         {
             conectar();
@@ -229,11 +231,14 @@ public class AdminDAO extends Conexao {
             rs = pstmt.executeQuery();
 
             //Adiciona 1 se o admin estiver logado e 0 se não
-            if(rs.next()){
-                if (rs.getString("cLogin").equals('1')){
+            if(rs.next())
+            {
+                if (rs.getString("cLogin").equals('1'))
+                {
                     atividade = 1;
                 }
-                else{
+                else
+                {
                     atividade = 0;
                 }
             }
@@ -242,9 +247,6 @@ public class AdminDAO extends Conexao {
         {
             // Imprime a exceção no console
             sqle.printStackTrace();
-
-            // Atribuí um nulo para indentificação da exceção
-            atividade = -1;
         }
         finally
         {
@@ -256,7 +258,6 @@ public class AdminDAO extends Conexao {
 
     public  ResultSet selecionarAdminsParaLogin(String cEmail, String cSenha)
     {
-        ResultSet rs = null;
         try
         {
             conectar();
