@@ -147,6 +147,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -171,6 +173,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", nome);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -204,6 +208,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoValor);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -237,6 +243,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoPct);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }

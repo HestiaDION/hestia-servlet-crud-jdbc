@@ -427,4 +427,10 @@ public class ValidationUtilsUwU
         req.setAttribute("success", true);
         req.setAttribute("log", "O login foi realizado com sucesso.");
     }
+
+    public static void logUserNotFound(HttpServletRequest req)
+    {
+        req.setAttribute("success", false);
+        req.setAttribute("log", "Essas credenciais são inválidas.");
+    }
 }

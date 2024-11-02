@@ -168,6 +168,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -192,6 +194,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ativo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -241,6 +245,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoPctDesconto);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -275,6 +281,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoTotal);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -299,6 +307,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigoAnunciante);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -323,6 +333,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigoPlano);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -346,6 +358,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigoUniversitario);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }

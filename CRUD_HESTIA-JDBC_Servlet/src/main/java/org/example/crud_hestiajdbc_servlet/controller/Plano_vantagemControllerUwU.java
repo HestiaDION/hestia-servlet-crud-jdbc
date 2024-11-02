@@ -102,9 +102,9 @@ public class Plano_vantagemControllerUwU extends HttpServlet
                 ValidationUtilsUwU.isValidString(nomePlanoParameter)
         )
         {
-            String vantagem  = vantagemParameter;
-            char ativo       = ativoParameter.charAt(0);
-            String nmPlano   = nomePlanoParameter;
+            String vantagem = vantagemParameter;
+            char ativo      = ativoParameter.charAt(0);
+            String nmPlano  = nomePlanoParameter;
             Plano_vantagem planoVantagem = new Plano_vantagem(vantagem, ativo, nmPlano);
 
             if (planoVantagemDAO.adicionarPlanoVantagem(planoVantagem) > 0)
@@ -144,6 +144,8 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -168,6 +170,8 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ativo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -192,6 +196,8 @@ public class Plano_vantagemControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigoPlano);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }

@@ -145,6 +145,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -169,6 +171,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", nome);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -193,6 +197,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", email);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -218,6 +224,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", tamanhoSenha);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }

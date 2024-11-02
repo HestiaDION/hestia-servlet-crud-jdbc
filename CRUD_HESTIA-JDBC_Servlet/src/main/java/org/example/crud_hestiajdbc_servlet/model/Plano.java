@@ -4,11 +4,11 @@ import java.util.UUID;
 
 public class Plano {
 //    DEFINIÇÃO DOS ATRIBUTOS DA CLASSE
-    private UUID uId;          // (UUID)
-    private String cNome;      // (VARCHAR(100))
-    private String cTipoUsuario;
-    private double nValor;     // (DECIMAL(10,2))
-    private String cDescricao; // (VARCHAR(MAX))
+    private UUID uId;            // (UUID)
+    private String cNome;        // (VARCHAR(100))
+    private String cTipoUsuario; // ()
+    private double nValor;       // (DECIMAL(10,2))
+    private String cDescricao;   // (VARCHAR(MAX))
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
     public Plano(UUID uId, String cNome, String cTipoUsuario, double nValor, String cDescricao)

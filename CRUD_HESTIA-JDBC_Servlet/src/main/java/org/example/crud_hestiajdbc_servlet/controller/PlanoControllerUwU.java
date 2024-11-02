@@ -146,6 +146,8 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -170,6 +172,8 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", nome);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -204,6 +208,8 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoValor);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }

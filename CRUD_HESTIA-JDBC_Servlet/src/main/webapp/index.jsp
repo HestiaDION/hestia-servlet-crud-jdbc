@@ -11,13 +11,12 @@
         request.setAttribute("action", "read");
     %>
     <form action="login" method="post">
-
         <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
         <label for="email">Usuário:</label>
         <input type="text" id="email" name="email" required>
         <br>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required>
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" name="senha" required>
         <br>
         <button type="submit">Entrar</button>
     </form>
