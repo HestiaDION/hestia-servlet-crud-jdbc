@@ -197,7 +197,7 @@
         element.addEventListener('click', () => {
             const uidInput = document.querySelector('#confirm-delete form input[name="uId"]');
 
-            uidInput.value = element.dataset.uid;
+            uidInput.value = element.dataset.uId;
             deleteForm.classList.remove("closed-form");
         });
     });
