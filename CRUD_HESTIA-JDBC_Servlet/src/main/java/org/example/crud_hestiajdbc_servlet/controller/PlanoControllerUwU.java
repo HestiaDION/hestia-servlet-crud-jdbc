@@ -89,22 +89,25 @@ public class PlanoControllerUwU extends HttpServlet
     private void createPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String nomeParameter      = req.getParameter("cNome");
-        String valorParameter     = req.getParameter("nValor");
-        String descricaoParameter = req.getParameter("cDescricao");
+        String nomeParameter        = req.getParameter("cNome");
+        String tipoUsuarioParameter = req.getParameter("cTipoUsuario");
+        String valorParameter       = req.getParameter("nValor");
+        String descricaoParameter   = req.getParameter("cDescricao");
     
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidString(nomeParameter)   &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)  &&
+                ValidationUtilsUwU.isValidString(nomeParameter)        &&
+                ValidationUtilsUwU.isValidString(tipoUsuarioParameter) &&
+                ValidationUtilsUwU.isValidDouble(valorParameter)       &&
                 ValidationUtilsUwU.isValidString(descricaoParameter)
         )
         {
             String nome        = nomeParameter;
+            String tipoUsuario = tipoUsuarioParameter;
             Double valor       = Double.parseDouble(valorParameter);
             String descricao   = descricaoParameter;
-            Plano plano = new Plano(nome, valor, descricao);
+            Plano plano = new Plano(nome, tipoUsuario, valor, descricao);
 
             if (planoDAO.adicionarPlano(plano) > 0)
                 ValidationUtilsUwU.logSuccessfulCreation(req);
@@ -115,15 +118,15 @@ public class PlanoControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
     
     private void readPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = (String) req.getParameter("predicate");
         
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -221,15 +224,25 @@ public class PlanoControllerUwU extends HttpServlet
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = planoDAO.selecionarTodosPlanos();
     
             if (list != null)
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
+            else if (list != null && !action.equals("read"))
+            {
+                // Quando o método é chamado por outro método para obter os registros do banco
+                req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
+            }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
@@ -242,37 +255,40 @@ public class PlanoControllerUwU extends HttpServlet
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
         String codigoParameter      = req.getParameter("uId");
-        String nomeParameter        = req.getParameter("cNmBoost");
+        String nomeParameter        = req.getParameter("cNome");
+        String tipoUsuarioParameter = req.getParameter("cTipoUsuario");
         String valorParameter       = req.getParameter("nValor");
         String descricaoParameter   = req.getParameter("cDescricao");
-    
-        // Verifica se os parâmetros têm valores válidos
+
+        // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParameter)      &&
-                ValidationUtilsUwU.isValidString(nomeParameter)      &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)     &&
+                ValidationUtilsUwU.isValidUUID(codigoParameter)        &&
+                ValidationUtilsUwU.isValidString(nomeParameter)        &&
+                ValidationUtilsUwU.isValidString(tipoUsuarioParameter) &&
+                ValidationUtilsUwU.isValidDouble(valorParameter)       &&
                 ValidationUtilsUwU.isValidString(descricaoParameter)
         )
         {
-            UUID codigo        = UUID.fromString(codigoParameter);
-            String nome        = nomeParameter;
-            Double valor       = Double.parseDouble(valorParameter);
-            String descricao   = descricaoParameter;
-            Plano plano = new Plano(codigo, nome, valor, descricao);
+        UUID   codigo      = UUID.fromString(codigoParameter);
+        String nome        = nomeParameter;
+        String tipoUsuario = tipoUsuarioParameter;
+        Double valor       = Double.parseDouble(valorParameter);
+        String descricao   = descricaoParameter;
+        Plano plano = new Plano(codigo, nome, tipoUsuario, valor, descricao);
 
-            if (planoDAO.atualizarPlano(plano) > 0)
-                ValidationUtilsUwU.logSuccessfulUpdate(req);
-            else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+        if (planoDAO.atualizarPlano(plano) > 0)
+            ValidationUtilsUwU.logSuccessfulUpdate(req);
+        else
+            ValidationUtilsUwU.logDatabaseIssue(req);
         }
         else
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
     
     private void deletePlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -295,8 +311,7 @@ public class PlanoControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "Plano");
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
 }

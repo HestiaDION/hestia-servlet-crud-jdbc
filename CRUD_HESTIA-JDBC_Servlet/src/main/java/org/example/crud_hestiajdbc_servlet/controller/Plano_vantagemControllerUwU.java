@@ -116,15 +116,15 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano_vantagem(req, resp);
     }
 
     private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = (String) req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -212,15 +212,25 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = planoVantagemDAO.selecionarTodasVantagensPlano();
 
-            if (list != null)
+            if (list != null && action.equals("read"))
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
+            else if (list != null && !action.equals("read"))
+            {
+                // Quando o método é chamado por outro método para obter os registros do banco
+                req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
+            }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
@@ -263,8 +273,8 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano_vantagem(req, resp);
     }
 
     private void deletePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -287,7 +297,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano_vantagem(req, resp);
     }
 }
