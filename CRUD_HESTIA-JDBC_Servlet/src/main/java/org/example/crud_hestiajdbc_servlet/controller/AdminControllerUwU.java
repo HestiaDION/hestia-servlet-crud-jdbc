@@ -121,7 +121,8 @@ public class AdminControllerUwU extends HttpServlet
         readAdmin(req, resp);
     }
 
-    private void readAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    // O método é público por ser chamado como padrão pela classe de login
+    public void readAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
         String predicate = (String) req.getAttribute("predicate");

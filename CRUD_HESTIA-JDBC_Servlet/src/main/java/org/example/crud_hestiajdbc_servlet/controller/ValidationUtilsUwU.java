@@ -419,6 +419,12 @@ public class ValidationUtilsUwU
     public static void logSuccessfulRemoval(HttpServletRequest req)
     {
         req.setAttribute("success", true);
-        req.setAttribute("log", "O registro foi removido com sucesso");
+        req.setAttribute("log", "O registro foi removido com sucesso.");
+    }
+
+    public static void logSuccessfulLogin(HttpServletRequest req)
+    {
+        req.setAttribute("success", true);
+        req.setAttribute("log", "O login foi realizado com sucesso.");
     }
 }

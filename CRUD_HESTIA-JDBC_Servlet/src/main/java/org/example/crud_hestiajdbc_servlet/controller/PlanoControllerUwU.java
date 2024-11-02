@@ -97,15 +97,17 @@ public class PlanoControllerUwU extends HttpServlet
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidString(nomeParameter)   &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)  &&
+                ValidationUtilsUwU.isValidString(nomeParameter)        &&
+                ValidationUtilsUwU.isValidString(tipoUsuarioParameter) &&
+                ValidationUtilsUwU.isValidDouble(valorParameter)       &&
                 ValidationUtilsUwU.isValidString(descricaoParameter)
         )
         {
             String nome        = nomeParameter;
+            String tipoUsuario = tipoUsuarioParameter;
             Double valor       = Double.parseDouble(valorParameter);
             String descricao   = descricaoParameter;
-            Plano plano = new Plano(nome, "FLOPPA", valor, descricao); // ARRUMAR
+            Plano plano = new Plano(nome, tipoUsuario, valor, descricao);
 
             if (planoDAO.adicionarPlano(plano) > 0)
                 ValidationUtilsUwU.logSuccessfulCreation(req);
@@ -253,29 +255,32 @@ public class PlanoControllerUwU extends HttpServlet
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
         String codigoParameter      = req.getParameter("uId");
-        String nomeParameter        = req.getParameter("cNmBoost");
+        String nomeParameter        = req.getParameter("cNome");
+        String tipoUsuarioParameter = req.getParameter("cTipoUsuario");
         String valorParameter       = req.getParameter("nValor");
         String descricaoParameter   = req.getParameter("cDescricao");
-    
-        // Verifica se os parâmetros têm valores válidos
+
+        // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParameter)      &&
-                ValidationUtilsUwU.isValidString(nomeParameter)      &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)     &&
+                ValidationUtilsUwU.isValidUUID(codigoParameter)        &&
+                ValidationUtilsUwU.isValidString(nomeParameter)        &&
+                ValidationUtilsUwU.isValidString(tipoUsuarioParameter) &&
+                ValidationUtilsUwU.isValidDouble(valorParameter)       &&
                 ValidationUtilsUwU.isValidString(descricaoParameter)
         )
         {
-            UUID codigo        = UUID.fromString(codigoParameter);
-            String nome        = nomeParameter;
-            Double valor       = Double.parseDouble(valorParameter);
-            String descricao   = descricaoParameter;
-            Plano plano = new Plano(codigo, nome, "FLOPPA", valor, descricao);
+        UUID   codigo      = UUID.fromString(codigoParameter);
+        String nome        = nomeParameter;
+        String tipoUsuario = tipoUsuarioParameter;
+        Double valor       = Double.parseDouble(valorParameter);
+        String descricao   = descricaoParameter;
+        Plano plano = new Plano(codigo, nome, tipoUsuario, valor, descricao);
 
-            if (planoDAO.atualizarPlano(plano) > 0)
-                ValidationUtilsUwU.logSuccessfulUpdate(req);
-            else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+        if (planoDAO.atualizarPlano(plano) > 0)
+            ValidationUtilsUwU.logSuccessfulUpdate(req);
+        else
+            ValidationUtilsUwU.logDatabaseIssue(req);
         }
         else
         {

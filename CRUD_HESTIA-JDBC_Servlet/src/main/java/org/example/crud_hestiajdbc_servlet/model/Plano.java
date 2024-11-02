@@ -15,6 +15,7 @@ public class Plano {
     {
         this.uId = uId;
         this.cNome = cNome;
+        this.cTipoUsuario = cTipoUsuario;
         this.nValor = nValor;
         this.cDescricao = cDescricao;
     }
@@ -22,6 +23,7 @@ public class Plano {
     public Plano(String cNome, String cTipoUsuario, double nValor, String cDescricao)
     {
         this.cNome = cNome;
+        cTipoUsuario = cTipoUsuario;
         this.nValor = nValor;
         this.cDescricao = cDescricao;
     }
@@ -84,7 +86,10 @@ public class Plano {
     @Override
     public String toString()
     {
-        return "ID do Plano = " + this.uId + "\nNome do Plano = " + this.cNome + "\nTipo de usuário do plano = "
-                + this.cTipoUsuario + "\nValor do Plano = " + this.nValor + "\nDescrição do Plano = " + this.cDescricao;
+        return "ID do Plano = " + this.uId +
+                "\nNome do Plano = " + this.cNome +
+                "\nTipo de usuário do plano = " + this.cTipoUsuario +
+                "\nValor do Plano = " + this.nValor +
+                "\nDescrição do Plano = " + this.cDescricao;
     }
 }
