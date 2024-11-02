@@ -89,10 +89,10 @@ public class PlanoControllerUwU extends HttpServlet
     private void createPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String nomeParameter             = req.getParameter("cNome");
-        String tipoUsuarioParameter      = req.getParameter("cTipoUsuario");
-        String valorParameter            = req.getParameter("nValor");
-        String descricaoParameter        = req.getParameter("cDescricao");
+        String nomeParameter        = req.getParameter("cNome");
+        String tipoUsuarioParameter = req.getParameter("cTipoUsuario");
+        String valorParameter       = req.getParameter("nValor");
+        String descricaoParameter   = req.getParameter("cDescricao");
     
         // Verifica se os parâmetros retornaram valores válidos
         if
@@ -105,7 +105,7 @@ public class PlanoControllerUwU extends HttpServlet
             String nome        = nomeParameter;
             Double valor       = Double.parseDouble(valorParameter);
             String descricao   = descricaoParameter;
-            Plano plano = new Plano(nome, valor, descricao);
+            Plano plano = new Plano(nome, "FLOPPA", valor, descricao); // ARRUMAR
 
             if (planoDAO.adicionarPlano(plano) > 0)
                 ValidationUtilsUwU.logSuccessfulCreation(req);
@@ -116,9 +116,9 @@ public class PlanoControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
     
     private void readPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -222,15 +222,25 @@ public class PlanoControllerUwU extends HttpServlet
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = planoDAO.selecionarTodosPlanos();
     
             if (list != null)
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
+            else if (list != null && !action.equals("read"))
+            {
+                // Quando o método é chamado por outro método para obter os registros do banco
+                req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
+            }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
@@ -260,7 +270,7 @@ public class PlanoControllerUwU extends HttpServlet
             String nome        = nomeParameter;
             Double valor       = Double.parseDouble(valorParameter);
             String descricao   = descricaoParameter;
-            Plano plano = new Plano(codigo, nome, valor, descricao);
+            Plano plano = new Plano(codigo, nome, "FLOPPA", valor, descricao);
 
             if (planoDAO.atualizarPlano(plano) > 0)
                 ValidationUtilsUwU.logSuccessfulUpdate(req);
@@ -271,9 +281,9 @@ public class PlanoControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
     
     private void deletePlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -296,8 +306,7 @@ public class PlanoControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "Plano");
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
 }

@@ -1,6 +1,5 @@
 package org.example.crud_hestiajdbc_servlet.connection;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,6 +21,7 @@ public class Conexao {
             Class.forName("org.postgresql.Driver");
 
             System.out.println(System.getenv("urlBD"));
+
             // Estabelece a conexão com o banco de dados
             conn = DriverManager.getConnection(System.getenv("urlBD"), System.getenv("userBD"), System.getenv("passwordBD"));
 
