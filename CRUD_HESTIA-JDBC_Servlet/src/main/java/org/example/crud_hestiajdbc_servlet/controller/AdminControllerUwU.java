@@ -128,7 +128,7 @@ public class AdminControllerUwU extends HttpServlet
     private void readAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;

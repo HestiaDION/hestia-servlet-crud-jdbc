@@ -485,8 +485,17 @@ reveal-text {
 }
 
 #preloader {
-    background: var(--red) url(images/icons/preloader.svg) no-repeat center center;
+    background: var(--red) url(../images/icons/preloader.svg) no-repeat center center;
     background-size: 6%;
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    z-index: 10;
+}
+
+#loading {
+    background: color-mix(in srgb, var(--dark-blue) 40%, #00000066) url(../images/icons/loading.svg) no-repeat center center;
+    background-size: 7.5rem;
     height: 100vh;
     width: 100vw;
     position: fixed;
@@ -509,7 +518,7 @@ loadedAnimation {
     }
 }
 
-#form-container {
+.form-container {
     height: 100vh;
     width: 100vw;
     position: fixed;
@@ -527,11 +536,11 @@ loadedAnimation {
     }
 }
 
-#close-form {
+.form-title #close-form {
     color: var(--dark-blue);
 }
 
-#form-container form {
+.form-container form {
     background-color: var(--white);
     width: 40rem;
     border-radius: 0.8rem;
@@ -557,7 +566,7 @@ close-form {
     }
 }
 
-#form-container form .form-title {
+.form-container form .form-title {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -568,17 +577,17 @@ close-form {
     }
 }
 
-#form-container form .form-title i {
+.form-container form .form-title i {
     font-size: 3.2rem;
     cursor: pointer;
 }
 
-#form-container form .input-container {
+.form-container form .input-container {
     position: relative;
     font-family: 'Poppins';
 }
 
-#form-container form .input-container input {
+.form-container form .input-container input {
     width: 100%;
     height: 4rem;
     border-radius: 0.8rem;
@@ -590,24 +599,24 @@ close-form {
     box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
 }
 
-#form-container form .input-container input:-webkit-autofill {
+.form-container form .input-container input:-webkit-autofill {
     -webkit-background-clip: text;
 }
 
-#form-container form .input-container input:focus  {
+.form-container form .input-container input:focus  {
     outline: none;
     color: var(--dark-blue);
 }
 
-#form-container form .input-container input:invalid {
+.form-container form .input-container input:invalid {
     color: var(--red);
 }
 
-#form-container form .input-container input:placeholder-shown {
+.form-container form .input-container input:placeholder-shown {
     color: var(--dark-blue);
 }
 
-#form-container form .input-container label {
+.form-container form .input-container label {
     position: absolute;
     font-size: 1.6rem;
     background-color: var(--white);
@@ -619,11 +628,11 @@ close-form {
     color: var(--dark-blue);
 }
 
-#form-container form .input-container input:invalid + label {
+.form-container form .input-container input:invalid + label {
     color: var(--red);
 }
 
-#form-container form .input-container input:placeholder-shown + label {
+.form-container form .input-container input:placeholder-shown + label {
     font-size: 1.8rem;
     top: 0rem;
     left: 0rem;
@@ -632,7 +641,7 @@ close-form {
     color: var(--dark-blue);
 }
 
-#form-container form .input-container input:focus + label {
+.form-container form .input-container input:focus + label {
     position: absolute;
     font-size: 1.6rem;
     background-color: var(--white);
@@ -643,13 +652,13 @@ close-form {
     line-height: normal;
 }
 
-#form-container form input[type=submit]{
+.form-container form input[type=submit]{
     background: linear-gradient(135deg, var(--blue), var(--dark-blue));
     color: var(--white);
     border-radius: 0.8rem;
     border: none;
-    width: 100%;
-    height: 4rem;
+    flex: 1;
+    min-height: 4rem;
     font-weight: 500;
     font-size: 1.8rem;
     cursor: pointer;
@@ -659,6 +668,10 @@ close-form {
     &:hover {
         letter-spacing: 0.2rem;
     }
+}
+
+.hidden-input {
+    display: none;
 }
 
 .anwsers {
@@ -878,6 +891,7 @@ close-form {
     height: 100vh;
     width: 100vw;
     color: var(--white);
+    background-size: cover;
 }
 
 .vertical-line {
@@ -958,6 +972,15 @@ close-form {
     overflow-y: scroll;
     height: 42rem;
     background-color: var(--light-blue);
+    scrollbar-color: var(--dark-blue) var(--light-blue);
+}
+
+.table-rows::-webkit-scrollbar-track {
+    background: var(--light-blue);
+}
+
+.table-rows::-webkit-scrollbar-thumb {
+    background: var(--dark-blue);
 }
 
 .table-rows .row:nth-child(2n){
@@ -990,6 +1013,8 @@ close-form {
     padding: 0rem 3rem 0rem 4.5rem;
     height: calc(100% / 6 - 0.16rem);
     border-bottom: 0.2rem solid color-mix(in srgb, var(--blue) 20%, transparent);
+    overflow: hidden;
+
     .material-symbols-outlined {
         opacity: 0;
         transition: 0.2s cubic-bezier(.175,.885,.32,1.3);
@@ -1198,4 +1223,107 @@ button:hover {
 
 #check:checked ~ .content .sidebar #sidebar-form button {
     animation: reveal-sidebar-text 0.5s cubic-bezier(.175,.885,.32,1.3) calc(var(--position) * 0.2s + 0.6s) both;
+}
+
+.hide-loading {
+    display: none;
+}
+
+#confirm-delete .form-title h3 {
+    text-transform: none;
+}
+
+.confirmation-buttons {
+    display: flex;
+    gap: 1rem;
+
+    button {
+        background: linear-gradient(135deg, var(--blue), var(--dark-blue));
+        color: var(--white);
+        border-radius: 0.8rem;
+        border: none;
+        flex: 1;
+        height: 4rem;
+        font-weight: 500;
+        font-size: 1.8rem;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
+        transition: 0.2s cubic-bezier(.175,.885,.32,1.3);
+
+        &:hover {
+            letter-spacing: 0.2rem;
+        }
+    }
+}
+
+#filter-form {
+    width: 100%;
+    background-color: var(--light-blue);
+    min-height: 5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    font-family: "Montserrat", sans-serif;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    padding: 0 1rem;
+    gap: 1rem;
+    color: var(--dark-blue);
+    text-shadow:
+            0 0 0.1rem var(--dark-blue);
+
+    label {
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        padding: 0.75rem 0;
+        border-radius: 0.4rem;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    select {
+        height: 2.5rem;
+        border-radius: 0.4rem;
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
+        outline: none;
+
+        *:hover {
+            background-color: var(--dark-blue);
+        }
+    }
+
+    input[type=text] {
+        flex: 1;
+        height: 2.5rem;
+        border-radius: 0.4rem;
+        border: none;
+        outline: none;
+        box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
+        background-color: var(--white);
+        padding: 0 1rem;
+    }
+
+    input[type=submit]{
+        background: linear-gradient(135deg, var(--blue), var(--dark-blue));
+        color: var(--white);
+        border-radius: 0.8rem;
+        border: none;
+        min-height: 2.5rem;
+        padding: 0.25rem 1rem;
+        font-weight: 500;
+        font-size: 1.8rem;
+        cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
+        transition: 0.2s cubic-bezier(.175,.885,.32,1.3);
+
+        &:hover {
+            letter-spacing: 0.2rem;
+        }
+    }
+
+    input:-webkit-autofill {
+        -webkit-background-clip: text;
+    }
 }
