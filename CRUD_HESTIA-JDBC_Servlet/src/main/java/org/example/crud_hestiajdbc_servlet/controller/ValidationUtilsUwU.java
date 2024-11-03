@@ -268,13 +268,14 @@ public class ValidationUtilsUwU
         {
             while (resultSet.next())
             {
-                String[] planoRegister = new String[4];
+                String[] planoRegister = new String[5];
 
                 // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
                 planoRegister[0] = String.valueOf(resultSet.getObject("uId"));
                 planoRegister[1] = String.valueOf(resultSet.getString("cNome"));
-                planoRegister[2] = String.valueOf(resultSet.getDouble("nValor"));
-                planoRegister[3] = String.valueOf(resultSet.getString("cDescricao"));
+                planoRegister[2] = String.valueOf(resultSet.getString("cTipoUsuario"));
+                planoRegister[3] = String.valueOf(resultSet.getDouble("nValor"));
+                planoRegister[4] = String.valueOf(resultSet.getString("cDescricao"));
 
                 // Adiciona o vetor de Strings na lista
                 planoList.add(planoRegister);
