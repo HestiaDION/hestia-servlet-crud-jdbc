@@ -1,306 +1,326 @@
 package org.example.crud_hestiajdbc_servlet.dao;
 
-import org.example.crud_hestiajdbc_servlet.connection.Conexao;
+import org.example.crud_hestiajdbc_servlet.connection.DatabaseConnection;
 import org.example.crud_hestiajdbc_servlet.model.Plano;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class PlanoDAO extends Conexao {
+public class PlanoDAO extends DatabaseConnection
+{
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
-    public int adicionarPlano(Plano plano)
+    public int addPlano(Plano plano)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Plano (cNome, cTipoUsuario, nValor, cDescricao) VALUES (?, ?, ?, ?)");
+                pstmt.setString(1, plano.getcNome());
+                pstmt.setString(2, plano.getcTipoUsuario());
+                pstmt.setDouble(3, plano.getnValor());
+                pstmt.setString(4, plano.getcDescricao());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Plano (cNome, cTipoUsuario, nValor, cDescricao) VALUES (?, ?, ?, ?)");
-            pstmt.setString(1, plano.getcNome());
-            pstmt.setString(2, plano.getcTipoUsuario());
-            pstmt.setDouble(3, plano.getnValor());
-            pstmt.setString(4, plano.getcDescricao());
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodosPlanos()
+    public ResultSet getAllPlanos()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarPlanosPorId(UUID uId)
+    public ResultSet getPlanoById(UUID uId)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarPlanosPorNome(String cNome)
+    public ResultSet getPlanoByNome(String cNome)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE cNome = ?");
+                pstmt.setString(1, cNome);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE cNome = ?");
-            pstmt.setString(1, cNome);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarPlanosPorTipoUsuario(String cTipoUsuario)
+    public ResultSet getPlanoByTipoUsuario(String cTipoUsuario)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE cTipoUsuario = ?");
+                pstmt.setString(1, cTipoUsuario);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE cTipoUsuario = ?");
-            pstmt.setString(1, cTipoUsuario);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarPlanosPorValorCrescente()
+    public ResultSet getPlanoByValorAscending()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano ORDER BY nValor");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano ORDER BY nValor");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarPlanosPorValorDecrescente()
+    public ResultSet getPlanoByValorDescending()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano ORDER BY nValor DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano ORDER BY nValor DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
-    public UUID acharIdBoost(String nmPlao)
+    public UUID getPlanoId(String nmPlao)
     {
         UUID uuid = null;
-        try {
-            conectar();
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT FN_Plano_Id(?)");
-            pstmt.setString(1, nmPlao);
+        if (connect())
+        {
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT FN_Plano_Id(?)");
+                pstmt.setString(1, nmPlao);
 
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
 
-            // Extrai o UUID da primeira linha, se existir
-            if (rs.next()) {
-                uuid = (UUID) rs.getObject(1);
+                // Extrai o UUID da primeira linha, se existir
+                if (rs.next())
+                {
+                    uuid = (UUID) rs.getObject(1);
+                }
             }
-        } catch (SQLException sqle) {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
-        } finally {
-            desconectar();
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
+
+        // Sempre retorna um UUID, que pode ser null caso não seja possível conectar ou ocorra uma exceção
         return uuid;
     }
 
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
-    public int atualizarPlano(Plano plano)
+    public int updatePlano(Plano plano)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Plano SET cNome = ?, cTipoUsuario = ?, nValor = ?, cDescricao = ? WHERE uId = ?");
+                pstmt.setString(1, plano.getcNome());
+                pstmt.setString(2, plano.getcTipoUsuario());
+                pstmt.setDouble(3, plano.getnValor());
+                pstmt.setString(4, plano.getcDescricao());
+                pstmt.setObject(5, plano.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Plano SET cNome = ?, cTipoUsuario = ?, nValor = ?, cDescricao = ? WHERE uId = ?");
-            pstmt.setString(1, plano.getcNome());
-            pstmt.setString(2, plano.getcTipoUsuario());
-            pstmt.setDouble(3, plano.getnValor());
-            pstmt.setString(4, plano.getcDescricao());
-            pstmt.setObject(5, plano.getuId());
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerPlano(UUID uId)
+    public int removePlano(UUID uId)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Plano WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Plano WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 }

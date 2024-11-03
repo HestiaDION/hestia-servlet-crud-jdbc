@@ -14,7 +14,7 @@ import org.example.crud_hestiajdbc_servlet.dao.Plano_vantagemDAO;
 import org.example.crud_hestiajdbc_servlet.model.Plano_vantagem;
 
 @WebServlet(name = "plano_vantagem", value = "/plano_vantagem")
-public class Plano_vantagemControllerUwU extends HttpServlet
+public class Plano_vantagemController extends HttpServlet
 {
 //    DECLARAÇÃO E INSTANCIAÇÃO DE OBJETO ESTÁTICO PARA MEDIAR A INTERAÇÃO COM O BANCO DE DADOS
     Plano_vantagemDAO planoVantagemDAO = new Plano_vantagemDAO();
@@ -26,10 +26,7 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
 
-        // Espefica com a classe do objeto que está sendo enviado, que é um agregado de plano
-        req.setAttribute("aggregate-table-identifier", "plano-vantagem");
-
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             if (action.equals("read"))
             {
@@ -37,13 +34,13 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             }
             else
             {
-                ValidationUtilsUwU.logActionManagerSetback(req);
+                Utils.logActionManagerSetback(req);
                 req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
         }
     }
@@ -54,11 +51,8 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
 
-        // Espefica com a classe do objeto que está sendo enviado, que é um agregado de plano
-        req.setAttribute("aggregate-table-identifier", "plano-vantagem");
-
         // Faz a validação do atributo
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             switch (action)
             {
@@ -75,13 +69,13 @@ public class Plano_vantagemControllerUwU extends HttpServlet
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
                     req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
         }
     }
@@ -97,9 +91,9 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidString(vantagemParameter) &&
-                ValidationUtilsUwU.isValidCharAtivo(ativoParameter) &&
-                ValidationUtilsUwU.isValidString(nomePlanoParameter)
+                Utils.isValidString(vantagemParameter)  &&
+                Utils.isValidCharAtivo(ativoParameter)  &&
+                Utils.isValidString(nomePlanoParameter)
         )
         {
             String vantagem = vantagemParameter;
@@ -107,14 +101,14 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             String nmPlano  = nomePlanoParameter;
             Plano_vantagem planoVantagem = new Plano_vantagem(vantagem, ativo, nmPlano);
 
-            if (planoVantagemDAO.adicionarPlanoVantagem(planoVantagem) > 0)
-                ValidationUtilsUwU.logSuccessfulCreation(req);
+            if (planoVantagemDAO.addPlanoVantagem(planoVantagem) > 0)
+                Utils.logSuccessfulCreation(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -130,90 +124,84 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         ResultSet list;
 
         // Verifica se o filtro tem valor ou não
-        if (ValidationUtilsUwU.isValidString(predicate))
+        if (Utils.isValidString(predicate))
         {
             switch (predicate)
             {
                 case "uId":
                     String codigoParametro = req.getParameter("uId");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoParametro))
+                    if (Utils.isValidUUID(codigoParametro))
                     {
                         UUID codigo = UUID.fromString(codigoParametro);
-                        list = planoVantagemDAO.selecionarVantagensPlanoPorId(codigo);
+                        list = planoVantagemDAO.getPlanoVantagemById(codigo);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigo);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "cAtivo":
                     String ativoParameter = req.getParameter("cAtivo");
 
-                    if (ValidationUtilsUwU.isValidCharAtivo(ativoParameter))
+                    if (Utils.isValidCharAtivo(ativoParameter))
                     {
                         String ativo = ativoParameter;
-                        list = planoVantagemDAO.selecionarVantagensPlanoPorAtividade(ativo);
+                        list = planoVantagemDAO.getPlanoVantagensByAtivo(ativo);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", ativo);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "uId_Plano":
                     String codigoPlanoParameter = req.getParameter("uId_Plano");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoPlanoParameter))
+                    if (Utils.isValidUUID(codigoPlanoParameter))
                     {
                         UUID codigoPlano = UUID.fromString(codigoPlanoParameter);
-                        list = planoVantagemDAO.selecionarVantagensPlanoPorIdPlano(codigoPlano);
+                        list = planoVantagemDAO.getPlanoVantagensByIdPlano(codigoPlano);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigoPlano);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
             }
         }
         else
@@ -221,23 +209,23 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             // Recebe a ação que deve ser ralizada como atributo da requisição
             String action = (String) req.getParameter("action");
 
-            list = planoVantagemDAO.selecionarTodasVantagensPlano();
+            list = planoVantagemDAO.getAllPlanoVantagens();
 
             if (list != null && action.equals("read"))
             {
                 // Quando o método é chamado de forma primária, action é "read"
-                req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
-                ValidationUtilsUwU.logSuccessfulReading(req);
+                req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
+                Utils.logSuccessfulReading(req);
             }
             else if (list != null && !action.equals("read"))
             {
                 // Quando o método é chamado por outro método para obter os registros do banco
-                req.setAttribute("list", ValidationUtilsUwU.toPlano_vantagemStringList(list));
+                req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
             }
             else
             {
                 // Quando ocorre erro no banco de dados
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
             }
         }
 
@@ -257,10 +245,10 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         // Verifica se os parâmetros têm valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParameter)      &&
-                ValidationUtilsUwU.isValidString(vantagemParameter)  &&
-                ValidationUtilsUwU.isValidCharAtivo(ativoParameter)  &&
-                ValidationUtilsUwU.isValidString(nomePlanoParameter)
+                Utils.isValidUUID(codigoParameter)      &&
+                Utils.isValidString(vantagemParameter)  &&
+                Utils.isValidCharAtivo(ativoParameter)  &&
+                Utils.isValidString(nomePlanoParameter)
         )
         {
             UUID codigo      = UUID.fromString(codigoParameter);
@@ -269,14 +257,14 @@ public class Plano_vantagemControllerUwU extends HttpServlet
             String nmPlano = nomePlanoParameter;
             Plano_vantagem planoVantagem = new Plano_vantagem(codigo, vantagem, ativo, nmPlano);
 
-            if (planoVantagemDAO.atualizarPlanoVantagem(planoVantagem) > 0)
-                ValidationUtilsUwU.logSuccessfulUpdate(req);
+            if (planoVantagemDAO.updatePlanoVantagem(planoVantagem) > 0)
+                Utils.logSuccessfulUpdate(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -289,18 +277,18 @@ public class Plano_vantagemControllerUwU extends HttpServlet
         String codigoParameter = req.getParameter("uId");
 
         // Verifica se os parâmetros retornaram valores válidos
-        if (ValidationUtilsUwU.isValidUUID(codigoParameter))
+        if (Utils.isValidUUID(codigoParameter))
         {
             UUID codigo = UUID.fromString(codigoParameter);
 
-            if (planoVantagemDAO.removerPlanoVantagem(codigo) > 0)
-                ValidationUtilsUwU.logSuccessfulRemoval(req);
+            if (planoVantagemDAO.removePlanoVantagem(codigo) > 0)
+                Utils.logSuccessfulRemoval(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição

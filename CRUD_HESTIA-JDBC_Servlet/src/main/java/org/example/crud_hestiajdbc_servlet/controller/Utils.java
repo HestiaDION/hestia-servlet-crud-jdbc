@@ -1,10 +1,7 @@
 package org.example.crud_hestiajdbc_servlet.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.example.crud_hestiajdbc_servlet.model.*;
 
-import javax.xml.transform.Result;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DateTimeException;
@@ -14,19 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ValidationUtilsUwU
+public class Utils
 {
-    public static void main(String[] args) {
-        if (isValidUUID("kfasjaçksdfçakfg"))
-        {
-            System.out.println("EA");
-        }
-        else
-        {
-            System.out.println("dfskpfspkdmfpsamd´f");
-        }
-    }
-
 //    MÉTODOS DE VALIDAÇÃO E TRATAMENTO DE TIPO DE DADOS
     public static boolean isValidString(String string)
     {
