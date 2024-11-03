@@ -23,7 +23,7 @@ public class Plano {
     public Plano(String cNome, String cTipoUsuario, double nValor, String cDescricao)
     {
         this.cNome = cNome;
-        cTipoUsuario = cTipoUsuario;
+        this.cTipoUsuario = cTipoUsuario;
         this.nValor = nValor;
         this.cDescricao = cDescricao;
     }

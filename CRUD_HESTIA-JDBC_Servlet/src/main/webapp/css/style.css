@@ -1271,6 +1271,8 @@ button:hover {
     color: var(--dark-blue);
     text-shadow:
             0 0 0.1rem var(--dark-blue);
+    transition: 1s cubic-bezier(.175,.885,.32,1.3);
+    overflow: hidden;
 
     label {
         font-size: 1.8rem;
@@ -1280,6 +1282,7 @@ button:hover {
         display: flex;
         align-items: center;
         gap: 0.75rem;
+        transition: 1s cubic-bezier(.175,.885,.32,1.3);
     }
 
     select {
@@ -1288,6 +1291,7 @@ button:hover {
         border: none;
         box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
         outline: none;
+        transition: 1s cubic-bezier(.175,.885,.32,1.3);
 
         *:hover {
             background-color: var(--dark-blue);
@@ -1303,6 +1307,7 @@ button:hover {
         box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
         background-color: var(--white);
         padding: 0 1rem;
+        transition: 1s cubic-bezier(.175,.885,.32,1.3);
     }
 
     input[type=submit]{
@@ -1326,4 +1331,10 @@ button:hover {
     input:-webkit-autofill {
         -webkit-background-clip: text;
     }
+}
+
+.hide-filters {
+    min-height: 0 !important;
+    height: 0;
+    margin-bottom: 0 !important;
 }

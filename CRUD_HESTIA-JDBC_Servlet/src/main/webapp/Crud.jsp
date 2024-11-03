@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.UUID" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,7 +36,27 @@
                 fieldNames = "Id,Opção,Categoria";
                 fieldTypes = "uId,cNome,cCategoria";
                 ignoreField = "true,false,false";
-                regexIds = "null,0,4";
+                regexIds = "null,7,4";
+                break;
+
+            case "pagamento":
+                fieldNames = "Id,Ativo,Data Fim,Total";
+                fieldTypes = "uId,cAtivo,dDtFim,nTotal";
+                ignoreField = "true,false,false,false";
+                regexIds = "null,0,4,4,5";
+                break;
+
+//            private UUID uId;            // (UUID)
+//            private String cNome;        // (VARCHAR(100))
+//            private String cTipoUsuario; // ()
+//            private double nValor;       // (DECIMAL(10,2))
+//            private String cDescricao;   // (VARCHAR(MAX))
+
+            case "plano":
+                fieldNames = "Id,Nome,Tipo de Usuário,Valor,Descrição";
+                fieldTypes = "uId,cNome,cTipoUsuario,nValor,cDescricao";
+                ignoreField = "true,false,false,false,false";
+                regexIds = "null,0,0,5,7";
                 break;
 
             default:
@@ -75,6 +96,11 @@
         <jsp:param name="ignoreField" value="<%=ignoreField%>"/>
         <jsp:param name="regexIds" value="<%=regexIds%>"/>
     </jsp:include>
+    <jsp:include page="components/confirmDelete.jsp">
+        <jsp:param name="table-identifier" value="<%=tableIdentifier%>"/>
+    </jsp:include>
+    <form action="login" class="hidden-input" method="post" id="logout">
+    </form>
     <div class="nav" id="crud-nav">
         <div class="header-title">
             <img src="images/icons/hestia.svg" alt="" id="logo"/>
@@ -176,6 +202,7 @@
     const creationForm = document.getElementById("creation-form");
     const deleteForm = document.getElementById("confirm-delete");
     const editionForm = document.getElementById("edition-form");
+    const filterForm = document.getElementById("filter-form");
     const loading = document.getElementById("loading");
     const currency = document.querySelectorAll('.currency');
 
@@ -197,7 +224,7 @@
         element.addEventListener('click', () => {
             const uidInput = document.querySelector('#confirm-delete form input[name="uId"]');
 
-            uidInput.value = element.dataset.uId;
+            uidInput.value = element.dataset.uid;
             deleteForm.classList.remove("closed-form");
         });
     });
@@ -228,18 +255,26 @@
         document.getElementById("sidebar-form").submit();
     }
 
-    currency.forEach(element => {
-        element.addEventListener('input', (event) => {
-            let inputValue = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
-            if (inputValue) {
-                inputValue = (parseFloat(inputValue) / 100).toFixed(2); // Convert to decimal
-                event.target.value = 'R$' + inputValue.replace(',', '.'); // Format to R$xx.xx
-            } else {
-                event.target.value = ''; // Clear if no input
+    // currency.forEach(element => {
+    //     element.addEventListener('input', (event) => {
+    //         let inputValue = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+    //         if (inputValue) {
+    //             inputValue = (parseFloat(inputValue) / 100).toFixed(2); // Convert to decimal
+    //             event.target.value = 'R$' + inputValue.replace(',', '.'); // Format to R$xx.xx
+    //         } else {
+    //             event.target.value = ''; // Clear if no input
+    //
+    //         }
+    //     })
+    // });
 
-            }
-        })
-    });
+    document.getElementById("filter").addEventListener('click', () => {
+        filterForm.classList.toggle('hide-filters')
+    })
+
+    document.getElementById("predicate").addEventListener('input', (event) => {
+        document.getElementById("filter-value").name = event.target.value;
+    })
 </script>
 </body>
 </html>

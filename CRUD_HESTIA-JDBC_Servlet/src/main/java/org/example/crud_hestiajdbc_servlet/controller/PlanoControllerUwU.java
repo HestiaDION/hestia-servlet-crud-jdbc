@@ -254,7 +254,7 @@ public class PlanoControllerUwU extends HttpServlet
         }
         
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
     
     private void updatePlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
