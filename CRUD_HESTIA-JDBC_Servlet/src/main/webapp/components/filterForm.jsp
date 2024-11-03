@@ -14,11 +14,11 @@
 <%
     request.setAttribute("action", "read");
 %>
-<form action="<%= tableIdentifier %>" method="get" id="filter-form">
+<form action="<%= tableIdentifier %>" method="get" id="filter-form" class="hide-filters">
     <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
 <%--    <input type="hidden" name="uId" value="">--%>
 
-    <label for="uId">Select * from <%= tableIdentifier %> where <select name="predicate" id="predicate">
+    <label for="filter-value" id="filter-label">Select * from <%= tableIdentifier %> where <select name="predicate" id="predicate">
         <% for (int i = 0; i < fieldTypes.length; i++) {%>
         <option value="<%= fieldTypes[i] %>"><%= fieldNames[i] %>
         </option>
@@ -28,7 +28,7 @@
     <input
             type="text"
             name="uId"
-            id="uId"
+            id="filter-value"
     <%--                    pattern=<%= regex[Integer.parseInt(regexIds[i])] %>--%>
     <%--            <% if (regexIds[i].equals("5")) { %>--%>
     <%--            class="currency"--%>
