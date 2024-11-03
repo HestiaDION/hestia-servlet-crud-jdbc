@@ -8,7 +8,7 @@ public class Admin {
     private String cNome;  // (VARCHAR(100))
     private String cEmail; // (VARCHAR(266))
     private String cSenha; // (VARCHAR(100))
-    private char   cLogin; // (CHAR)
+    private char   cLogin; // (VARCHAR(1))
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
     public Admin(UUID uId, String cNome, String cEmail, String cSenha)

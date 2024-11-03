@@ -5,7 +5,6 @@ import org.example.crud_hestiajdbc_servlet.model.Boost;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.UUID;
 
 public class BoostDAO extends Conexao {
@@ -275,11 +274,12 @@ public class BoostDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Boost SET cNmBoost = ?, nValor = ?, nPctBoost = ? WHERE uId = ?");
+            pstmt = conn.prepareStatement("UPDATE Boost SET cNmBoost = ?, nValor = ?, nPctBoost = ?, cDescricao = ? WHERE uId = ?");
             pstmt.setString(1, boost.getcNmBoost());
             pstmt.setDouble(2, boost.getnValor());
             pstmt.setDouble(3, boost.getnPctBoost());
-            pstmt.setObject(4, boost.getuId());
+            pstmt.setString(4,boost.getcDescricao());
+            pstmt.setObject(5, boost.getuId());
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();

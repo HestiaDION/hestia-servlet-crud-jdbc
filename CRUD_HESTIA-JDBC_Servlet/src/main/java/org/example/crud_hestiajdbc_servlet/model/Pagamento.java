@@ -5,17 +5,17 @@ import java.util.UUID;
 
 public class Pagamento {
 //    DEFINIÇÃO DOS ATRIBUTOS DA CLASSE
-    private UUID uId;                      // (UUID)
-    private String cAtivo;                 // (CHAR(2))
-    private Date dDtFim;                   // (DATE)
-    private double nPctDesconto;           // (DECIMAL(10,1))
-    private double nTotal;                 // (DECIMAL(10,2))
-    private String cUserAnunciante;        // (Parâmetro 1 do FN_Anunciante_Id)
-    private String cEmailAnunciante;       // (Parâmetro 2 do FN_Anunciante_Id)
-    private String cNmPlano;               // (Parâmetro 1 do FN_Plano_Id)
-    private String cUserUniversitario;     // (Parâmetro 1 do FN_Universitario_Id)
-    private String cEmailUniversitario;    // (Parâmetro 2 do FN_Universitario_Id)
-    private String cDNEUniversitario;      // (Parâmetro 3 do FN_Universitario_Id)
+    private UUID uId;                   // (UUID)
+    private String cAtivo;              // (VARCHAR(2))
+    private Date dDtFim;                // (DATE)
+    private double nPctDesconto;        // (DECIMAL(10,1))
+    private double nTotal;              // (DECIMAL(10,2))
+    private String cUserAnunciante;     // (Parâmetro 1 da FN_Anunciante_Id)
+    private String cEmailAnunciante;    // (Parâmetro 2 da FN_Anunciante_Id)
+    private String cNmPlano;            // (Parâmetro 1 da FN_Plano_Id)
+    private String cUserUniversitario;  // (Parâmetro 1 da FN_Universitario_Id)
+    private String cEmailUniversitario; // (Parâmetro 2 da FN_Universitario_Id)
+    private String cDNEUniversitario;   // (Parâmetro 3 da FN_Universitario_Id)
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
     public Pagamento(UUID uId, String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,

@@ -6,7 +6,7 @@ public class Plano_vantagem {
 //    DEFINIÇÃO DOS ATRIBUTOS DA CLASSE
     private UUID uId;         // (UUID)
     private String cVantagem; // (VARCHAR(100))
-    private char cAtivo;      // (CHAR(1))
+    private char cAtivo;      // (VARCHAR(1))
     private String cNmPlano;  // (Parâmetro 1 do FN_Plano_Id)
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES

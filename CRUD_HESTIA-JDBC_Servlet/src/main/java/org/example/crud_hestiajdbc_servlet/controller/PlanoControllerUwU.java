@@ -89,10 +89,10 @@ public class PlanoControllerUwU extends HttpServlet
     private void createPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String nomeParameter             = req.getParameter("cNome");
-        String tipoUsuarioParameter      = req.getParameter("cTipoUsuario");
-        String valorParameter            = req.getParameter("nValor");
-        String descricaoParameter        = req.getParameter("cDescricao");
+        String nomeParameter        = req.getParameter("cNome");
+        String tipoUsuarioParameter = req.getParameter("cTipoUsuario");
+        String valorParameter       = req.getParameter("nValor");
+        String descricaoParameter   = req.getParameter("cDescricao");
     
         // Verifica se os parâmetros retornaram valores válidos
         if
@@ -118,15 +118,15 @@ public class PlanoControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
     
     private void readPlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = (String) req.getParameter("predicate");
         
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -146,6 +146,8 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -170,6 +172,8 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", nome);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -204,6 +208,8 @@ public class PlanoControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoValor);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -224,31 +230,41 @@ public class PlanoControllerUwU extends HttpServlet
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = planoDAO.selecionarTodosPlanos();
     
             if (list != null)
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
+            else if (list != null && !action.equals("read"))
+            {
+                // Quando o método é chamado por outro método para obter os registros do banco
+                req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
+            }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
         
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
     
     private void updatePlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String codigoParameter           = req.getParameter("uId");
-        String nomeParameter             = req.getParameter("cNome");
-        String tipoUsuarioParameter      = req.getParameter("cTipoUsuario");
-        String valorParameter            = req.getParameter("nValor");
-        String descricaoParameter        = req.getParameter("cDescricao");
+        String codigoParameter      = req.getParameter("uId");
+        String nomeParameter        = req.getParameter("cNome");
+        String tipoUsuarioParameter = req.getParameter("cTipoUsuario");
+        String valorParameter       = req.getParameter("nValor");
+        String descricaoParameter   = req.getParameter("cDescricao");
 
         // Verifica se os parâmetros retornaram valores válidos
         if
@@ -276,9 +292,9 @@ public class PlanoControllerUwU extends HttpServlet
         {
             ValidationUtilsUwU.logInputSetback(req);
         }
-    
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
     
     private void deletePlano(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -301,8 +317,7 @@ public class PlanoControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "Plano");
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPlano(req, resp);
     }
 }

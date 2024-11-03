@@ -90,16 +90,16 @@ public class PagamentoControllerUwU extends HttpServlet {
     private void createPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String ativoParameter               = req.getParameter("cAtivo");
-        String dataParameter                = req.getParameter("dDtFim");
-        String porcentagemParameter         = req.getParameter("nPctDesconto");
-        String totalParameter               = req.getParameter("nTotal");
-        String userAnuncianteParameter      = req.getParameter("cUserAnunciante");
-        String emailAnuncianteParameter     = req.getParameter("cEmailAnunciante");
-        String nomePlanoParameter           = req.getParameter("cNmPlano");
-        String userUniversitarioParameter   = req.getParameter("cUserUniversitario");
-        String emailUniversitarioParameter  = req.getParameter("cEmailUniversitario");
-        String dneUniversitarioParameter    = req.getParameter("cDNEUniversitario");
+        String ativoParameter              = req.getParameter("cAtivo");
+        String dataParameter               = req.getParameter("dDtFim");
+        String porcentagemParameter        = req.getParameter("nPctDesconto");
+        String totalParameter              = req.getParameter("nTotal");
+        String userAnuncianteParameter     = req.getParameter("cUserAnunciante");
+        String emailAnuncianteParameter    = req.getParameter("cEmailAnunciante");
+        String nomePlanoParameter          = req.getParameter("cNmPlano");
+        String userUniversitarioParameter  = req.getParameter("cUserUniversitario");
+        String emailUniversitarioParameter = req.getParameter("cEmailUniversitario");
+        String dneUniversitarioParameter   = req.getParameter("cDNEUniversitario");
 
 
         // Verifica se os parâmetros retornaram valores válidos
@@ -141,8 +141,8 @@ public class PagamentoControllerUwU extends HttpServlet {
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPagamento(req, resp);
     }
 
     private void readPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -168,6 +168,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -192,6 +194,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ativo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -241,6 +245,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoPctDesconto);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -275,6 +281,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoTotal);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -299,6 +307,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigoAnunciante);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -323,6 +333,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigoPlano);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -346,6 +358,8 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigoUniversitario);
+
                             req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -366,21 +380,31 @@ public class PagamentoControllerUwU extends HttpServlet {
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = pagamentoDAO.selecionarTodosPagamentos();
 
-            if (list != null)
+            if (list != null && action.equals("read"))
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
+            else if (list != null && !action.equals("read"))
+            {
+                // Quando o método é chamado por outro método para obter os registros do banco
+                req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
+            }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updatePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -439,8 +463,8 @@ public class PagamentoControllerUwU extends HttpServlet {
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPagamento(req, resp);
     }
 
     private void deletePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -463,8 +487,7 @@ public class PagamentoControllerUwU extends HttpServlet {
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "Pagamento");
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readPagamento(req, resp);
     }
 }

@@ -49,7 +49,7 @@ public class PlanoDAO extends Conexao {
             conectar();
 
             // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano");
+            pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano");
 
             // Executa a instrução e guarda as linhas retornadas
             rs = pstmt.executeQuery();

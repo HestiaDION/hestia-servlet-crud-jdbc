@@ -117,18 +117,15 @@ public class AdminControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "admin");
-
-//        // Redireciona a requisição e resposta de volta à página de administração
-//        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
-
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
         readAdmin(req, resp);
     }
 
+    // O método é público por ser chamado como padrão pela classe de login
     public void readAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -148,6 +145,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -172,6 +171,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", nome);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -196,6 +197,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", email);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -221,6 +224,8 @@ public class AdminControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", tamanhoSenha);
+
                             req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -248,20 +253,21 @@ public class AdminControllerUwU extends HttpServlet
 
             if (list != null && action.equals("read"))
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
             else if (list != null && !action.equals("read"))
             {
+                // Quando o método é chamado por outro método para obter os registros do banco
                 req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
             }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
-
-        req.setAttribute("tableName", "admin");
 
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("Crud.jsp").forward(req, resp);
@@ -300,8 +306,8 @@ public class AdminControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readAdmin(req, resp);
     }
 
     private void deleteAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -325,10 +331,7 @@ public class AdminControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "admin");
-        // Redireciona a requisição e resposta de volta à página de administração
-//        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
-
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
         readAdmin(req, resp);
     }
 }

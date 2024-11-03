@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.UUID" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,6 +13,7 @@
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 <body style="--white: #fdfdfd; --dark-blue: #00224d; --red: #e20a3d; --light-red: #ff3263; --light-blue: #f4f8ff; --blue: #195198; background-color: #00285a;">
+<div id="loading" class="hide-loading"></div>
 <div class="crud background">
     <%
         boolean success = (boolean) request.getAttribute("success");
@@ -22,20 +24,39 @@
         String regexIds;
         String fieldTypes;
 
-        switch (tableIdentifier)
-        {
+        switch (tableIdentifier) {
             case "boost":
                 fieldNames = "Id,Nome,Valor,Percentual,Descrição";
                 fieldTypes = "uId,cNmBoost,nValor,nPctBoost,cDescricao";
                 ignoreField = "true,false,false,false,false";
-                regexIds = "null,4,3,3,4";
+                regexIds = "null,0,5,6,7";
                 break;
 
             case "filtro":
-                fieldNames = "Id,Nome,Categoria";
+                fieldNames = "Id,Opção,Categoria";
                 fieldTypes = "uId,cNome,cCategoria";
                 ignoreField = "true,false,false";
-                regexIds = "null,0,0";
+                regexIds = "null,7,4";
+                break;
+
+            case "pagamento":
+                fieldNames = "Id,Ativo,Data Fim,Total";
+                fieldTypes = "uId,cAtivo,dDtFim,nTotal";
+                ignoreField = "true,false,false,false";
+                regexIds = "null,0,4,4,5";
+                break;
+
+//            private UUID uId;            // (UUID)
+//            private String cNome;        // (VARCHAR(100))
+//            private String cTipoUsuario; // ()
+//            private double nValor;       // (DECIMAL(10,2))
+//            private String cDescricao;   // (VARCHAR(MAX))
+
+            case "plano":
+                fieldNames = "Id,Nome,Tipo de Usuário,Valor,Descrição";
+                fieldTypes = "uId,cNome,cTipoUsuario,nValor,cDescricao";
+                ignoreField = "true,false,false,false,false";
+                regexIds = "null,0,0,5,7";
                 break;
 
             default:
@@ -61,13 +82,25 @@
     <%
         }
     %>
-    <jsp:include page="components/create-form.jsp">
+    <jsp:include page="components/creationForm.jsp">
         <jsp:param name="table-identifier" value="<%=tableIdentifier%>"/>
         <jsp:param name="fieldNames" value="<%=fieldNames%>"/>
         <jsp:param name="fieldTypes" value="<%=fieldTypes%>"/>
         <jsp:param name="ignoreField" value="<%=ignoreField%>"/>
         <jsp:param name="regexIds" value="<%=regexIds%>"/>
     </jsp:include>
+    <jsp:include page="components/editionForm.jsp">
+        <jsp:param name="table-identifier" value="<%=tableIdentifier%>"/>
+        <jsp:param name="fieldNames" value="<%=fieldNames%>"/>
+        <jsp:param name="fieldTypes" value="<%=fieldTypes%>"/>
+        <jsp:param name="ignoreField" value="<%=ignoreField%>"/>
+        <jsp:param name="regexIds" value="<%=regexIds%>"/>
+    </jsp:include>
+    <jsp:include page="components/confirmDelete.jsp">
+        <jsp:param name="table-identifier" value="<%=tableIdentifier%>"/>
+    </jsp:include>
+    <form action="login" class="hidden-input" method="post" id="logout">
+    </form>
     <div class="nav" id="crud-nav">
         <div class="header-title">
             <img src="images/icons/hestia.svg" alt="" id="logo"/>
@@ -109,6 +142,11 @@
                 </h3>
                 <div class="blue-button" id="create">Criar</div>
             </div>
+            <jsp:include page="components/filterForm.jsp">
+                <jsp:param name="table-identifier" value="<%=tableIdentifier%>"/>
+                <jsp:param name="fieldNames" value="<%=fieldNames%>"/>
+                <jsp:param name="fieldTypes" value="<%=fieldTypes%>"/>
+            </jsp:include>
             <div class="table-header">
                 <%
                     // Dynamically create headers from the field names
@@ -140,13 +178,9 @@
                     <%
                         }
                     %>
-                    <form id="edit-delete-form<%=i%>" method="post" action="<%= tableIdentifier %>">
-                        <input type="hidden" name="action" value="delete">
-                        <input type="hidden" name="uId" value="<%= list.get(i)[0] %>">
-                        <i class="material-symbols-outlined" id="edit">edit</i>
-                        <i class="material-symbols-outlined" id="delete"
-                           onclick="editOrDelete('edit-delete-form<%=i%>')">delete</i>
-                    </form>
+                    <i class="material-symbols-outlined" id="edit"
+                       data-values="<%=String.join(",",list.get(i))%>">edit</i>
+                    <i class="material-symbols-outlined" id="delete" data-uId="<%= list.get(i)[0] %>">delete</i>
                 </div>
                 <%
                     }
@@ -165,13 +199,16 @@
         document.querySelector('.alert').classList.add('hide-alert');
     });
 
-    const creationForm = document.querySelector(".creation-form");
+    const creationForm = document.getElementById("creation-form");
+    const deleteForm = document.getElementById("confirm-delete");
+    const editionForm = document.getElementById("edition-form");
+    const filterForm = document.getElementById("filter-form");
+    const loading = document.getElementById("loading");
+    const currency = document.querySelectorAll('.currency');
 
     document.querySelectorAll('#close-form').forEach(close => {
         close.addEventListener('click', () => {
-            console.log('bbb')
-            document.querySelectorAll('#form-container').forEach(element => {
-                console.log('aaaaaaa')
+            document.querySelectorAll('.form-container').forEach(element => {
                 element.classList.add("closed-form")
             });
         });
@@ -185,21 +222,59 @@
 
     document.querySelectorAll('#delete').forEach(element => {
         element.addEventListener('click', () => {
+            const uidInput = document.querySelector('#confirm-delete form input[name="uId"]');
 
+            uidInput.value = element.dataset.uid;
+            deleteForm.classList.remove("closed-form");
+        });
+    });
+
+    document.querySelectorAll('#edit').forEach(element => {
+        element.addEventListener('click', () => {
+            const inputs = `<%= fieldTypes %>`.split(',');
+            const values = element.dataset.values.split(",");
+
+            inputs.forEach((inputName, index) => {
+                const input = document.querySelector('#edition-form form input[name=' + inputName + ']');
+                if (input) {
+                    input.value = values[index]
+                }
+            });
+
+            editionForm.classList.remove("closed-form");
         });
     });
 
     function changeTable(table) {
         // Set the form action to the desired servlet
         document.getElementById("sidebar-form").action = table;
+
+        loading.classList.remove("hide-loading")
+
         // Submit the form
         document.getElementById("sidebar-form").submit();
     }
 
-    function editOrDelete(formId) {
-        document.getElementById(formId).submit();
-    }
+    // currency.forEach(element => {
+    //     element.addEventListener('input', (event) => {
+    //         let inputValue = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
+    //         if (inputValue) {
+    //             inputValue = (parseFloat(inputValue) / 100).toFixed(2); // Convert to decimal
+    //             event.target.value = 'R$' + inputValue.replace(',', '.'); // Format to R$xx.xx
+    //         } else {
+    //             event.target.value = ''; // Clear if no input
+    //
+    //         }
+    //     })
+    // });
 
+    document.getElementById("filter").addEventListener('click', () => {
+        filterForm.classList.toggle('hide-filters')
+    })
+
+    document.getElementById("predicate").addEventListener('input', (event) => {
+        document.getElementById("filter-value").name = event.target.value;
+    })
 </script>
 </body>
 </html>

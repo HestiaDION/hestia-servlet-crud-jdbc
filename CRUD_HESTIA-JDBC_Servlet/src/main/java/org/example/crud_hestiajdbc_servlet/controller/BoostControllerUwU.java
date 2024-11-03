@@ -120,16 +120,14 @@ public class BoostControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "boost");
-
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readBoost(req, resp);
     }
 
     private void readBoost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = (String) req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -149,6 +147,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -173,6 +173,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", nome);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -206,6 +208,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoValor);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -239,6 +243,8 @@ public class BoostControllerUwU extends HttpServlet
 
                         if (list != null)
                         {
+                            req.setAttribute("filter-value", ordenacaoPct);
+
                             req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
                         }
@@ -259,21 +265,28 @@ public class BoostControllerUwU extends HttpServlet
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = boostDAO.selecionarTodosBoosts();
 
-            if (list != null)
+            if (list != null && action.equals("read"))
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
+            else if (list != null && !action.equals("read"))
+            {
+                // Quando o método é chamado por outro método para obter os registros do banco
+                req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
+            }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
-
-        //
-        req.setAttribute("tableName", "boost");
 
         // Redireciona a requisição e resposta de volta à página de administração
         req.getRequestDispatcher("Crud.jsp").forward(req, resp);
@@ -315,8 +328,8 @@ public class BoostControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readBoost(req, resp);
     }
 
     private void deleteBoost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -339,7 +352,7 @@ public class BoostControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readBoost(req, resp);
     }
 }

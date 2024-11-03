@@ -114,35 +114,45 @@ public class FiltroControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readFiltro(req, resp);
     }
 
     private void readFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = (String) req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
 
         // Verifica se o filtro tem valor ou não
-        if (ValidationUtilsUwU.isValidString(predicate)) {
-            switch (predicate) {
+        if (ValidationUtilsUwU.isValidString(predicate))
+        {
+            switch (predicate)
+            {
                 case "uId":
                     String codigoParametro = req.getParameter("uId");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoParametro)) {
+                    if (ValidationUtilsUwU.isValidUUID(codigoParametro))
+                    {
                         UUID codigo = UUID.fromString(codigoParametro);
                         list = filtroDAO.selecionarFiltrosPorId(codigo);
 
-                        if (list != null) {
+                        if (list != null)
+                        {
+                            req.setAttribute("filter-value", codigo);
+
                             req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
-                        } else {
+                        }
+                        else
+                        {
                             ValidationUtilsUwU.logDatabaseIssue(req);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         ValidationUtilsUwU.logInputSetback(req);
                     }
                     break;
@@ -150,17 +160,25 @@ public class FiltroControllerUwU extends HttpServlet
                 case "cNome":
                     String nomeParameter = req.getParameter("cNome");
 
-                    if (ValidationUtilsUwU.isValidString(nomeParameter)) {
+                    if (ValidationUtilsUwU.isValidString(nomeParameter))
+                    {
                         String nome = nomeParameter;
                         list = filtroDAO.selecionarFiltrosPorNome(nome);
 
-                        if (list != null) {
+                        if (list != null)
+                        {
+                            req.setAttribute("filter-value", nome);
+
                             req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
-                        } else {
+                        }
+                        else
+                        {
                             ValidationUtilsUwU.logDatabaseIssue(req);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         ValidationUtilsUwU.logInputSetback(req);
                     }
                     break;
@@ -168,17 +186,25 @@ public class FiltroControllerUwU extends HttpServlet
                 case "cCategoria":
                     String categoriaParameter = req.getParameter("cCategoria");
 
-                    if (ValidationUtilsUwU.isValidString(categoriaParameter)) {
+                    if (ValidationUtilsUwU.isValidString(categoriaParameter))
+                    {
                         String categoria = categoriaParameter;
                         list = filtroDAO.selecionarFiltrosPorCategoria(categoria);
 
-                        if (list != null) {
+                        if (list != null)
+                        {
+                            req.setAttribute("filter-value", categoria);
+
                             req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                             ValidationUtilsUwU.logSuccessfulReading(req);
-                        } else {
+                        }
+                        else
+                        {
                             ValidationUtilsUwU.logDatabaseIssue(req);
                         }
-                    } else {
+                    }
+                    else
+                    {
                         ValidationUtilsUwU.logInputSetback(req);
                     }
                     break;
@@ -190,15 +216,25 @@ public class FiltroControllerUwU extends HttpServlet
         }
         else
         {
+            // Recebe a ação que deve ser ralizada como atributo da requisição
+            String action = (String) req.getParameter("action");
+
             list = filtroDAO.selecionarTodosFiltros();
 
-            if (list != null)
+            if (list != null && action.equals("read"))
             {
+                // Quando o método é chamado de forma primária, action é "read"
                 req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
                 ValidationUtilsUwU.logSuccessfulReading(req);
             }
+            else if (list != null && !action.equals("read"))
+            {
+                // Quando o método é chamado por outro método para obter os registros do banco
+                req.setAttribute("list", ValidationUtilsUwU.toFiltroStringList(list));
+            }
             else
             {
+                // Quando ocorre erro no banco de dados
                 ValidationUtilsUwU.logDatabaseIssue(req);
             }
         }
@@ -237,8 +273,8 @@ public class FiltroControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readFiltro(req, resp);
     }
 
     private void deleteFiltro(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -261,8 +297,7 @@ public class FiltroControllerUwU extends HttpServlet
             ValidationUtilsUwU.logInputSetback(req);
         }
 
-        req.setAttribute("tableName", "Filtro");
-        // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+        // Chama o método de leitura, que obtém os registros do banco e responde a requisição
+        readFiltro(req, resp);
     }
 }

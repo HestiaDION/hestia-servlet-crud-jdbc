@@ -6,12 +6,12 @@ As classes DAOs não utilizam o retorno do método conectar(); e do desconectar(
 
 Os métodos baseados no SELECT retornam um ResultSet vazio se não encontrarem um registro, e um ResultSet nulo em caso de exceção, tudo bem?
 
-Devemos adicionar métodos baseados no SELECT mais funcionais, por exemplo, que mostram o usuários com senha menor que seis dígitos?
+Mandar imagem
 
-Os métodos baseados no SELECT são muito repetitivos, eu devo manter a diferenciação por nome, ou encapsular para possibilitar uma fácil manutenção.
+Verificações de atividade do usuário
 
-Devemos fazer métodos baseados no UPDATE e DELETE com condições mais inteligentes, ou que sejam mais abrangentes, por exemplo, no caso de alterar ou deletar todos os usuários com senha menor que oito dígitos?
+Revisar tudo, inclusive ordem dos métodos e o que os outros fizeram
 
-Devemos rever o funcionamento dos métodos baseados no UPDATE, uma vez que eles atualizam todos os campos de uma vez, ao invés de atualizar só os solicitados.
+Revisar nomenclatura dos métodos e classes
 
-Tudo bem todos praticamente todos os métodos receberem um objeto como parâmetro?
+Ver se é possível mudar o login no banco para atividade
