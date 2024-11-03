@@ -13,7 +13,7 @@ import jakarta.servlet.ServletException;
 import org.example.crud_hestiajdbc_servlet.dao.AdminDAO;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
 
-@WebServlet(name = "login", value = "/login")
+@WebServlet(name = "login", value = "/login1")
 public class LoginController extends HttpServlet // REVISAR ESSA CLASSE INTEIRA
 {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -30,21 +30,26 @@ public class LoginController extends HttpServlet // REVISAR ESSA CLASSE INTEIRA
 
         rs = adminDAO.selecionarAdminsParaLogin(email, password);
 
-        if (rs != null)
-        { // REVISAR ESSA CLASSE INTEIRA
-            //Alterando o status do login do usuário para '1' (Ativo)
-//            adminDAO.atualizarAdminLogin(email);
+        try {
+            if (rs != null && rs.next())
+            { // REVISAR ESSA CLASSE INTEIRA
+                //Alterando o status do login do usuário para '1' (Ativo)
+                adminDAO.setAdminActive(email);
 
-            ValidationUtilsUwU.logSuccessfulLogin(req);
+                ValidationUtilsUwU.logSuccessfulLogin(req);
 
-            req.setAttribute("table-identifier", "admin");
+                req.setAttribute("table-identifier", "admin");
 
-            // Continua a requisição
-            adminControllerUwU.readAdmin(req, resp);
-        } // REVISAR ESSA CLASSE INTEIRA
-        else
-        { // REVISAR ESSA CLASSE INTEIRA
-            ValidationUtilsUwU.logInputSetback(req);
-        } // REVISAR ESSA CLASSE INTEIRA
+                // Continua a requisição
+                adminControllerUwU.readAdmin(req, resp);
+            } // REVISAR ESSA CLASSE INTEIRA
+            else
+            { // REVISAR ESSA CLASSE INTEIRA
+                ValidationUtilsUwU.logInputSetback(req);
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
+            } // REVISAR ESSA CLASSE INTEIRA
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     } // REVISAR ESSA CLASSE INTEIRA
 } // REVISAR ESSA CLASSE INTEIRA
