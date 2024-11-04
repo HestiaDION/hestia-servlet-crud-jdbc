@@ -90,17 +90,13 @@ public class PagamentoController extends HttpServlet {
     private void createPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String ativoParameter              = req.getParameter("cAtivo");
-        String dataParameter               = req.getParameter("dDtFim");
-        String porcentagemParameter        = req.getParameter("nPctDesconto");
-        String totalParameter              = req.getParameter("nTotal");
-        String userAnuncianteParameter     = req.getParameter("cUserAnunciante");
-        String emailAnuncianteParameter    = req.getParameter("cEmailAnunciante");
-        String nomePlanoParameter          = req.getParameter("cNmPlano");
-        String userUniversitarioParameter  = req.getParameter("cUserUniversitario");
-        String emailUniversitarioParameter = req.getParameter("cEmailUniversitario");
-        String dneUniversitarioParameter   = req.getParameter("cDNEUniversitario");
-
+        String ativoParameter        = req.getParameter("cAtivo");
+        String dataParameter         = req.getParameter("dDtFim");
+        String porcentagemParameter  = req.getParameter("nPctDesconto");
+        String totalParameter        = req.getParameter("nTotal");
+        String emailUsuarioParameter = req.getParameter("cEmailUsuario");
+        String nomePlanoParameter    = req.getParameter("cNmPlano");
+        String tipoUsuarioParameter  = req.getParameter("tipoUsuario");
 
         // Verifica se os parâmetros retornaram valores válidos
         if
@@ -109,27 +105,21 @@ public class PagamentoController extends HttpServlet {
                 Utils.isValidDate(dataParameter)                 &&
                 Utils.isValidPorcentagem(porcentagemParameter)   &&
                 Utils.isValidDouble(totalParameter)              &&
-                Utils.isValidString(userAnuncianteParameter)     &&
-                Utils.isValidString(emailAnuncianteParameter)    &&
+                Utils.isValidString(emailUsuarioParameter)       &&
                 Utils.isValidString(nomePlanoParameter)          &&
-                Utils.isValidString(userUniversitarioParameter)  &&
-                Utils.isValidString(emailUniversitarioParameter) &&
-                Utils.isValidString(dneUniversitarioParameter)
+                Utils.isValidInteger(tipoUsuarioParameter)
         )
         {
             String ativo              = ativoParameter;
             Date data                 = Date.valueOf(Utils.toLocalDate(dataParameter));
             Double porcentagem        = Double.parseDouble(porcentagemParameter);
             Double total              = Double.parseDouble(totalParameter);
-            String userAnunciante     = userAnuncianteParameter;
-            String emailAnunciante    = emailAnuncianteParameter;
-            String dnePlano           = nomePlanoParameter;
-            String userUniversitario  = userUniversitarioParameter;
-            String emailUniversitario = emailUniversitarioParameter;
-            String dneUniversitario   = dneUniversitarioParameter;
+            String emailUsuario       = emailUsuarioParameter;
+            String nomePlano          = nomePlanoParameter;
+            int tipoUsuario           = Integer.parseInt(tipoUsuarioParameter);
 
 
-            Pagamento pagamento = new Pagamento(ativo, data, porcentagem, total, userAnunciante, emailAnunciante, dnePlano, userUniversitario, emailUniversitario, dneUniversitario);
+            Pagamento pagamento = new Pagamento(ativo, data, porcentagem, total, emailUsuario, nomePlano, tipoUsuario);
 
             if (pagamentoDAO.addPagamento(pagamento) > 0)
                 Utils.logSuccessfulCreation(req);
@@ -289,13 +279,37 @@ public class PagamentoController extends HttpServlet {
                     }
                     break;
 
-                case "uId_Anunciante":
-                    String codigoAnuncianteParameter = req.getParameter("uId_Anunciante");
+//                case "uId_Anunciante":
+//                    String codigoAnuncianteParameter = req.getParameter("uId_Anunciante");
+//
+//                    if (Utils.isValidUUID(codigoAnuncianteParameter))
+//                    {
+//                        UUID codigoAnunciante = UUID.fromString(codigoAnuncianteParameter);
+//                        list = pagamentoDAO.getPagamentosByIdAnunciante(codigoAnunciante);
+//
+//                        if (list != null)
+//                        {
+//                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+//                            Utils.logSuccessfulReading(req);
+//                        }
+//                        else
+//                        {
+//                            Utils.logDatabaseIssue(req);
+//                        }
+//                    }
+//                    else
+//                    {
+//                        Utils.logInputSetback(req);
+//                    }
+//                    break;
 
-                    if (Utils.isValidUUID(codigoAnuncianteParameter))
+                case "cNmPlano":
+                    String nomePlanoParameter = req.getParameter("cNmPlano");
+
+                    if (Utils.isValidString(nomePlanoParameter))
                     {
-                        UUID codigoAnunciante = UUID.fromString(codigoAnuncianteParameter);
-                        list = pagamentoDAO.getPagamentosByIdAnunciante(codigoAnunciante);
+                        String nomePlano = nomePlanoParameter;
+                        list = pagamentoDAO.getPagamentoByNmPlano(nomePlano);
 
                         if (list != null)
                         {
@@ -311,54 +325,30 @@ public class PagamentoController extends HttpServlet {
                     {
                         Utils.logInputSetback(req);
                     }
-                    break;
 
-                case "uId_Plano":
-                    String codigoPlanoParameter = req.getParameter("uId_Plano");
-
-                    if (Utils.isValidUUID(codigoPlanoParameter))
-                    {
-                        UUID codigoPlano = UUID.fromString(codigoPlanoParameter);
-                        list = pagamentoDAO.getPagamentoByIdPlano(codigoPlano);
-
-                        if (list != null)
-                        {
-                            req.setAttribute("list", Utils.toPagamentoStringList(list));
-                            Utils.logSuccessfulReading(req);
-                        }
-                        else
-                        {
-                            Utils.logDatabaseIssue(req);
-                        }
-                    }
-                    else
-                    {
-                        Utils.logInputSetback(req);
-                    }
-
-                case "uId_Universitario":
-                    String codigoUniversitarioParameter = req.getParameter("uId_Universitario");
-
-                    if (Utils.isValidUUID(codigoUniversitarioParameter))
-                    {
-                        UUID codigoUniversitario = UUID.fromString(codigoUniversitarioParameter);
-                        list = pagamentoDAO.getPagamentoByIdUniversitario(codigoUniversitario);
-
-                        if (list != null)
-                        {
-                            req.setAttribute("list", Utils.toPagamentoStringList(list));
-                            Utils.logSuccessfulReading(req);
-                        }
-                        else
-                        {
-                            Utils.logDatabaseIssue(req);
-                        }
-                    }
-                    else
-                    {
-                        Utils.logInputSetback(req);
-                    }
-                    break;
+//                case "uId_Universitario":
+//                    String codigoUniversitarioParameter = req.getParameter("uId_Universitario");
+//
+//                    if (Utils.isValidUUID(codigoUniversitarioParameter))
+//                    {
+//                        UUID codigoUniversitario = UUID.fromString(codigoUniversitarioParameter);
+//                        list = pagamentoDAO.getPagamentoByIdUniversitario(codigoUniversitario);
+//
+//                        if (list != null)
+//                        {
+//                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+//                            Utils.logSuccessfulReading(req);
+//                        }
+//                        else
+//                        {
+//                            Utils.logDatabaseIssue(req);
+//                        }
+//                    }
+//                    else
+//                    {
+//                        Utils.logInputSetback(req);
+//                    }
+//                    break;
 
                 default:
                     Utils.logActionManagerSetback(req);
@@ -397,16 +387,13 @@ public class PagamentoController extends HttpServlet {
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
         String codigoParametro              = req.getParameter("uId");
-        String ativoParameter               = req.getParameter("cAtivo");
-        String dataParameter                = req.getParameter("dDtFim");
-        String porcentagemParameter         = req.getParameter("nPctDesconto");
-        String totalParameter               = req.getParameter("nTotal");
-        String userAnuncianteParameter      = req.getParameter("cUserAnunciante");
-        String emailAnuncianteParameter     = req.getParameter("cEmailAnunciante");
-        String nomePlanoParameter           = req.getParameter("cNmPlano");
-        String userUniversitarioParameter   = req.getParameter("cUserUniversitario");
-        String emailUniversitarioParameter  = req.getParameter("cEmailUniversitario");
-        String dneUniversitarioParameter    = req.getParameter("cDNEUniversitario");
+        String ativoParameter        = req.getParameter("cAtivo");
+        String dataParameter         = req.getParameter("dDtFim");
+        String porcentagemParameter  = req.getParameter("nPctDesconto");
+        String totalParameter        = req.getParameter("nTotal");
+        String emailUsuarioParameter = req.getParameter("cEmailUsuario");
+        String nomePlanoParameter    = req.getParameter("cNmPlano");
+        String tipoUsuarioParameter  = req.getParameter("tipoUsuario");
 
         // Verifica se os parâmetros têm valores válidos
         if
@@ -416,12 +403,9 @@ public class PagamentoController extends HttpServlet {
                 Utils.isValidDate(dataParameter)                 &&
                 Utils.isValidPorcentagem(porcentagemParameter)   &&
                 Utils.isValidDouble(totalParameter)              &&
-                Utils.isValidString(userAnuncianteParameter)     &&
-                Utils.isValidString(emailAnuncianteParameter)    &&
+                Utils.isValidString(emailUsuarioParameter)       &&
                 Utils.isValidString(nomePlanoParameter)          &&
-                Utils.isValidString(userUniversitarioParameter)  &&
-                Utils.isValidString(emailUniversitarioParameter) &&
-                Utils.isValidString(dneUniversitarioParameter)
+                Utils.isValidInteger(tipoUsuarioParameter)
         )
         {
             UUID codigo              = UUID.fromString(codigoParametro);
@@ -429,15 +413,12 @@ public class PagamentoController extends HttpServlet {
             Date data                 = Date.valueOf(Utils.toLocalDate(dataParameter));
             Double porcentagem        = Double.parseDouble(porcentagemParameter);
             Double total              = Double.parseDouble(totalParameter);
-            String userAnunciante     = userAnuncianteParameter;
-            String emailAnunciante    = emailAnuncianteParameter;
-            String dnePlano           = nomePlanoParameter;
-            String userUniversitario  = userUniversitarioParameter;
-            String emailUniversitario = emailUniversitarioParameter;
-            String dneUniversitario   = dneUniversitarioParameter;
+            String emailUsuario       = emailUsuarioParameter;
+            String nomePlano          = nomePlanoParameter;
+            int tipoUsuario           = Integer.parseInt(tipoUsuarioParameter);
 
 
-            Pagamento pagamento = new Pagamento(codigo, ativo, data, porcentagem, total, userAnunciante, emailAnunciante, dnePlano, userUniversitario, emailUniversitario, dneUniversitario);
+            Pagamento pagamento = new Pagamento(codigo, ativo, data, porcentagem, total, emailUsuario, nomePlano, tipoUsuario);
 
             if (pagamentoDAO.updatePagamento(pagamento) > 0)
                 Utils.logSuccessfulUpdate(req);
