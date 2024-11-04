@@ -42,21 +42,6 @@ public class Filtro {
         return cCategoria;
     }
 
-//    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId)
-    {
-        this.uId = uId;
-    } // Método Inútil Por Enquanto
-
-    public void setcNome(String cNome)
-    {
-        this.cNome = cNome;
-    } // Método Inútil Por Enquanto
-
-    public void setcCategoria(String cCategoria)
-    {
-        this.cCategoria = cCategoria;
-    } // Método Inútil Por Enquanto
 
 //    DEFINIÇÃO DO MÉTODO toString
     @Override

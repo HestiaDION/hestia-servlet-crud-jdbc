@@ -183,12 +183,12 @@ public class Plano_vantagemController extends HttpServlet
                     break;
 
                 case "uId_Plano":
-                    String codigoPlanoParameter = req.getParameter("uId_Plano");
+                    String nomePlanoParameter = req.getParameter("cNmPlano");
 
-                    if (Utils.isValidUUID(codigoPlanoParameter))
+                    if (Utils.isValidUUID(nomePlanoParameter))
                     {
-                        UUID codigoPlano = UUID.fromString(codigoPlanoParameter);
-                        list = planoVantagemDAO.getPlanoVantagensByIdPlano(codigoPlano);
+                        String nomePlano = nomePlanoParameter;
+                        list = planoVantagemDAO.getPlanoVantagensByNmPlano(nomePlano);
 
                         if (list != null)
                         {

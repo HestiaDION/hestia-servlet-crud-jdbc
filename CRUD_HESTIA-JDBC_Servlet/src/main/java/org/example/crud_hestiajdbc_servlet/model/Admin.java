@@ -62,26 +62,6 @@ public class Admin {
         return cLogin;
     }
 
-    //    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId)
-    {
-        this.uId = uId;
-    } // Método Inútil Por Enquanto
-
-    public void setcNome(String cNome)
-    {
-        this.cNome = cNome;
-    } // Método Inútil Por Enquanto
-
-    public void setcEmail(String cEmail)
-    {
-        this.cEmail = cEmail;
-    } // Método Inútil Por Enquanto
-
-    public void setcSenha(String cSenha)
-    {
-        this.cSenha = cSenha;
-    } // Método Inútil Por Enquanto
 
 //    DEFINIÇÃO DO MÉTODO toString
     @Override

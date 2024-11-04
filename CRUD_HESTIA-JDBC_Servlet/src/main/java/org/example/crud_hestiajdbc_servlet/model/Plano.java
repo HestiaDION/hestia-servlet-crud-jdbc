@@ -57,31 +57,6 @@ public class Plano {
         return cDescricao;
     }
 
-//    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId)
-    {
-        this.uId = uId;
-    } // Método Inútil Por Enquanto
-
-    public void setcNome(String cNome)
-    {
-        this.cNome = cNome;
-    } // Método Inútil Por Enquanto
-
-    public void setcTipoUsuario(String cTipoUsuario) {
-        this.cTipoUsuario = cTipoUsuario;
-    } // Método Inútil Por Enquanto
-
-    public void setnValor(double nValor)
-    {
-        this.nValor = nValor;
-    } // Método Inútil Por Enquanto
-
-    public void setcDescricao(String cDescricao)
-    {
-        this.cDescricao = cDescricao;
-    } // Método Inútil Por Enquanto
-
 //    DEFINIÇÃO DO MÉTODO toString
     @Override
     public String toString()
