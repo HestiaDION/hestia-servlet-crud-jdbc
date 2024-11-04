@@ -14,7 +14,7 @@ import org.example.crud_hestiajdbc_servlet.dao.BoostDAO;
 import org.example.crud_hestiajdbc_servlet.model.Boost;
 
 @WebServlet(name = "boost", value = "/boost")
-public class BoostControllerUwU extends HttpServlet
+public class BoostController extends HttpServlet
 {
 //    DECLARAÇÃO E INSTANCIAÇÃO DE OBJETO ESTÁTICO PARA MEDIAR A INTERAÇÃO COM O BANCO DE DADOS
     BoostDAO boostDAO = new BoostDAO();
@@ -29,7 +29,7 @@ public class BoostControllerUwU extends HttpServlet
         // Espefica com a classe do objeto que está sendo enviado
         req.setAttribute("table-identifier", "boost");
 
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             if (action.equals("read"))
             {
@@ -37,13 +37,13 @@ public class BoostControllerUwU extends HttpServlet
             }
             else
             {
-                ValidationUtilsUwU.logActionManagerSetback(req);
+                Utils.logActionManagerSetback(req);
                 req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
@@ -58,7 +58,7 @@ public class BoostControllerUwU extends HttpServlet
         req.setAttribute("table-identifier", "boost");
 
         // Faz a validação do atributo
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             switch (action)
             {
@@ -75,13 +75,13 @@ public class BoostControllerUwU extends HttpServlet
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
                     req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
@@ -98,10 +98,10 @@ public class BoostControllerUwU extends HttpServlet
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidString(nomeParameter)             &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)            &&
-                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter) &&
-                ValidationUtilsUwU.isValidString(descricaoParameter)
+                Utils.isValidString(nomeParameter)             &&
+                Utils.isValidDouble(valorParameter)            &&
+                Utils.isValidPorcentagem(porcentagemParameter) &&
+                Utils.isValidString(descricaoParameter)
         )
         {
             String nome        = nomeParameter;
@@ -110,14 +110,14 @@ public class BoostControllerUwU extends HttpServlet
             String descricao   = descricaoParameter;
             Boost boost = new Boost(nome, valor, porcentagem, descricao);
 
-            if (boostDAO.adicionarBoost(boost) > 0)
-                ValidationUtilsUwU.logSuccessfulCreation(req);
+            if (boostDAO.addBoost(boost) > 0)
+                Utils.logSuccessfulCreation(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -133,59 +133,55 @@ public class BoostControllerUwU extends HttpServlet
         ResultSet list;
 
         // Verifica se o filtro tem valor ou não
-        if (ValidationUtilsUwU.isValidString(predicate))
+        if (Utils.isValidString(predicate))
         {
             switch (predicate)
             {
                 case "uId":
                     String codigoParametro = req.getParameter("uId");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoParametro))
+                    if (Utils.isValidUUID(codigoParametro))
                     {
                         UUID codigo = UUID.fromString(codigoParametro);
-                        list = boostDAO.selecionarBoostsPorId(codigo);
+                        list = boostDAO.getBoostById(codigo);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigo);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toBoostStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "cNmBoost":
                     String nomeParameter = req.getParameter("cNmBoost");
 
-                    if (ValidationUtilsUwU.isValidString(nomeParameter))
+                    if (Utils.isValidString(nomeParameter))
                     {
                         String nome = nomeParameter;
-                        list = boostDAO.selecionarBoostsPorNome(nome);
+                        list = boostDAO.getBoostByName(nome);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", nome);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toBoostStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
@@ -194,7 +190,7 @@ public class BoostControllerUwU extends HttpServlet
                     String ordenacaoValorParameter = req.getParameter("sort");
 
                     if (
-                            ValidationUtilsUwU.isValidChar(ordenacaoValorParameter) &&
+                            Utils.isValidChar(ordenacaoValorParameter) &&
                             ordenacaoValorParameter.charAt(0) == '>'                ||
                             ordenacaoValorParameter.charAt(0) == '<'
                     )
@@ -202,25 +198,23 @@ public class BoostControllerUwU extends HttpServlet
                         char ordenacaoValor = ordenacaoValorParameter.charAt(0);
 
                         if (ordenacaoValor == '>')
-                            list = boostDAO.selecionarBoostsPorPctBoostCrescente();
+                            list = boostDAO.getBoostByValorAscending();
                         else
-                            list = boostDAO.selecionarBoostsPorValorDecrescente();
+                            list = boostDAO.getBoostsByValorDescending();
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", ordenacaoValor);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toBoostStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
@@ -229,7 +223,7 @@ public class BoostControllerUwU extends HttpServlet
                     String ordenacaoPctParameter = req.getParameter("sort");
 
                     if (
-                            ValidationUtilsUwU.isValidChar(ordenacaoPctParameter) &&
+                            Utils.isValidChar(ordenacaoPctParameter) &&
                             ordenacaoPctParameter.charAt(0) == '>'                ||
                             ordenacaoPctParameter.charAt(0) == '<'
                     )
@@ -237,30 +231,28 @@ public class BoostControllerUwU extends HttpServlet
                         char ordenacaoPct = ordenacaoPctParameter.charAt(0);
 
                         if (ordenacaoPct == '>')
-                            list = boostDAO.selecionarBoostsPorPctBoostCrescente();
+                            list = boostDAO.getBoostsByPctBoostAscending();
                         else
-                            list = boostDAO.selecionarBoostsPorPctBoostDecrescente();
+                            list = boostDAO.getBoostByPctBoostDescending();
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", ordenacaoPct);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toBoostStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                             ValidationUtilsUwU.logDatabaseIssue(req);
+                             Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
             }
         }
         else
@@ -268,23 +260,23 @@ public class BoostControllerUwU extends HttpServlet
             // Recebe a ação que deve ser ralizada como atributo da requisição
             String action = (String) req.getParameter("action");
 
-            list = boostDAO.selecionarTodosBoosts();
+            list = boostDAO.getAllBoosts();
 
             if (list != null && action.equals("read"))
             {
                 // Quando o método é chamado de forma primária, action é "read"
-                req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
-                ValidationUtilsUwU.logSuccessfulReading(req);
+                req.setAttribute("list", Utils.toBoostStringList(list));
+                Utils.logSuccessfulReading(req);
             }
             else if (list != null && !action.equals("read"))
             {
                 // Quando o método é chamado por outro método para obter os registros do banco
-                req.setAttribute("list", ValidationUtilsUwU.toBoostStringList(list));
+                req.setAttribute("list", Utils.toBoostStringList(list));
             }
             else
             {
                 // Quando ocorre erro no banco de dados
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
             }
         }
 
@@ -304,11 +296,11 @@ public class BoostControllerUwU extends HttpServlet
         // Verifica se os parâmetros têm valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParameter)             &&
-                ValidationUtilsUwU.isValidString(nomeParameter)             &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)            &&
-                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter) &&
-                ValidationUtilsUwU.isValidString(descricaoParameter)
+                Utils.isValidUUID(codigoParameter)             &&
+                Utils.isValidString(nomeParameter)             &&
+                Utils.isValidDouble(valorParameter)            &&
+                Utils.isValidPorcentagem(porcentagemParameter) &&
+                Utils.isValidString(descricaoParameter)
         )
         {
             UUID codigo        = UUID.fromString(codigoParameter);
@@ -318,14 +310,14 @@ public class BoostControllerUwU extends HttpServlet
             String descricao   = descricaoParameter;
             Boost boost = new Boost(codigo, nome, valor, porcentagem,descricao);
 
-            if (boostDAO.atualizarBoost(boost) > 0)
-                ValidationUtilsUwU.logSuccessfulUpdate(req);
+            if (boostDAO.updateBoost(boost) > 0)
+                Utils.logSuccessfulUpdate(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -338,18 +330,18 @@ public class BoostControllerUwU extends HttpServlet
         String codigoParameter = req.getParameter("uId");
 
         // Verifica se os parâmetros retornaram valores válidos
-        if (ValidationUtilsUwU.isValidUUID(codigoParameter))
+        if (Utils.isValidUUID(codigoParameter))
         {
             UUID codigo = UUID.fromString(codigoParameter);
 
-            if (boostDAO.removerBoost(codigo) > 0)
-                ValidationUtilsUwU.logSuccessfulRemoval(req);
+            if (boostDAO.removeBoost(codigo) > 0)
+                Utils.logSuccessfulRemoval(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição

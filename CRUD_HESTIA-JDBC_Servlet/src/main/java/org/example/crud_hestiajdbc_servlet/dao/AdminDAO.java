@@ -1,434 +1,468 @@
 package org.example.crud_hestiajdbc_servlet.dao;
 
-import org.example.crud_hestiajdbc_servlet.connection.Conexao;
+import org.example.crud_hestiajdbc_servlet.connection.DatabaseConnection;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class AdminDAO extends Conexao {
+public class AdminDAO extends DatabaseConnection
+{
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
-    public int adicionarAdmin(Admin admin)
+    public int addAdmin(Admin admin)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Admin (cNome, cEmail, cSenha) VALUES (?, ?, ?)");
+                pstmt.setString(1, admin.getcNome());
+                pstmt.setString(2, admin.getcEmail());
+                pstmt.setString(3, admin.getcSenha());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Admin (cNome, cEmail, cSenha) VALUES (?, ?, ?)");
-            pstmt.setString(1, admin.getcNome());
-            pstmt.setString(2, admin.getcEmail());
-            pstmt.setString(3, admin.getcSenha());
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodosAdmins()
+    public ResultSet getAllAdmins()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarAdminsPorId(UUID uId)
+    public ResultSet getAdminById(UUID uId)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarAdminsPorNome(String cNome)
+    public ResultSet getAdminByName(String cNome)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cNome = ?");
+                pstmt.setString(1, cNome);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cNome = ?");
-            pstmt.setString(1, cNome);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarAdminsPorEmail(String cEmail)
+    public ResultSet getAdminByEmail(String cEmail)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ?");
+                pstmt.setString(1, cEmail);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ?");
-            pstmt.setString(1, cEmail);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarAdminsPorTamanhoSenha(int tamanhoSenha)
+    public ResultSet getAdminsByPasswordSize(int tamanhoSenha)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE LENGTH(csenha) < ?");
+                pstmt.setInt(1, tamanhoSenha);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE LENGTH(csenha) < ?");
-            pstmt.setInt(1, tamanhoSenha);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarAdminsPorAtividade(String cLogin)
+    public ResultSet getAdminsByActivity(String cLogin)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cLogin = ?");
+                pstmt.setString(1, cLogin);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cLogin = ?");
-            pstmt.setString(1, cLogin);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public int atividadeAdminLogin(String cEmail)
+    public int getAdminActivity(String cEmail)
     {
         int atividade = -1;
 
-        try
+        if (connect())
         {
-            conectar();
-
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT cLogin FROM Admin WHERE cEmail = ?");
-            pstmt.setString(1, cEmail);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
-
-            //Adiciona 1 se o admin estiver logado e 0 se não
-            if(rs.next())
+            try
             {
-                if (rs.getString("cLogin").equals('1'))
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT cLogin FROM Admin WHERE cEmail = ?");
+                pstmt.setString(1, cEmail);
+
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+
+                //Adiciona 1 se o admin estiver logado e 0 se não
+                if(rs.next())
                 {
-                    atividade = 1;
-                }
-                else
-                {
-                    atividade = 0;
+                    if (rs.getString("cLogin").equals('1'))
+                    {
+                        atividade = 1;
+                    }
+                    else
+                    {
+                        atividade = 0;
+                    }
                 }
             }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
-        }
-        finally
-        {
-            desconectar();
-            // Retorna a atividade atual do usuário
-            return atividade;
-        }
+
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return atividade;
     }
 
-    public  ResultSet selecionarAdminsParaLogin(String cEmail, String cSenha)
+    public  ResultSet getAdminForLogin(String cEmail, String cSenha)
     {
-        try
-        {
-            conectar();
+        rs = null;
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ? AND cSenha = ?");
-            pstmt.setString(1, cEmail);
-            pstmt.setString(2, cSenha);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
-        }
-        catch (SQLException sqle)
+        if (connect())
         {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ? AND cSenha = ?");
+                pstmt.setString(1, cEmail);
+                pstmt.setString(2, cSenha);
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        finally
-        {
-            desconectar();
-        }
+
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
         return rs;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
-    public UUID acharIdAdmin(String email)
+    public UUID getAdminId(String email)
     {
-    UUID uuid = null;
-    try {
-        conectar();
+        UUID uuid = null;
 
-        // Prepara a instrução SQL
-        pstmt = conn.prepareStatement("SELECT FN_Admin_Id(?)");
-        pstmt.setString(1, email);
+        if (connect())
+        {
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT FN_Admin_Id(?)");
+                pstmt.setString(1, email);
 
-        // Executa a instrução e guarda as linhas retornadas
-        rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
 
-        // Extrai o UUID da primeira linha, se existir
-        if (rs.next()) {
-            uuid = (UUID) rs.getObject(1);
+                // Extrai o UUID da primeira linha, se existir
+                if (rs.next())
+                {
+                    uuid = (UUID) rs.getObject(1);
+                }
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-    } catch (SQLException sqle) {
-        // Imprime a exceção no console
-        sqle.printStackTrace();
-    } finally {
-        desconectar();
+
+        // Sempre retorna um UUID, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return uuid;
     }
-    return uuid;
-}
 
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
-    public int atualizarAdmin(Admin admin)
+    public int updateAdmin(Admin admin)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ? WHERE uId = ?");
+                pstmt.setString(1, admin.getcNome());
+                pstmt.setString(2, admin.getcEmail());
+                pstmt.setString(3, admin.getcSenha());
+                pstmt.setObject(4, admin.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ? WHERE uId = ?");
-            pstmt.setString(1, admin.getcNome());
-            pstmt.setString(2, admin.getcEmail());
-            pstmt.setString(3, admin.getcSenha());
-            pstmt.setObject(4, admin.getuId());
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
     public int setAdminActive(String cEmail)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '1' WHERE cEmail = ?");
+                pstmt.setString(1, cEmail);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '1' WHERE cEmail = ?");
-            pstmt.setString(1, cEmail);
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
     public int setAdminInactive(String cEmail)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '0' WHERE cEmail = ?");
+                pstmt.setString(1, cEmail);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '0' WHERE cEmail = ?");
-            pstmt.setString(1, cEmail);
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerAdmin(UUID uId)
+    public int removeAdmin(UUID uId)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Admin WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Admin WHERE uId = ?");
-            pstmt.setObject(1, uId);
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
 
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                return linhasAfetadas;
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 }

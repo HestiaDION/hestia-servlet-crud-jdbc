@@ -1,19 +1,16 @@
 package org.example.crud_hestiajdbc_servlet.connection;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
-public class Conexao {
+public class DatabaseConnection
+{
 //    DECLARAÇÃO DOS ATRIBUTOS DA CLASSE
     protected Connection conn;
     protected PreparedStatement pstmt;
     protected ResultSet rs;
 
 //    DEFINIÇÃO DO MÉTODO CONECTAR
-    protected boolean conectar()
+    protected boolean connect()
     {
         try
         {
@@ -39,7 +36,7 @@ public class Conexao {
     }
 
 //    DEFINIÇÃO DO MÉTODO DESCONECTAR
-    protected boolean desconectar()
+    protected boolean disconnect()
     {
         try
         {

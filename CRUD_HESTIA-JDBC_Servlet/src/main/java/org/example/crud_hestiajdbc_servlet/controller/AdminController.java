@@ -14,7 +14,7 @@ import org.example.crud_hestiajdbc_servlet.dao.AdminDAO;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
 
 @WebServlet(name = "admin", value = "/admin")
-public class AdminControllerUwU extends HttpServlet
+public class AdminController extends HttpServlet
 {
 //    DECLARAÇÃO E INSTANCIAÇÃO DE OBJETO ESTÁTICO PARA MEDIAR A INTERAÇÃO COM O BANCO DE DADOS
     AdminDAO adminDAO = new AdminDAO();
@@ -29,7 +29,7 @@ public class AdminControllerUwU extends HttpServlet
         // Espefica com a classe do objeto que está sendo enviado
         req.setAttribute("table-identifier", "admin");
 
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             if (action.equals("read"))
             {
@@ -37,13 +37,13 @@ public class AdminControllerUwU extends HttpServlet
             }
             else
             {
-                ValidationUtilsUwU.logActionManagerSetback(req);
+                Utils.logActionManagerSetback(req);
                 req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
@@ -58,7 +58,7 @@ public class AdminControllerUwU extends HttpServlet
         req.setAttribute("table-identifier", "admin");
 
         // Faz a validação do atributo
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             switch (action)
             {
@@ -75,13 +75,13 @@ public class AdminControllerUwU extends HttpServlet
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
                     req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
@@ -97,9 +97,9 @@ public class AdminControllerUwU extends HttpServlet
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidString(nomeParameter) &&
-                ValidationUtilsUwU.isValidString(emailParamter) &&
-                ValidationUtilsUwU.isValidString(senhaParamter)
+                Utils.isValidString(nomeParameter) &&
+                Utils.isValidString(emailParamter) &&
+                Utils.isValidString(senhaParamter)
         )
         {
             String nome  = nomeParameter;
@@ -107,14 +107,14 @@ public class AdminControllerUwU extends HttpServlet
             String senha = senhaParamter;
             Admin admin = new Admin(nome, email, senha);
 
-            if (adminDAO.adicionarAdmin(admin) > 0)
-                ValidationUtilsUwU.logSuccessfulCreation(req);
+            if (adminDAO.addAdmin(admin) > 0)
+                Utils.logSuccessfulCreation(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -131,85 +131,79 @@ public class AdminControllerUwU extends HttpServlet
         ResultSet list;
 
         // Verifica se o filtro tem valor ou não
-        if (ValidationUtilsUwU.isValidString(predicate))
+        if (Utils.isValidString(predicate))
         {
             switch (predicate)
             {
                 case "uId":
                     String codigoParameter = req.getParameter("uId");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoParameter))
+                    if (Utils.isValidUUID(codigoParameter))
                     {
                         UUID codigo = UUID.fromString(codigoParameter);
-                        list = adminDAO.selecionarAdminsPorId(codigo);
+                        list = adminDAO.getAdminById(codigo);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigo);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toAdminStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "cNome":
                     String nomeParameter = req.getParameter("cNome");
 
-                    if (ValidationUtilsUwU.isValidString(nomeParameter))
+                    if (Utils.isValidString(nomeParameter))
                     {
                         String nome = nomeParameter;
-                        list = adminDAO.selecionarAdminsPorNome(nome);
+                        list = adminDAO.getAdminByName(nome);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", nome);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toAdminStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "cEmail":
                     String emailParameter = req.getParameter("cEmail");
 
-                    if (ValidationUtilsUwU.isValidString(emailParameter))
+                    if (Utils.isValidString(emailParameter))
                     {
                         String email = emailParameter;
-                        list = adminDAO.selecionarAdminsPorEmail(email);
+                        list = adminDAO.getAdminByEmail(email);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", email);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toAdminStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
@@ -217,31 +211,29 @@ public class AdminControllerUwU extends HttpServlet
                     // Não recebe uma senha especifica, e sim um tamanho de senha (Integer)
                     String tamanhoSenhaParameter = req.getParameter("length");
 
-                    if (ValidationUtilsUwU.isValidInteger(tamanhoSenhaParameter))
+                    if (Utils.isValidInteger(tamanhoSenhaParameter))
                     {
                         int tamanhoSenha = Integer.parseInt(tamanhoSenhaParameter);
-                        list = adminDAO.selecionarAdminsPorTamanhoSenha(tamanhoSenha);
+                        list = adminDAO.getAdminsByPasswordSize(tamanhoSenha);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", tamanhoSenha);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toAdminStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
             }
         }
         else
@@ -249,23 +241,23 @@ public class AdminControllerUwU extends HttpServlet
             // Recebe a ação que deve ser ralizada como atributo da requisição
             String action = (String) req.getParameter("action");
 
-            list = adminDAO.selecionarTodosAdmins();
+            list = adminDAO.getAllAdmins();
 
             if (list != null && action.equals("read"))
             {
                 // Quando o método é chamado de forma primária, action é "read"
-                req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
-                ValidationUtilsUwU.logSuccessfulReading(req);
+                req.setAttribute("list", Utils.toAdminStringList(list));
+                Utils.logSuccessfulReading(req);
             }
             else if (list != null && !action.equals("read"))
             {
                 // Quando o método é chamado por outro método para obter os registros do banco
-                req.setAttribute("list", ValidationUtilsUwU.toAdminStringList(list));
+                req.setAttribute("list", Utils.toAdminStringList(list));
             }
             else
             {
                 // Quando ocorre erro no banco de dados
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
             }
         }
 
@@ -284,10 +276,10 @@ public class AdminControllerUwU extends HttpServlet
         // Verifica se os parâmetros têm valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParameter) &&
-                ValidationUtilsUwU.isValidString(nomeParameter) &&
-                ValidationUtilsUwU.isValidString(emailParamter) &&
-                ValidationUtilsUwU.isValidString(senhaParamter)
+                Utils.isValidUUID(codigoParameter) &&
+                Utils.isValidString(nomeParameter) &&
+                Utils.isValidString(emailParamter) &&
+                Utils.isValidString(senhaParamter)
         )
         {
             UUID codigo  = UUID.fromString(codigoParameter);
@@ -296,14 +288,14 @@ public class AdminControllerUwU extends HttpServlet
             String senha = senhaParamter;
             Admin admin = new Admin(codigo, nome, email, senha);
 
-            if (adminDAO.atualizarAdmin(admin) > 0)
-                ValidationUtilsUwU.logSuccessfulUpdate(req);
+            if (adminDAO.updateAdmin(admin) > 0)
+                Utils.logSuccessfulUpdate(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -317,18 +309,18 @@ public class AdminControllerUwU extends HttpServlet
 
         // Verifica se os parâmetros retornaram valores válidos
         if
-        (ValidationUtilsUwU.isValidUUID(codigoParameter))
+        (Utils.isValidUUID(codigoParameter))
         {
             UUID codigo = UUID.fromString(codigoParameter);
 
-            if (adminDAO.removerAdmin(codigo) > 0)
-                ValidationUtilsUwU.logSuccessfulRemoval(req);
+            if (adminDAO.removeAdmin(codigo) > 0)
+                Utils.logSuccessfulRemoval(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição

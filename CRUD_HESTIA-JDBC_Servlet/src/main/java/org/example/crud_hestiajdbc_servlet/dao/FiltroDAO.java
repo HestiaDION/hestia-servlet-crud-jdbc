@@ -1,247 +1,265 @@
 package org.example.crud_hestiajdbc_servlet.dao;
 
-import org.example.crud_hestiajdbc_servlet.connection.Conexao;
+import org.example.crud_hestiajdbc_servlet.connection.DatabaseConnection;
 import org.example.crud_hestiajdbc_servlet.model.Filtro;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class FiltroDAO extends Conexao {
+public class FiltroDAO extends DatabaseConnection
+{
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
-    public int adicionarFiltro(Filtro filtro)
+    public int addFiltro(Filtro filtro)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Filtro (cNome, cCategoria) VALUES (?, ?)");
+                pstmt.setString(1, filtro.getcNome());
+                pstmt.setString(2, filtro.getcCategoria());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Filtro (cNome, cCategoria) VALUES (?, ?)");
-            pstmt.setString(1, filtro.getcNome());
-            pstmt.setString(2, filtro.getcCategoria());
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodosFiltros()
+    public ResultSet getAllFiltros()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarFiltrosPorId(UUID uId)
+    public ResultSet getFiltroById(UUID uId)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarFiltrosPorNome(String cNome)
+    public ResultSet getFiltroByNome(String cNome)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cNome = ?");
+                pstmt.setString(1, cNome);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cNome = ?");
-            pstmt.setString(1, cNome);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarFiltrosPorCategoria(String cCategoria)
+    public ResultSet getFiltroByCategoria(String cCategoria)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cCategoria = ?");
+                pstmt.setString(1, cCategoria);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cCategoria = ?");
-            pstmt.setString(1, cCategoria);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
-    public UUID acharIdFiltro(String nmFiltro, String categoria)
+    public UUID getFiltroId(String nmFiltro, String categoria)
     {
         UUID uuid = null;
-        try {
-            conectar();
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT FN_Filtro_Id(?, ?)");
-            pstmt.setString(1, nmFiltro);
-            pstmt.setString(2, categoria);
+        if (connect())
+        {
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT FN_Filtro_Id(?, ?)");
+                pstmt.setString(1, nmFiltro);
+                pstmt.setString(2, categoria);
 
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
 
-            // Extrai o UUID da primeira linha, se existir
-            if (rs.next()) {
-                uuid = (UUID) rs.getObject(1);
+                // Extrai o UUID da primeira linha, se existir
+                if (rs.next())
+                {
+                    uuid = (UUID) rs.getObject(1);
+                }
             }
-        } catch (SQLException sqle) {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
-        } finally {
-            desconectar();
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
+
+        // Sempre retorna um UUID, que pode ser null caso não seja possível conectar ou ocorra uma exceção
         return uuid;
     }
 
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
-    public int atualizarFiltro(Filtro filtro)
+    public int updateFiltro(Filtro filtro)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Filtro SET cNome = ?, cCategoria = ? WHERE uId = ?");
+                pstmt.setString(1, filtro.getcNome());
+                pstmt.setString(2, filtro.getcCategoria());
+                pstmt.setObject(3, filtro.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Filtro SET cNome = ?, cCategoria = ? WHERE uId = ?");
-            pstmt.setString(1, filtro.getcNome());
-            pstmt.setString(2, filtro.getcCategoria());
-            pstmt.setObject(3, filtro.getuId());
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerFiltro(UUID uId)
+    public int removeFiltro(UUID uId)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Filtro WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Filtro WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 }
