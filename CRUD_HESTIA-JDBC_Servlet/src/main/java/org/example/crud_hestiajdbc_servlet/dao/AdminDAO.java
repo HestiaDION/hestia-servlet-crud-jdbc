@@ -3,7 +3,6 @@ package org.example.crud_hestiajdbc_servlet.dao;
 import org.example.crud_hestiajdbc_servlet.connection.Conexao;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
@@ -186,7 +185,7 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public ResultSet selecionarAdminsLogin(String cLogin)
+    public ResultSet selecionarAdminsPorAtividade(String cLogin)
     {
         try
         {
@@ -215,7 +214,7 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public int verificarAdminLogin(String cEmail)
+    public int atividadeAdminLogin(String cEmail)
     {
         int atividade = -1;
 
@@ -345,7 +344,7 @@ public class AdminDAO extends Conexao {
         }
     }
 
-    public int atualizarAdminLogin(String cEmail)
+    public int setAdminActive(String cEmail)
     {
         try
         {
@@ -355,6 +354,34 @@ public class AdminDAO extends Conexao {
             pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '1' WHERE cEmail = ?");
             pstmt.setString(1, cEmail);
 
+            // Executa a instrução e guarda as linhas afetadas
+            int linhasAfetadas = pstmt.executeUpdate();
+
+            return linhasAfetadas;
+        }
+        catch (SQLException sqle)
+        {
+            // Imprime a exceção no console
+            sqle.printStackTrace();
+
+            // Retorna -1 se ocorrer algum erro
+            return -1;
+        }
+        finally
+        {
+            desconectar();
+        }
+    }
+
+    public int setAdminInactive(String cEmail)
+    {
+        try
+        {
+            conectar();
+
+            // Prepara a instrução SQL e define os seus argumentos
+            pstmt = conn.prepareStatement("UPDATE Admin SET cLogin = '0' WHERE cEmail = ?");
+            pstmt.setString(1, cEmail);
 
             // Executa a instrução e guarda as linhas afetadas
             int linhasAfetadas = pstmt.executeUpdate();
