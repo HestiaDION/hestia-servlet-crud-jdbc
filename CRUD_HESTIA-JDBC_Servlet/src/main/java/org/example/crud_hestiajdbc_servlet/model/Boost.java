@@ -56,31 +56,6 @@ public class Boost {
         return cDescricao;
     }
 
-    //    DEFINIÇÃO MÉTODOS setters
-    public void setuId(UUID uId)
-    {
-        this.uId = uId;
-    } // Método Inútil Por Enquanto
-
-    public void setcNmBoost(String cTipoBoost)
-    {
-        this.cNmBoost = cTipoBoost;
-    } // Método Inútil Por Enquanto
-
-    public void setnValor(double nValor)
-    {
-        this.nValor = nValor;
-    } // Método Inútil Por Enquanto
-
-    public void setnPctBoost(double nPctBoost)
-    {
-        this.nPctBoost = nPctBoost;
-    } // Método Inútil Por Enquanto
-
-    public void setcDescricao(String cDescricao)
-    {
-        this.cDescricao = cDescricao;
-    }
 
     //    DEFINIÇÃO DO MÉTODO toString
     @Override
