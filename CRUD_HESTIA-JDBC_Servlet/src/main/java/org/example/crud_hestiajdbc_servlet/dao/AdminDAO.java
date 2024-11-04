@@ -274,7 +274,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ? AND cSenha = ?");
+                pstmt = conn.prepareStatement("SELECT cNome, cFoto FROM Admin WHERE cEmail = ? AND cSenha = ?");
                 pstmt.setString(1, cEmail);
                 pstmt.setString(2, cSenha);
 

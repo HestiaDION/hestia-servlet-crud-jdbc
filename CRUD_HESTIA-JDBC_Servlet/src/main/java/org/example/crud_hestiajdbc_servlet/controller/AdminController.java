@@ -1,19 +1,26 @@
 package org.example.crud_hestiajdbc_servlet.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
+import java.util.Base64;
 import java.util.UUID;
 
+import jakarta.servlet.http.Part;
 import org.example.crud_hestiajdbc_servlet.dao.AdminDAO;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
+import org.example.crud_hestiajdbc_servlet.model.Pagamento;
 
 @WebServlet(name = "admin", value = "/admin")
+// Permite trabalhar com arquivos
+@MultipartConfig
 public class AdminController extends HttpServlet
 {
 //    DECLARAÇÃO E INSTANCIAÇÃO DE OBJETO ESTÁTICO PARA MEDIAR A INTERAÇÃO COM O BANCO DE DADOS
@@ -90,22 +97,25 @@ public class AdminController extends HttpServlet
     private void createAdmin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String nomeParameter = req.getParameter("cNome");
-        String emailParamter = req.getParameter("cEmail");
-        String senhaParamter = req.getParameter("cSenha");
+        String nomeParameter  = req.getParameter("cNome");
+        String emailParameter = req.getParameter("cEmail");
+        String senhaParamter  = req.getParameter("cSenha");
+        Part imagemParameter  = req.getPart("cFoto");
 
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                Utils.isValidString(nomeParameter) &&
-                Utils.isValidString(emailParamter) &&
-                Utils.isValidString(senhaParamter)
+                Utils.isValidString(nomeParameter)  &&
+                Utils.isValidString(emailParameter) &&
+                Utils.isValidString(senhaParamter)  &&
+                Utils.isValidPhoto(imagemParameter)
         )
         {
             String nome  = nomeParameter;
-            String email = emailParamter;
+            String email = emailParameter;
             String senha = senhaParamter;
-            Admin admin = new Admin(nome, email, senha);
+            String imagem = Base64.getEncoder().encodeToString(Utils.toPhotoByteArray(imagemParameter.getInputStream()));
+            Admin admin = new Admin(nome, email, imagem, senha);
 
             if (adminDAO.addAdmin(admin) > 0)
                 Utils.logSuccessfulCreation(req);
@@ -271,22 +281,25 @@ public class AdminController extends HttpServlet
         String codigoParameter = req.getParameter("uId");
         String nomeParameter   = req.getParameter("cNome");
         String emailParamter   = req.getParameter("cEmail");
+        Part imagemParameter   = req.getPart("cImagem");
         String senhaParamter   = req.getParameter("cSenha");
 
         // Verifica se os parâmetros têm valores válidos
         if
         (
-                Utils.isValidUUID(codigoParameter) &&
-                Utils.isValidString(nomeParameter) &&
-                Utils.isValidString(emailParamter) &&
+                Utils.isValidUUID(codigoParameter)  &&
+                Utils.isValidString(nomeParameter)  &&
+                Utils.isValidString(emailParamter)  &&
+                Utils.isValidPhoto(imagemParameter) &&
                 Utils.isValidString(senhaParamter)
         )
         {
             UUID codigo  = UUID.fromString(codigoParameter);
             String nome  = nomeParameter;
             String email = emailParamter;
+            String imagem = Base64.getEncoder().encodeToString(Utils.toPhotoByteArray(imagemParameter.getInputStream()));
             String senha = senhaParamter;
-            Admin admin = new Admin(codigo, nome, email, senha);
+            Admin admin = new Admin(codigo, nome, email, imagem, senha);
 
             if (adminDAO.updateAdmin(admin) > 0)
                 Utils.logSuccessfulUpdate(req);
