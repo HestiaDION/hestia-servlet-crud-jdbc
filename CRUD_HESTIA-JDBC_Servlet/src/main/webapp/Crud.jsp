@@ -40,17 +40,11 @@
                 break;
 
             case "pagamento":
-                fieldNames = "Id,Ativo,Data Fim,Total";
-                fieldTypes = "uId,cAtivo,dDtFim,nTotal";
-                ignoreField = "true,false,false,false";
-                regexIds = "null,0,4,4,5";
+                fieldNames = "Id,Ativo,Data Final,Desconto,Total,Nome,Email,Tipo de Usuario";
+                fieldTypes = "uId,cAtivo,dDtFim,nPctDesconto,nTotal,cNmPlano,cEmailUsuario,cTipoUsuario";
+                ignoreField = "true,false,false,false,false,false,false,false";
+                regexIds = "null,0,7,6,5,4,1,4";
                 break;
-
-//            private UUID uId;            // (UUID)
-//            private String cNome;        // (VARCHAR(100))
-//            private String cTipoUsuario; // ()
-//            private double nValor;       // (DECIMAL(10,2))
-//            private String cDescricao;   // (VARCHAR(MAX))
 
             case "plano":
                 fieldNames = "Id,Nome,Tipo de Usuário,Valor,Descrição";
@@ -60,7 +54,7 @@
                 break;
 
             default:
-                fieldNames = "Id,Nome,Email,Senha";
+                fieldNames = "Id,Nome,E-mail,Senha";
                 fieldTypes = "uId,cNome,cEmail,cSenha";
                 ignoreField = "true,false,false,false";
                 regexIds = "null,0,1,2";
@@ -172,10 +166,23 @@
                 <div class="row">
                     <%
                         for (int j = 0; j < list.get(i).length; j++) {
+                            if (regexIds.split(",")[j].equals("5")) {
                     %>
-                    <p><%= list.get(i)[j] %>
+                    <p title="R$<%= String.format("%.2f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>">
+                        R$<%= String.format("%.2f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>
                     </p>
                     <%
+                    } else if (regexIds.split(",")[j].equals("6")) {
+                    %>
+                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>%
+                    </p>
+                    <%
+                    } else {
+                    %>
+                    <p title="<%= list.get(i)[j] %>"><%= list.get(i)[j] %>
+                    </p>
+                    <%
+                            }
                         }
                     %>
                     <i class="material-symbols-outlined" id="edit"
@@ -183,6 +190,7 @@
                     <i class="material-symbols-outlined" id="delete" data-uId="<%= list.get(i)[0] %>">delete</i>
                 </div>
                 <%
+
                     }
                 } else {
                 %>
@@ -205,6 +213,7 @@
     const filterForm = document.getElementById("filter-form");
     const loading = document.getElementById("loading");
     const currency = document.querySelectorAll('.currency');
+    const percentage = document.querySelectorAll('.percentage');
 
     document.querySelectorAll('#close-form').forEach(close => {
         close.addEventListener('click', () => {
@@ -235,9 +244,26 @@
             const values = element.dataset.values.split(",");
 
             inputs.forEach((inputName, index) => {
+                if (inputName === "nValor" || inputName === "nPctBoost") {
+                    const input = document.querySelector('#edition-form form input[name=' + inputName + ']');
+                    if (input) {
+                        console.log(input)
+                        input.value = values[index]
+                    }
+                    inputName += "-edit-masked"
+                }
                 const input = document.querySelector('#edition-form form input[name=' + inputName + ']');
                 if (input) {
-                    input.value = values[index]
+                    let value = values[index]
+                    if (inputName === "nValor-edit-masked") {
+                        value += 0
+                        value = formatAsMoney(value)
+                    }
+                    if (inputName === "nPctBoost-edit-masked") {
+                        value += 0
+                        value = formatAsPercentage(value)
+                    }
+                    input.value = value
                 }
             });
 
@@ -255,18 +281,108 @@
         document.getElementById("sidebar-form").submit();
     }
 
-    // currency.forEach(element => {
-    //     element.addEventListener('input', (event) => {
-    //         let inputValue = event.target.value.replace(/\D/g, ''); // Remove all non-digit characters
-    //         if (inputValue) {
-    //             inputValue = (parseFloat(inputValue) / 100).toFixed(2); // Convert to decimal
-    //             event.target.value = 'R$' + inputValue.replace(',', '.'); // Format to R$xx.xx
-    //         } else {
-    //             event.target.value = ''; // Clear if no input
-    //
-    //         }
-    //     })
-    // });
+    currency.forEach(element => {
+        element.addEventListener('input', function (e) {
+            let value = e.target.value;
+
+            // Remove all non-digit characters
+            value = value.replace(/\D/g, '');
+
+            // Format as currency
+            if (value.length > 2) {
+                value = (parseFloat(value) / 100).toFixed(2);
+            } else if (value.length === 2) {
+                value = '0.' + value;
+            } else if (value.length === 1) {
+                value = '0.0' + value;
+            } else {
+                value = '0.00';
+            }
+
+            // Update the input field with the formatted value
+            e.target.value = 'R$' + value.replace('.', ',');
+
+            // Store the raw value in a hidden field
+            const input = document.querySelector('input[id=' + e.target.name.slice(0, -7) + ']');
+            input.value = value.replace(',', '.');
+        });
+    });
+
+    function formatAsMoney(text) {
+        // Remove all non-digit characters
+        let value = text.replace(/\D/g, '');
+
+        // Format as currency
+        if (value.length > 2) {
+            value = (parseFloat(value) / 100).toFixed(2);
+        } else if (value.length === 2) {
+            value = '0.' + value;
+        } else if (value.length === 1) {
+            value = '0.0' + value;
+        } else {
+            value = '0.00';
+        }
+
+        // Update the input field with the formatted value
+        return 'R$' + value.replace('.', ',');
+    }
+
+    function truncateToDecimals(num, decimals) {
+        let factor = Math.pow(10, decimals);
+        let truncatedNum = Math.trunc(num * factor) / factor;
+        return truncatedNum.toFixed(decimals);
+    }
+
+    percentage.forEach(element => {
+        element.addEventListener('input', function (e) {
+            let value = e.target.value;
+            value = value.replace(/%(\d+)$/, '$10');
+            // Remove all non-digit characters
+            value = value.replace(/\D/g, '');
+
+            if (value.length > 2) {
+                if (parseFloat(value) > 9999) {
+                    value = '9999'
+                }
+                value = String(truncateToDecimals((parseFloat(value) / 100.0), 1))
+            } else if (value.length === 2) {
+                value = '0.' + value; // If the input is two digits, keep it as a fraction
+            } else if (value.length === 1) {
+                value = '0.0' + value; // If one digit, format to two decimal places
+            } else {
+                value = '0'; // If empty, just show zero
+            }
+
+            // Update the input field with the formatted value, adding "%" at the end
+            e.target.value = value.replace('.', ',') + '%';
+
+            // Store the raw value in a hidden field
+            const input = document.querySelector('input[id=' + e.target.name.slice(0, -7) + ']');
+            input.value = value.replace(',', '.'); // Store the raw percentage value
+        });
+    });
+
+    function formatAsPercentage(text) {
+        let value = text.replace('%', '0');
+        value = value.replace(/\D/g, '');
+
+        // Format as percentage without decimals unless explicitly typed
+        if (value.length > 2) {
+            if (parseFloat(value) > 10000) {
+                value = '10000'
+            }
+            value = (parseFloat(value) / 100).toFixed(1);
+        } else if (value.length === 2) {
+            value = '0.' + value; // If the input is two digits, keep it as a fraction
+        } else if (value.length === 1) {
+            value = '0.0' + value; // If one digit, format to two decimal places
+        } else {
+            value = '0'; // If empty, just show zero
+        }
+
+        // Update the input field with the formatted value, adding "%" at the end
+        return value.replace('.', ',') + '%';
+    }
 
     document.getElementById("filter").addEventListener('click', () => {
         filterForm.classList.toggle('hide-filters')
