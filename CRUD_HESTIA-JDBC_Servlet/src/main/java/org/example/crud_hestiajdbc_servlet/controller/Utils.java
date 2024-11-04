@@ -1,7 +1,11 @@
 package org.example.crud_hestiajdbc_servlet.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Part;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.DateTimeException;
@@ -107,6 +111,27 @@ public class Utils
         }
     }
 
+    public static boolean isValidPhoto(Part file)
+    {
+        try
+        {
+            // Tenta transformar o arquivo em fluxo de dados
+            InputStream fileContent = file.getInputStream();
+
+            // Tenta transformar fluxo em vetor de bytes
+            toPhotoByteArray(fileContent);
+
+            // Retorna true se der tudo certo
+            return true;
+        }
+        catch (IOException ioe)
+        {
+            // Retorna false se não for possível converter
+            return false;
+        }
+    }
+
+//    DEFINIÇÃO DOS MÉTODOS DE CONVERSÃO
     public static LocalDate toLocalDate(String value) throws DateTimeException
     {
         // Declaração de formatador com o formato brasileiro
@@ -116,26 +141,49 @@ public class Utils
         return LocalDate.parse(value, formatter);
     }
 
+    public static byte[] toPhotoByteArray(InputStream value) throws IOException
+    {
+        // Instancia uma classe que permite gravar dados em um lista de bytes
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+        // Cria um vetor que tem capacidade de 1024 bytes
+        byte[] buffer = new byte[1024];
+
+        // Vai armazernar quantos bytes foram lidos, em cada execução
+        int bytesRead;
+
+        // Lê os bytes do fluxo até que não tenha mais informações para serem lidas
+        while ((bytesRead = value.read(buffer)) != -1)
+        {
+            // Grava os dados na lista de bytes, partindo do zero e indo até os bytes lidos
+            byteArrayOutputStream.write(buffer, 0, bytesRead);
+        }
+
+        // Transoforma essa lista em um vetor de bytes
+        return byteArrayOutputStream.toByteArray();
+    }
+
     public static List<String[]> toAdminStringList(ResultSet resultSet)
     {
         // Criamos uma lista para guardar cada registro da tabela
-        List<String[]> listPlanoVantagem = new ArrayList<>();
+        List<String[]> listAdmin = new ArrayList<>();
 
         // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings
         try
         {
             while (resultSet.next())
             {
-                String[] registerPlanoVantagem = new String[4];
+                String[] registerAdmin = new String[5];
 
                 // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null/
-                registerPlanoVantagem[0] = String.valueOf(resultSet.getObject("uId"));
-                registerPlanoVantagem[1] = String.valueOf(resultSet.getString("cNome"));
-                registerPlanoVantagem[2] = String.valueOf(resultSet.getString("cEmail"));
-                registerPlanoVantagem[3] = String.valueOf(resultSet.getString("cSenha"));
+                registerAdmin[0] = String.valueOf(resultSet.getObject("uId"));
+                registerAdmin[1] = String.valueOf(resultSet.getString("cNome"));
+                registerAdmin[2] = String.valueOf(resultSet.getString("cEmail"));
+                registerAdmin[3] = String.valueOf(resultSet.getString("cFoto"));
+                registerAdmin[4] = String.valueOf(resultSet.getString("cSenha"));
 
                 // Adiciona o vetor de Strings na lista
-                listPlanoVantagem.add(registerPlanoVantagem);
+                listAdmin.add(registerAdmin);
             }
         }
         catch (SQLException sqle)
@@ -144,7 +192,7 @@ public class Utils
         }
 
         // Retornamos a lista
-        return listPlanoVantagem;
+        return listAdmin;
     }
 
     public static List<String[]> toBoostStringList(ResultSet resultSet)
@@ -307,7 +355,7 @@ public class Utils
         return planoVantagemList;
     }
 
-    //    MÉTODOS DE VALIDAÇÃO E TRATAMENTO DE DADOS DO NEGÓCIO
+//    MÉTODOS DE VALIDAÇÃO E TRATAMENTO DE DADOS DO NEGÓCIO
     public static boolean isValidPorcentagem(String value)
     {
         return isValidDouble(value) && Double.parseDouble(value) <= 100 && 0 <= Double.parseDouble(value);
@@ -360,7 +408,7 @@ public class Utils
     *
     * */
 
-//    MÉTODOS DE LOGGING
+//    MÉTODOS DE LOGGING PARA O FRONT
     public static void logServerIssue(HttpServletRequest req)
     {
         req.setAttribute("success", false);

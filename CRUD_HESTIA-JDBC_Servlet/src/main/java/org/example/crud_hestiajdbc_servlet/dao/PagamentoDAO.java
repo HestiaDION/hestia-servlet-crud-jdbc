@@ -19,18 +19,29 @@ public class PagamentoDAO extends DatabaseConnection
         {
             try
             {
-                // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
-                        "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, DEFAULT, ?, ?, FN_Anunciante_Id(?, ?), FN_Plano_Id(?), Fn_Universitario_Id(?, ?, ?))");
-                pstmt.setString(1, pagamento.getcAtivo());
-                pstmt.setDouble(2, pagamento.getnPctDesconto());
-                pstmt.setDouble(3, pagamento.getnTotal());
-                pstmt.setString(4, pagamento.getcUserAnunciante());
-                pstmt.setString(5, pagamento.getcEmailAnunciante());
-                pstmt.setString(6, pagamento.getcNmPlano());
-                pstmt.setString(7, pagamento.getcUserUniversitario());
-                pstmt.setString(8, pagamento.getcEmailUniversitario());
-                pstmt.setString(9, pagamento.getcDNEUniversitario());
+                if (pagamento.getcEmailUniversitario() == null)
+                {
+                    // Prepara a instrução SQL e define os seus argumentos
+                    pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
+                            "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, DEFAULT, ?, ?, FN_Anunciante_Id(NULL, ?), FN_Plano_Id(?), NULL)");
+                    pstmt.setString(1, pagamento.getcAtivo());
+                    pstmt.setDouble(2, pagamento.getnPctDesconto());
+                    pstmt.setDouble(3, pagamento.getnTotal());
+                    pstmt.setString(4, pagamento.getcEmailAnunciante());
+                    pstmt.setString(5, pagamento.getcNmPlano());
+                }
+                else
+                {
+                    // Prepara a instrução SQL e define os seus argumentos
+                    pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
+                            "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, DEFAULT, ?, ?, NULL, FN_Plano_Id(?), Fn_Universitario_Id(NULL, ?, NULL))");
+                    pstmt.setString(1, pagamento.getcAtivo());
+                    pstmt.setDouble(2, pagamento.getnPctDesconto());
+                    pstmt.setDouble(3, pagamento.getnTotal());
+                    pstmt.setString(4, pagamento.getcNmPlano());
+                    pstmt.setString(5, pagamento.getcEmailUniversitario());
+                }
+
 
                 // Executa a instrução e guarda as linhas afetadas
                 linhasAfetadas = pstmt.executeUpdate();
@@ -60,7 +71,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal" +
+                        ", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -87,7 +99,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.uId = ?");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -117,7 +130,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE cAtivo = ?");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cAtivo = ?");
                 pstmt.setString(1, cAtivo);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -147,7 +161,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE dDtFim > CURRENT_DATE");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.dDtFim > CURRENT_DATE");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -176,7 +191,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nPctDesconto");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nPctDesconto");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -205,7 +221,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nPctDesconto DESC");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nPctDesconto DESC");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -234,7 +251,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nTotal");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nTotal");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -263,7 +281,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento ORDER BY nTotal DESC");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nTotal DESC");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -283,7 +302,38 @@ public class PagamentoDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getPagamentosByIdAnunciante(UUID uId_Anunciante)
+//    public ResultSet getPagamentosByEmailAnunciante(UUID uId_Anunciante)
+//    {
+//        rs = null;
+//
+//        if (connect())
+//        {
+//            try
+//            {
+//                // Prepara a instrução SQL
+//                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cEmailAnunciante = ?");
+//                pstmt.setObject(1, uId_Anunciante);
+//
+//                // Executa a instrução e guarda as linhas retornadas
+//                rs = pstmt.executeQuery();
+//            }
+//            catch (SQLException sqle)
+//            {
+//                // Imprime a exceção no console
+//                sqle.printStackTrace();
+//            }
+//            finally
+//            {
+//                disconnect();
+//            }
+//        }
+//
+//        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+//        return rs;
+//    }
+
+    public ResultSet getPagamentoByNmPlano(String cNmPlano)
     {
         rs = null;
 
@@ -292,8 +342,9 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Anunciante = ?");
-                pstmt.setObject(1, uId_Anunciante);
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cNmPlano = ?");
+                pstmt.setObject(1, cNmPlano);
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -313,65 +364,36 @@ public class PagamentoDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getPagamentoByIdPlano(UUID uId_Plano)
-    {
-        rs = null;
-
-        if (connect())
-        {
-            try
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Plano = ?");
-                pstmt.setObject(1, uId_Plano);
-
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            catch (SQLException sqle)
-            {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
-            }
-            finally
-            {
-                disconnect();
-            }
-        }
-
-        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
-        return rs;
-    }
-
-    public ResultSet getPagamentoByIdUniversitario(UUID uId_Universitario)
-    {
-        rs = null;
-
-        if (connect())
-        {
-            try
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cAtivo, dDtFim, nPctDesconto, nTotal, uId_Anunciante, uId_Plano, uId_Universitario FROM Pagamento WHERE uId_Universitario = ?");
-                pstmt.setObject(1, uId_Universitario);
-
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            catch (SQLException sqle)
-            {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
-            }
-            finally
-            {
-                disconnect();
-            }
-        }
-
-        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
-        return rs;
-    }
+//    public ResultSet getPagamentoByEmailUniversitario(UUID uId_Universitario)
+//    {
+//        rs = null;
+//
+//        if (connect())
+//        {
+//            try
+//            {
+//                // Prepara a instrução SQL
+//                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cEmailUniversitario = ?");
+//                pstmt.setObject(1, uId_Universitario);
+//
+//                // Executa a instrução e guarda as linhas retornadas
+//                rs = pstmt.executeQuery();
+//            }
+//            catch (SQLException sqle)
+//            {
+//                // Imprime a exceção no console
+//                sqle.printStackTrace();
+//            }
+//            finally
+//            {
+//                disconnect();
+//            }
+//        }
+//
+//        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+//        return rs;
+//    }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
     public UUID getPagamentoId(UUID idUsuario, UUID idPlano, Date dtFim)
@@ -421,19 +443,31 @@ public class PagamentoDAO extends DatabaseConnection
         {
             try
             {
-                // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Anunciante = FN_Anunciante_Id(?, ?), uId_Plano = FN_Plano_Id(?), uId_Universitario = Fn_Universitario_Id(?, ?, ?) WHERE uId = ?");
-                pstmt.setString(1, pagamento.getcAtivo());
-                pstmt.setObject(2, pagamento.getdDtFim());
-                pstmt.setDouble(3, pagamento.getnPctDesconto());
-                pstmt.setDouble(4, pagamento.getnTotal());
-                pstmt.setString(5, pagamento.getcUserAnunciante());
-                pstmt.setString(6, pagamento.getcEmailAnunciante());
-                pstmt.setString(7, pagamento.getcNmPlano());
-                pstmt.setString(8, pagamento.getcUserUniversitario());
-                pstmt.setString(9, pagamento.getcEmailUniversitario());
-                pstmt.setString(10, pagamento.getcDNEUniversitario());
-                pstmt.setObject(11, pagamento.getuId());
+                if (pagamento.getcEmailUniversitario() == null)
+                {
+                    // Prepara a instrução SQL e define os seus argumentos
+                    pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Anunciante = FN_Anunciante_Id(NULL, ?), uId_Plano = FN_Plano_Id(?) WHERE uId = ?");
+                    pstmt.setString(1, pagamento.getcAtivo());
+                    pstmt.setObject(2, pagamento.getdDtFim());
+                    pstmt.setDouble(3, pagamento.getnPctDesconto());
+                    pstmt.setDouble(4, pagamento.getnTotal());
+                    pstmt.setString(5, pagamento.getcEmailAnunciante());
+                    pstmt.setString(6, pagamento.getcNmPlano());
+                    pstmt.setObject(7, pagamento.getuId());
+                }
+                else
+                {
+                    // Prepara a instrução SQL e define os seus argumentos
+                    pstmt = conn.prepareStatement("UPDATE Pagamento SET cAtivo = ?, dDtFim = ?, nPctDesconto = ?, nTotal = ?, uId_Plano = FN_Plano_Id(?), uId_Universitario = FN_Universitario_Id(NULL, ?, NULL) WHERE uId = ?");
+                    pstmt.setString(1, pagamento.getcAtivo());
+                    pstmt.setObject(2, pagamento.getdDtFim());
+                    pstmt.setDouble(3, pagamento.getnPctDesconto());
+                    pstmt.setDouble(4, pagamento.getnTotal());
+                    pstmt.setString(5, pagamento.getcEmailUniversitario());
+                    pstmt.setString(6, pagamento.getcNmPlano());
+                    pstmt.setObject(7, pagamento.getuId());
+                }
+
 
                 // Executa a instrução e guarda as linhas afetadas
                 linhasAfetadas = pstmt.executeUpdate();

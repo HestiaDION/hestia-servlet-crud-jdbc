@@ -1007,6 +1007,13 @@ close-form {
     margin-left: 1.6rem;
 }
 
+#open-advantages {
+    opacity: 1;
+    font-size: 3rem;
+}
+
+
+
 .row {
     display: flex;
     align-items: center;

@@ -83,8 +83,14 @@ public class LoginController extends HttpServlet
                         // Espefica com a classe do objeto que está sendo enviado
                         req.setAttribute("table-identifier", "admin");
 
-                        // Especifica o e-mail do usuário que está acessando
+                        // Passa o nome do usuário que está acessando, pegando o valor do ResultSet
                         req.setAttribute("user-email", email);
+
+                        // Passa o nome do usuário que está acessando, pegando o valor do ResultSet
+                        req.setAttribute("user-name", rs.getString("cNome"));
+
+                        // Passa a foto do usuário que está acessando, pegando o valor do ResultSet
+                        req.setAttribute("user-photo", rs.getString("cFoto"));
 
                         // Altera o status do login do usuário, para sinalizar que ele está ativo
                         adminDAO.setAdminActive(email);

@@ -10,43 +10,56 @@ public class Pagamento {
     private Date dDtFim;                // (DATE)
     private double nPctDesconto;        // (DECIMAL(10,1))
     private double nTotal;              // (DECIMAL(10,2))
-    private String cUserAnunciante;     // (Parâmetro 1 da FN_Anunciante_Id)
     private String cEmailAnunciante;    // (Parâmetro 2 da FN_Anunciante_Id)
     private String cNmPlano;            // (Parâmetro 1 da FN_Plano_Id)
-    private String cUserUniversitario;  // (Parâmetro 1 da FN_Universitario_Id)
     private String cEmailUniversitario; // (Parâmetro 2 da FN_Universitario_Id)
-    private String cDNEUniversitario;   // (Parâmetro 3 da FN_Universitario_Id)
 
 //    DEFINIÇÃO DOS MÉTODOS CONSTRUTORES
     public Pagamento(UUID uId, String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
-                     String cUserAnunciante, String cEmailAnunciante, String cNmPlano, String cUserUniversitario, String cEmailUniversitario, String cDNEUniversitario)
+                     String cEmailUsuario, String cNmPlano, int tipoUsuario)
+    // tipoUsuario recbe 0 se for anunciante e 1 se for universitario
     {
-        this.uId = uId;
-        this.cAtivo = cAtivo;
-        this.dDtFim = dDtFim;
-        this.nPctDesconto = nPctDesconto;
-        this.nTotal = nTotal;
-        this.cUserAnunciante = cUserAnunciante;
-        this.cEmailAnunciante = cEmailAnunciante;
-        this.cNmPlano = cNmPlano;
-        this.cUserUniversitario = cUserUniversitario;
-        this.cEmailUniversitario = cEmailUniversitario;
-        this.cDNEUniversitario = cDNEUniversitario;
-        
+        if (tipoUsuario == 0){
+            this.uId = uId;
+            this.cAtivo = cAtivo;
+            this.dDtFim = dDtFim;
+            this.nPctDesconto = nPctDesconto;
+            this.nTotal = nTotal;
+            this.cEmailAnunciante = cEmailUsuario;
+            this.cNmPlano = cNmPlano;
+            this.cEmailUniversitario = null;
+        } else if (tipoUsuario == 1) {
+            this.uId = uId;
+            this.cAtivo = cAtivo;
+            this.dDtFim = dDtFim;
+            this.nPctDesconto = nPctDesconto;
+            this.nTotal = nTotal;
+            this.cEmailUniversitario = cEmailUsuario;
+            this.cNmPlano = cNmPlano;
+            this.cEmailAnunciante = null;
+        }
     }
 
     public Pagamento(String cAtivo, Date dDtFim, double nPctDesconto, double nTotal,
-                     String cUserAnunciante, String cEmailAnunciante, String cNmPlano, String cUserUniversitario, String cEmailUniversitario, String cDNEUniversitario)
+                     String cEmailUsuario, String cNmPlano, int tipoUsuario)
+    // tipoUsuario recbe 0 se for anunciante e 1 se for universitario
     {
-        this.cAtivo = cAtivo;
-        this.dDtFim = dDtFim;
-        this.nPctDesconto = nPctDesconto;
-        this.cUserAnunciante = cUserAnunciante;
-        this.cEmailAnunciante = cEmailAnunciante;
-        this.cNmPlano = cNmPlano;
-        this.cUserUniversitario = cUserUniversitario;
-        this.cEmailUniversitario = cEmailUniversitario;
-        this.cDNEUniversitario = cDNEUniversitario;
+        if (tipoUsuario == 0){
+            this.cAtivo = cAtivo;
+            this.dDtFim = dDtFim;
+            this.nPctDesconto = nPctDesconto;
+            this.nTotal = nTotal;
+            this.cEmailAnunciante = cEmailUsuario;
+            this.cNmPlano = cNmPlano;
+        } else if (tipoUsuario == 1) {
+            this.cAtivo = cAtivo;
+            this.dDtFim = dDtFim;
+            this.nPctDesconto = nPctDesconto;
+            this.nTotal = nTotal;
+            this.cEmailUniversitario = cEmailUsuario;
+            this.cNmPlano = cNmPlano;
+
+        }
     }
 
     public Pagamento()
@@ -79,10 +92,6 @@ public class Pagamento {
         return nTotal;
     }
 
-    public String getcUserAnunciante() {
-        return cUserAnunciante;
-    }
-    
     public String getcEmailAnunciante() {
         return cEmailAnunciante;
     }
@@ -90,79 +99,21 @@ public class Pagamento {
     public String getcNmPlano() {
         return cNmPlano;
     }
-    
-    public String getcUserUniversitario() {
-        return cUserUniversitario;
-    }
-    
+
     public String getcEmailUniversitario() {
         return cEmailUniversitario;
     }
-    
-    public String getcDNEUniversitario() {
-        return cDNEUniversitario;
-    }
 
-//    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId)
-    {
-        this.uId = uId;
-    } 
-
-    public void setcAtivo(String cAtivo)
-    {
-        this.cAtivo = cAtivo;
-    } 
-
-    public void setdDtFim(Date dDtFim)
-    {
-        this.dDtFim = dDtFim;
-    } 
-
-    public void setnPctDesconto(double nPctDesconto)
-    {
-        this.nPctDesconto = nPctDesconto;
-    } 
-
-    public void setnTotal(double nTotal)
-    {
-        this.nTotal = nTotal;
-    }
-
-    public void setcUserAnunciante(String cUserAnunciante) {
-        this.cUserAnunciante = cUserAnunciante;
-    }
-
-    public void setcEmailAnunciante(String cEmailAnunciante) {
-        this.cEmailAnunciante = cEmailAnunciante;
-    }
-
-    public void setcNmPlano(String cNmPlano) {
-        this.cNmPlano = cNmPlano;
-    }
-
-    public void setcUserUniversitario(String cUserUniversitario) {
-        this.cUserUniversitario = cUserUniversitario;
-    }
-
-    public void setcEmailUniversitario(String cEmailUniversitario) {
-        this.cEmailUniversitario = cEmailUniversitario;
-    }
-
-    public void setcDNEUniversitario(String cDNEUniversitario) {
-        this.cDNEUniversitario = cDNEUniversitario;
-    }
 
     //    DEFINIÇÃO DO MÉTODO toString
     @Override
     public String toString()
     {
-        if (this.cEmailAnunciante != null || this.cUserAnunciante != null) {
+        if (this.cEmailAnunciante != null) {
             return "ID do Pagamento = " + this.uId + "\nAtividade do Pagamento = " + this.cAtivo +
                     "\nData de Validade do Pagamento = " + this.dDtFim +
                     "\nPorcentagem de Desconto do Pagamento = " + this.nPctDesconto +
                     "\nTotal do Pagamento = " + this.nTotal +
-                    "\nUsername do Anunciante do pagamento = " + this.cUserAnunciante+
                     "\nE-mail do Anunciante do pagamento = "+this.cEmailAnunciante+
                     "\nNome do plano sendo pago = "+ this.cNmPlano;
         }
@@ -171,9 +122,7 @@ public class Pagamento {
                     "\nData de Validade do Pagamento = " + this.dDtFim +
                     "\nPorcentagem de Desconto do Pagamento = " + this.nPctDesconto +
                     "\nTotal do Pagamento = " + this.nTotal +
-                    "\nUsername do Universitario do pagamento = " + this.cUserUniversitario+
                     "\nE-mail do Universitario do pagamento = "+this.cEmailUniversitario+
-                    "\nDNE do Universitario do pagamento = "+this.cDNEUniversitario+
                     "\nNome do plano sendo pago = "+ this.cNmPlano;
         }
         

@@ -112,7 +112,7 @@
         </div>
         <div class="acount">
             <p>Flopa fofa</p>
-            <img src="images/perfil.png" alt=""/>
+            <img src="data:image/png:base64;<%= request.getAttribute("user-photo") %>" alt=""/>
             <a href="index.html"><i class="material-icons">logout</i></a>
         </div>
     </div>
@@ -200,7 +200,7 @@
                         if (tableIdentifier == "plano") {
                     %>
                     <p>
-                        <span class="material-symbols-outlined">open_in_new</span>
+                        <span class="material-symbols-outlined" id="open-advantages" data-name="<%=list.get(i)[1]%>">open_in_new</span>
                     </p>
                     <%
                         }
@@ -292,6 +292,32 @@
             });
 
             editionForm.classList.remove("closed-form");
+        });
+    });
+
+    document.querySelectorAll('#open-advantages').forEach(element => {
+        element.addEventListener('click', () => {
+            let predicate = document.createElement('input');
+            predicate.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+            predicate.name = 'predicate'; // Set the name attribute
+            predicate.value = 'cNmPlano'
+
+            let input = document.createElement('input');
+            input.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+            input.name = 'cNmPlano'; // Set the name attribute
+            input.value = element.dataset.name
+
+            const sidebar = document.getElementById("sidebar-form")
+
+            // Set the form action to the desired servlet
+            sidebar.action = 'plano_vantagem';
+            sidebar.appendChild(predicate);
+            sidebar.appendChild(input);
+
+            loading.classList.remove("hide-loading")
+
+            // Submit the form
+            sidebar.submit();
         });
     });
 
