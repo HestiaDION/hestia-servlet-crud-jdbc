@@ -312,52 +312,52 @@ public class Main {
         Plano_vantagemDAO plano_vantagem = new Plano_vantagemDAO();
 
 //        // INSERT plano_vantagem
-        if (plano_vantagem.adicionarPlanoVantagem(new Plano_vantagem("Desconto no anúncio", '1', "Chamas Douradas")) == -1) {
-            System.out.println("Não foi possível adicionar a vantagem do plano.");
-        }
-        else {
-            System.out.println("Vantagem do plano adicionada com sucesso!");
-        }
-
-        // SELECT * plano_vantagem
-        System.out.println("\nMOSTRANDO TODAS AS VANTAGENS DOS PLANOS");
-
-        ResultSet rs = plano_vantagem.selecionarTodasVantagensPlano();
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
-                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
-            System.out.println(linha);
-        }
-
-        // SELECT por ID
-        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR ID");
-
-        rs = plano_vantagem.selecionarVantagensPlanoPorId(UUID.fromString("a3e4b572-6069-4ee5-8b0f-0a1a930df057"));
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
-                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
-            System.out.println(linha);
-        }
-
-        // SELECT por id_plano
-        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR PLANO");
-
-        rs = plano_vantagem.selecionarVantagensPlanoPorIdPlano(UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"));
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
-                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
-            System.out.println(linha);
-        }
-
-        // SELECT por cativo
-        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR ATIVIDADE");
-
-        rs = plano_vantagem.selecionarVantagensPlanoPorAtividade("1");
-        while (rs.next()) {
-            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
-                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
-            System.out.println(linha);
-        }
+//        if (plano_vantagem.adicionarPlanoVantagem(new Plano_vantagem("Desconto no anúncio", '1', "Chamas Douradas")) == -1) {
+//            System.out.println("Não foi possível adicionar a vantagem do plano.");
+//        }
+//        else {
+//            System.out.println("Vantagem do plano adicionada com sucesso!");
+//        }
+//
+//        // SELECT * plano_vantagem
+//        System.out.println("\nMOSTRANDO TODAS AS VANTAGENS DOS PLANOS");
+//
+//        ResultSet rs = plano_vantagem.selecionarTodasVantagensPlano();
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+//                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+//            System.out.println(linha);
+//        }
+//
+//        // SELECT por ID
+//        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR ID");
+//
+//        rs = plano_vantagem.selecionarVantagensPlanoPorId(UUID.fromString("a3e4b572-6069-4ee5-8b0f-0a1a930df057"));
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+//                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+//            System.out.println(linha);
+//        }
+//
+//        // SELECT por id_plano
+//        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR PLANO");
+//
+//        rs = plano_vantagem.selecionarVantagensPlanoPorIdPlano(UUID.fromString("ceae7210-c6e7-4155-a5ee-11514620893f"));
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+//                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+//            System.out.println(linha);
+//        }
+//
+//        // SELECT por cativo
+//        System.out.println("\nFILTRANDO AS VANTAGENS DOS PLANOS POR ATIVIDADE");
+//
+//        rs = plano_vantagem.selecionarVantagensPlanoPorAtividade("1");
+//        while (rs.next()) {
+//            String linha = rs.getString("uid") +" "+ rs.getString("cvantagem") +" "+
+//                    rs.getString("cativo") +" "+ rs.getString("uid_plano");
+//            System.out.println(linha);
+//        }
 
             // DELETE plano_vantagem
 

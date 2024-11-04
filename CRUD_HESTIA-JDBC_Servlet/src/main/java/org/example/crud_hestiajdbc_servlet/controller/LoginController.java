@@ -98,6 +98,8 @@ public class LoginController extends HttpServlet
                     else
                     {
                         Utils.logUserNotFound(req);
+
+                        req.getRequestDispatcher("index.jsp").forward(req, resp);
                     }
                 }
                 catch (SQLException sqle)
@@ -107,17 +109,23 @@ public class LoginController extends HttpServlet
 
                     // Erro no banco de dados
                     Utils.logDatabaseIssue(req);
+
+                    req.getRequestDispatcher("index.jsp").forward(req, resp);
                 }
             }
             else
             {
                 // Erro no banco de dados
                 Utils.logDatabaseIssue(req);
+
+                req.getRequestDispatcher("index.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logInputSetback(req);
+
+            req.getRequestDispatcher("index.jsp").forward(req, resp);
         }
     }
 

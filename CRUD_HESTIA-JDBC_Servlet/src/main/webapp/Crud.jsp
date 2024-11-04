@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.UUID" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,17 +39,24 @@
                 break;
 
             case "pagamento":
-                fieldNames = "Id,Ativo,Data Final,Desconto,Total,Nome,Email,Tipo de Usuario";
+                fieldNames = "Id,Ativo,Data Final,Desconto,Total,Plano,Email,Tipo de Usuario";
                 fieldTypes = "uId,cAtivo,dDtFim,nPctDesconto,nTotal,cNmPlano,cEmailUsuario,cTipoUsuario";
                 ignoreField = "true,false,false,false,false,false,false,false";
-                regexIds = "null,0,7,6,5,4,1,4";
+                regexIds = "null,12,9,6,5,4,1,10";
                 break;
 
             case "plano":
                 fieldNames = "Id,Nome,Tipo de Usuário,Valor,Descrição";
                 fieldTypes = "uId,cNome,cTipoUsuario,nValor,cDescricao";
                 ignoreField = "true,false,false,false,false";
-                regexIds = "null,0,0,5,7";
+                regexIds = "null,0,11,5,7";
+                break;
+
+            case "plano_vantagem":
+                fieldNames = "Id,Vantagem,Ativo,Nome do Plano";
+                fieldTypes = "uId,cVantagem,cAtivo,cNmPlano";
+                ignoreField = "true,false,false,false";
+                regexIds = "null,7,12,4";
                 break;
 
             default:
@@ -150,6 +156,11 @@
                 </h3>
                 <%
                     }
+                    if (tableIdentifier == "plano") {
+                %>
+                <h3>Vantagens</h3>
+                <%
+                    }
                 %>
                 <i class="material-symbols-outlined" id="filter">filter_alt</i>
             </div>
@@ -174,7 +185,8 @@
                     <%
                     } else if (regexIds.split(",")[j].equals("6")) {
                     %>
-                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>%
+                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>
+                        %
                     </p>
                     <%
                     } else {
@@ -183,6 +195,14 @@
                     </p>
                     <%
                             }
+                        }
+
+                        if (tableIdentifier == "plano") {
+                    %>
+                    <p>
+                        <span class="material-symbols-outlined">open_in_new</span>
+                    </p>
+                    <%
                         }
                     %>
                     <i class="material-symbols-outlined" id="edit"
@@ -252,7 +272,11 @@
                     }
                     inputName += "-edit-masked"
                 }
-                const input = document.querySelector('#edition-form form input[name=' + inputName + ']');
+
+                let input = document.querySelector('#edition-form form input[name=' + inputName + ']');
+                if (inputName === "cTipoUsuario" || inputName === "cAtivo") {
+                    input = document.querySelector('#edition-form form select[name=' + inputName + ']');
+                }
                 if (input) {
                     let value = values[index]
                     if (inputName === "nValor-edit-masked") {
