@@ -141,7 +141,7 @@ public class Plano_vantagemDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT Vw_Plano_vantagem.uId, Vw_Plano_vantagem.cVantagem, Vw_Plano_vantagem.cAtivo, Vw_Plano_vantagem.uId_Plano FROM Vw_Plano_vantagem WHERE Vw_Plano_vantagem.cNmPlano = ?");
+                pstmt = conn.prepareStatement("SELECT Vw_Plano_vantagem.uId, Vw_Plano_vantagem.cVantagem, Vw_Plano_vantagem.cAtivo, Vw_Plano_vantagem.cNmPlano FROM Vw_Plano_vantagem WHERE Vw_Plano_vantagem.cNmPlano = ?");
                 pstmt.setObject(1, cNmPlano);
 
                 // Executa a instrução e guarda as linhas retornadas
