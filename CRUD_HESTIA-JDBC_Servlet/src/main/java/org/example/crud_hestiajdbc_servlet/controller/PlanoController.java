@@ -14,7 +14,7 @@ import org.example.crud_hestiajdbc_servlet.dao.PlanoDAO;
 import org.example.crud_hestiajdbc_servlet.model.Plano;
 
 @WebServlet(name = "plano", value = "/plano")
-public class PlanoControllerUwU extends HttpServlet
+public class PlanoController extends HttpServlet
 {
 //    DECLARAÇÃO E INSTANCIAÇÃO DE OBJETO ESTÁTICO PARA MEDIAR A INTERAÇÃO COM O BANCO DE DADOS
     PlanoDAO planoDAO = new PlanoDAO();
@@ -29,7 +29,7 @@ public class PlanoControllerUwU extends HttpServlet
         // Espefica com a classe do objeto que está sendo enviado
         req.setAttribute("table-identifier", "plano");
 
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             if (action.equals("read"))
             {
@@ -37,13 +37,13 @@ public class PlanoControllerUwU extends HttpServlet
             }
             else
             {
-                ValidationUtilsUwU.logActionManagerSetback(req);
+                Utils.logActionManagerSetback(req);
                 req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
         }
     }
@@ -57,7 +57,7 @@ public class PlanoControllerUwU extends HttpServlet
         req.setAttribute("table-identifier", "plano");
 
         // Faz a validação do atributo
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             switch (action)
             {
@@ -74,13 +74,13 @@ public class PlanoControllerUwU extends HttpServlet
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
                     req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
         }
     }
@@ -97,10 +97,10 @@ public class PlanoControllerUwU extends HttpServlet
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidString(nomeParameter)        &&
-                ValidationUtilsUwU.isValidString(tipoUsuarioParameter) &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)       &&
-                ValidationUtilsUwU.isValidString(descricaoParameter)
+                Utils.isValidString(nomeParameter)        &&
+                Utils.isValidString(tipoUsuarioParameter) &&
+                Utils.isValidDouble(valorParameter)       &&
+                Utils.isValidString(descricaoParameter)
         )
         {
             String nome        = nomeParameter;
@@ -109,14 +109,14 @@ public class PlanoControllerUwU extends HttpServlet
             String descricao   = descricaoParameter;
             Plano plano = new Plano(nome, tipoUsuario, valor, descricao);
 
-            if (planoDAO.adicionarPlano(plano) > 0)
-                ValidationUtilsUwU.logSuccessfulCreation(req);
+            if (planoDAO.addPlano(plano) > 0)
+                Utils.logSuccessfulCreation(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -132,59 +132,55 @@ public class PlanoControllerUwU extends HttpServlet
         ResultSet list;
     
         // Verifica se o filtro tem valor ou não
-        if (ValidationUtilsUwU.isValidString(predicate))
+        if (Utils.isValidString(predicate))
         {
             switch (predicate)
             {
                 case "uId":
                     String codigoParametro = req.getParameter("uId");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoParametro))
+                    if (Utils.isValidUUID(codigoParametro))
                     {
                         UUID codigo = UUID.fromString(codigoParametro);
-                        list = planoDAO.selecionarPlanosPorId(codigo);
+                        list = planoDAO.getPlanoById(codigo);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigo);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPlanoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "cNome":
                     String nomeParameter = req.getParameter("cNome");
 
-                    if (ValidationUtilsUwU.isValidString(nomeParameter))
+                    if (Utils.isValidString(nomeParameter))
                     {
                         String nome = nomeParameter;
-                        list = planoDAO.selecionarPlanosPorNome(nome);
+                        list = planoDAO.getPlanoByNome(nome);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", nome);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPlanoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
@@ -194,7 +190,7 @@ public class PlanoControllerUwU extends HttpServlet
 
                     if
                     (
-                            ValidationUtilsUwU.isValidChar(ordenacaoValorParameter) &&
+                            Utils.isValidChar(ordenacaoValorParameter) &&
                             ordenacaoValorParameter.charAt(0) == '>' ||
                             ordenacaoValorParameter.charAt(0) == '<'
                     )
@@ -202,30 +198,28 @@ public class PlanoControllerUwU extends HttpServlet
                         char ordenacaoValor = ordenacaoValorParameter.charAt(0);
 
                         if (ordenacaoValor == '>')
-                            list = planoDAO.selecionarPlanosPorValorCrescente();
+                            list = planoDAO.getPlanoByValorAscending();
                         else
-                            list = planoDAO.selecionarPlanosPorValorDecrescente();
+                            list = planoDAO.getPlanoByValorDescending();
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", ordenacaoValor);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPlanoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
             }
         }
         else
@@ -233,23 +227,23 @@ public class PlanoControllerUwU extends HttpServlet
             // Recebe a ação que deve ser ralizada como atributo da requisição
             String action = (String) req.getParameter("action");
 
-            list = planoDAO.selecionarTodosPlanos();
+            list = planoDAO.getAllPlanos();
     
             if (list != null)
             {
                 // Quando o método é chamado de forma primária, action é "read"
-                req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
-                ValidationUtilsUwU.logSuccessfulReading(req);
+                req.setAttribute("list", Utils.toPlanoStringList(list));
+                Utils.logSuccessfulReading(req);
             }
             else if (list != null && !action.equals("read"))
             {
                 // Quando o método é chamado por outro método para obter os registros do banco
-                req.setAttribute("list", ValidationUtilsUwU.toPlanoStringList(list));
+                req.setAttribute("list", Utils.toPlanoStringList(list));
             }
             else
             {
                 // Quando ocorre erro no banco de dados
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
             }
         }
         
@@ -269,11 +263,11 @@ public class PlanoControllerUwU extends HttpServlet
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParameter)        &&
-                ValidationUtilsUwU.isValidString(nomeParameter)        &&
-                ValidationUtilsUwU.isValidString(tipoUsuarioParameter) &&
-                ValidationUtilsUwU.isValidDouble(valorParameter)       &&
-                ValidationUtilsUwU.isValidString(descricaoParameter)
+                Utils.isValidUUID(codigoParameter)        &&
+                Utils.isValidString(nomeParameter)        &&
+                Utils.isValidString(tipoUsuarioParameter) &&
+                Utils.isValidDouble(valorParameter)       &&
+                Utils.isValidString(descricaoParameter)
         )
         {
         UUID   codigo      = UUID.fromString(codigoParameter);
@@ -283,14 +277,14 @@ public class PlanoControllerUwU extends HttpServlet
         String descricao   = descricaoParameter;
         Plano plano = new Plano(codigo, nome, tipoUsuario, valor, descricao);
 
-        if (planoDAO.atualizarPlano(plano) > 0)
-            ValidationUtilsUwU.logSuccessfulUpdate(req);
+        if (planoDAO.updatePlano(plano) > 0)
+            Utils.logSuccessfulUpdate(req);
         else
-            ValidationUtilsUwU.logDatabaseIssue(req);
+            Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -303,18 +297,18 @@ public class PlanoControllerUwU extends HttpServlet
         String codigoParameter = req.getParameter("uId");
     
         // Verifica se os parâmetros retornaram valores válidos
-        if (ValidationUtilsUwU.isValidUUID(codigoParameter))
+        if (Utils.isValidUUID(codigoParameter))
         {
             UUID codigo = UUID.fromString(codigoParameter);
     
-            if (planoDAO.removerPlano(codigo) > 0)
-                ValidationUtilsUwU.logSuccessfulRemoval(req);
+            if (planoDAO.removePlano(codigo) > 0)
+                Utils.logSuccessfulRemoval(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição

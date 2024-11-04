@@ -1,332 +1,355 @@
 package org.example.crud_hestiajdbc_servlet.dao;
 
-import org.example.crud_hestiajdbc_servlet.connection.Conexao;
+import org.example.crud_hestiajdbc_servlet.connection.DatabaseConnection;
 import org.example.crud_hestiajdbc_servlet.model.Boost;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class BoostDAO extends Conexao {
+public class BoostDAO extends DatabaseConnection
+{
 //    DEFINIÇÃO DO MÉTODO DE INSERÇÃO NO BANCO DE DADOS
-    public int adicionarBoost(Boost boost)
+    public int addBoost(Boost boost)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("INSERT INTO Boost (cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?)");
+                pstmt.setString(1, boost.getcNmBoost());
+                pstmt.setDouble(2, boost.getnValor());
+                pstmt.setDouble(3, boost.getnPctBoost());
+                pstmt.setString(4,boost.getcDescricao());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("INSERT INTO Boost (cNmBoost, nValor, nPctBoost, cDescricao) VALUES (?, ?, ?, ?)");
-            pstmt.setString(1, boost.getcNmBoost());
-            pstmt.setDouble(2, boost.getnValor());
-            pstmt.setDouble(3, boost.getnPctBoost());
-            pstmt.setString(4,boost.getcDescricao());
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONSULTA NO BANCO DE DADOS
-    public ResultSet selecionarTodosBoosts()
+    public ResultSet getAllBoosts()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarBoostsPorId(UUID uId)
+    public ResultSet getBoostById(UUID uId)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarBoostsPorNome(String cNmBoost)
+    public ResultSet getBoostByName(String cNmBoost)
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost = ?");
+                pstmt.setString(1, cNmBoost);
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost = ?");
-            pstmt.setString(1, cNmBoost);
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarBoostsPorValorCrescente()
+    public ResultSet getBoostByValorAscending()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor");
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor");
 
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
 
+            }
+            catch(SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch(SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarBoostsPorValorDecrescente()
+    public ResultSet getBoostsByValorDescending()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarBoostsPorPctBoostCrescente()
+    public ResultSet getBoostsByPctBoostAscending()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
-    public ResultSet selecionarBoostsPorPctBoostDecrescente()
+    public ResultSet getBoostByPctBoostDescending()
     {
-        try
+        rs = null;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost DESC");
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost DESC");
-
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Atribuí um nulo para indentificação da exceção
-            rs = null;
-        }
-        finally
-        {
-            desconectar();
-
-            return rs;
-        }
+        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+        return rs;
     }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
-    public UUID acharIdBoost(String nmBoost)
+    public UUID getBoostId(String nmBoost)
     {
         UUID uuid = null;
-        try {
-            conectar();
 
-            // Prepara a instrução SQL
-            pstmt = conn.prepareStatement("SELECT FN_Boost_Id(?)");
-            pstmt.setString(1, nmBoost);
+        if (connect())
+        {
+            try
+            {
+                // Prepara a instrução SQL
+                pstmt = conn.prepareStatement("SELECT FN_Boost_Id(?)");
+                pstmt.setString(1, nmBoost);
 
-            // Executa a instrução e guarda as linhas retornadas
-            rs = pstmt.executeQuery();
+                // Executa a instrução e guarda as linhas retornadas
+                rs = pstmt.executeQuery();
 
-            // Extrai o UUID da primeira linha, se existir
-            if (rs.next()) {
-                uuid = (UUID) rs.getObject(1);
+                // Extrai o UUID da primeira linha, se existir
+                if (rs.next())
+                {
+                    uuid = (UUID) rs.getObject(1);
+                }
             }
-        } catch (SQLException sqle) {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
-        } finally {
-            desconectar();
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
+
+        // Sempre retorna um UUID, que pode ser null caso não seja possível conectar ou ocorra uma exceção
         return uuid;
     }
 
 //    DEFINIÇÃO DO MÉTODO DE ATUALIZAÇÃO NO BANCO DE DADOS
-    public int atualizarBoost(Boost boost)
+    public int updateBoost(Boost boost)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("UPDATE Boost SET cNmBoost = ?, nValor = ?, nPctBoost = ?, cDescricao = ? WHERE uId = ?");
+                pstmt.setString(1, boost.getcNmBoost());
+                pstmt.setDouble(2, boost.getnValor());
+                pstmt.setDouble(3, boost.getnPctBoost());
+                pstmt.setString(4,boost.getcDescricao());
+                pstmt.setObject(5, boost.getuId());
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("UPDATE Boost SET cNmBoost = ?, nValor = ?, nPctBoost = ?, cDescricao = ? WHERE uId = ?");
-            pstmt.setString(1, boost.getcNmBoost());
-            pstmt.setDouble(2, boost.getnValor());
-            pstmt.setDouble(3, boost.getnPctBoost());
-            pstmt.setString(4,boost.getcDescricao());
-            pstmt.setObject(5, boost.getuId());
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 
 //    DEFINIÇÃO DO MÉTODO DE REMOÇÃO NO BANCO DE DADOS
-    public int removerBoost(UUID uId)
+    public int removeBoost(UUID uId)
     {
-        try
+        int linhasAfetadas = -1;
+
+        if (connect())
         {
-            conectar();
+            try
+            {
+                // Prepara a instrução SQL e define os seus argumentos
+                pstmt = conn.prepareStatement("DELETE FROM Boost WHERE uId = ?");
+                pstmt.setObject(1, uId);
 
-            // Prepara a instrução SQL e define os seus argumentos
-            pstmt = conn.prepareStatement("DELETE FROM Boost WHERE uId = ?");
-            pstmt.setObject(1, uId);
-
-            // Executa a instrução e guarda as linhas afetadas
-            int linhasAfetadas = pstmt.executeUpdate();
-
-            return linhasAfetadas;
+                // Executa a instrução e guarda as linhas afetadas
+                linhasAfetadas = pstmt.executeUpdate();
+            }
+            catch (SQLException sqle)
+            {
+                // Imprime a exceção no console
+                sqle.printStackTrace();
+            }
+            finally
+            {
+                disconnect();
+            }
         }
-        catch (SQLException sqle)
-        {
-            // Imprime a exceção no console
-            sqle.printStackTrace();
 
-            // Retorna -1 se ocorrer algum erro
-            return -1;
-        }
-        finally
-        {
-            desconectar();
-        }
+        // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção
+        return linhasAfetadas;
     }
 }

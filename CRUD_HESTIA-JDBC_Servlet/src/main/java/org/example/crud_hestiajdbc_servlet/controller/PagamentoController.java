@@ -15,7 +15,7 @@ import org.example.crud_hestiajdbc_servlet.dao.PagamentoDAO;
 import org.example.crud_hestiajdbc_servlet.model.Pagamento;
 
 @WebServlet(name = "pagamento", value = "/pagamento")
-public class PagamentoControllerUwU extends HttpServlet {
+public class PagamentoController extends HttpServlet {
 //    DECLARAÇÃO E INSTANCIAÇÃO DE OBJETO ESTÁTICO PARA MEDIAR A INTERAÇÃO COM O BANCO DE DADOS
     PagamentoDAO pagamentoDAO = new PagamentoDAO();
 
@@ -29,7 +29,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         // Espefica com a classe do objeto que está sendo enviado
         req.setAttribute("table-identifier", "pagamento");
 
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             if (action.equals("read"))
             {
@@ -37,13 +37,13 @@ public class PagamentoControllerUwU extends HttpServlet {
             }
             else
             {
-                ValidationUtilsUwU.logActionManagerSetback(req);
+                Utils.logActionManagerSetback(req);
                 req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
         }
     }
@@ -58,7 +58,7 @@ public class PagamentoControllerUwU extends HttpServlet {
         req.setAttribute("table-identifier", "pagamento");
 
         // Faz a validação do atributo
-        if (ValidationUtilsUwU.isValidString(action))
+        if (Utils.isValidString(action))
         {
             switch (action)
             {
@@ -75,13 +75,13 @@ public class PagamentoControllerUwU extends HttpServlet {
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
                     req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
             }
         }
         else
         {
-            ValidationUtilsUwU.logServerIssue(req);
+            Utils.logServerIssue(req);
             req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
         }
     }
@@ -105,20 +105,20 @@ public class PagamentoControllerUwU extends HttpServlet {
         // Verifica se os parâmetros retornaram valores válidos
         if
         (
-                ValidationUtilsUwU.isValidStringAtivo(ativoParameter)         &&
-                ValidationUtilsUwU.isValidDate(dataParameter)                 &&
-                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter)   &&
-                ValidationUtilsUwU.isValidDouble(totalParameter)              &&
-                ValidationUtilsUwU.isValidString(userAnuncianteParameter)     &&
-                ValidationUtilsUwU.isValidString(emailAnuncianteParameter)    &&
-                ValidationUtilsUwU.isValidString(nomePlanoParameter)          &&
-                ValidationUtilsUwU.isValidString(userUniversitarioParameter)  &&
-                ValidationUtilsUwU.isValidString(emailUniversitarioParameter) &&
-                ValidationUtilsUwU.isValidString(dneUniversitarioParameter)
+                Utils.isValidStringAtivo(ativoParameter)         &&
+                Utils.isValidDate(dataParameter)                 &&
+                Utils.isValidPorcentagem(porcentagemParameter)   &&
+                Utils.isValidDouble(totalParameter)              &&
+                Utils.isValidString(userAnuncianteParameter)     &&
+                Utils.isValidString(emailAnuncianteParameter)    &&
+                Utils.isValidString(nomePlanoParameter)          &&
+                Utils.isValidString(userUniversitarioParameter)  &&
+                Utils.isValidString(emailUniversitarioParameter) &&
+                Utils.isValidString(dneUniversitarioParameter)
         )
         {
             String ativo              = ativoParameter;
-            Date data                 = Date.valueOf(ValidationUtilsUwU.toLocalDate(dataParameter));
+            Date data                 = Date.valueOf(Utils.toLocalDate(dataParameter));
             Double porcentagem        = Double.parseDouble(porcentagemParameter);
             Double total              = Double.parseDouble(totalParameter);
             String userAnunciante     = userAnuncianteParameter;
@@ -131,14 +131,14 @@ public class PagamentoControllerUwU extends HttpServlet {
 
             Pagamento pagamento = new Pagamento(ativo, data, porcentagem, total, userAnunciante, emailAnunciante, dnePlano, userUniversitario, emailUniversitario, dneUniversitario);
 
-            if (pagamentoDAO.adicionarPagamento(pagamento) > 0)
-                ValidationUtilsUwU.logSuccessfulCreation(req);
+            if (pagamentoDAO.addPagamento(pagamento) > 0)
+                Utils.logSuccessfulCreation(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -154,74 +154,70 @@ public class PagamentoControllerUwU extends HttpServlet {
         ResultSet list;
 
         // Verifica se o filtro tem valor ou não
-        if (ValidationUtilsUwU.isValidString(predicate))
+        if (Utils.isValidString(predicate))
         {
             switch (predicate)
             {
                 case "uId":
                     String codigoParametro = req.getParameter("uId");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoParametro))
+                    if (Utils.isValidUUID(codigoParametro))
                     {
                         UUID codigo = UUID.fromString(codigoParametro);
-                        list = pagamentoDAO.selecionarPagamentosPorId(codigo);
+                        list = pagamentoDAO.getPagamentoById(codigo);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigo);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "cAtivo":
                     String ativoParameter = req.getParameter("cAtivo");
 
-                    if (ValidationUtilsUwU.isValidStringAtivo(ativoParameter))
+                    if (Utils.isValidStringAtivo(ativoParameter))
                     {
                         String ativo = ativoParameter;
-                        list = pagamentoDAO.selecionarPagamentosPorAtividade(ativo);
+                        list = pagamentoDAO.getPagamentoByAtividade(ativo);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", ativo);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "dDtFim":
                     // Não recebe ordenação, pois sempre mostra os pagamentos com data de fim futura
-                    list = pagamentoDAO.selecionarPagamentosPorDtFimFutura();
+                    list = pagamentoDAO.getPagamentoByFutureDtFim();
 
                     if (list != null)
                     {
-                        req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                        ValidationUtilsUwU.logSuccessfulReading(req);
+                        req.setAttribute("list", Utils.toPagamentoStringList(list));
+                        Utils.logSuccessfulReading(req);
                     }
                     else
                     {
-                        ValidationUtilsUwU.logDatabaseIssue(req);
+                        Utils.logDatabaseIssue(req);
                     }
                     break;
 
@@ -231,7 +227,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                     if
                     (
-                            ValidationUtilsUwU.isValidChar(ordenacaoPctDescontoParameter) &&
+                            Utils.isValidChar(ordenacaoPctDescontoParameter) &&
                             ordenacaoPctDescontoParameter.charAt(0) == '>'                ||
                             ordenacaoPctDescontoParameter.charAt(0) == '<'
                     )
@@ -239,25 +235,23 @@ public class PagamentoControllerUwU extends HttpServlet {
                         char ordenacaoPctDesconto = ordenacaoPctDescontoParameter.charAt(0);
 
                         if (ordenacaoPctDesconto == '>')
-                            list = pagamentoDAO.selecionarPagamentosPorPctDescontoCrescente();
+                            list = pagamentoDAO.getPagamentosByPctDescontoAscending();
                         else
-                            list = pagamentoDAO.selecionarPagamentosPorPctDescontoDescrescente();
+                            list = pagamentoDAO.getPagamentosByPctDescontoDescending();
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", ordenacaoPctDesconto);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
@@ -267,7 +261,7 @@ public class PagamentoControllerUwU extends HttpServlet {
 
                     if
                     (
-                            ValidationUtilsUwU.isValidChar(ordenacaoTotalParameter) &&
+                            Utils.isValidChar(ordenacaoTotalParameter) &&
                             ordenacaoTotalParameter.charAt(0) == '>'                ||
                             ordenacaoTotalParameter.charAt(0) == '<'
                     )
@@ -275,107 +269,99 @@ public class PagamentoControllerUwU extends HttpServlet {
                         char ordenacaoTotal = ordenacaoTotalParameter.charAt(0);
 
                         if (ordenacaoTotal == '>')
-                            list = pagamentoDAO.selecionarPagamentosPorValorTotalCrescente();
+                            list = pagamentoDAO.getPagamentosByTotalAscending();
                         else
-                            list = pagamentoDAO.selecionarPagamentosPorValorTotalDescrescente();
+                            list = pagamentoDAO.getPagamentosByTotalDescending();
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", ordenacaoTotal);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "uId_Anunciante":
                     String codigoAnuncianteParameter = req.getParameter("uId_Anunciante");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoAnuncianteParameter))
+                    if (Utils.isValidUUID(codigoAnuncianteParameter))
                     {
                         UUID codigoAnunciante = UUID.fromString(codigoAnuncianteParameter);
-                        list = pagamentoDAO.selecionarPagamentosPorIdAnunciante(codigoAnunciante);
+                        list = pagamentoDAO.getPagamentosByIdAnunciante(codigoAnunciante);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigoAnunciante);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 case "uId_Plano":
                     String codigoPlanoParameter = req.getParameter("uId_Plano");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoPlanoParameter))
+                    if (Utils.isValidUUID(codigoPlanoParameter))
                     {
                         UUID codigoPlano = UUID.fromString(codigoPlanoParameter);
-                        list = pagamentoDAO.selecionarPagamentosPorIdPlano(codigoPlano);
+                        list = pagamentoDAO.getPagamentoByIdPlano(codigoPlano);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigoPlano);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
 
                 case "uId_Universitario":
                     String codigoUniversitarioParameter = req.getParameter("uId_Universitario");
 
-                    if (ValidationUtilsUwU.isValidUUID(codigoUniversitarioParameter))
+                    if (Utils.isValidUUID(codigoUniversitarioParameter))
                     {
                         UUID codigoUniversitario = UUID.fromString(codigoUniversitarioParameter);
-                        list = pagamentoDAO.selecionarPagamentosPorIdUniversitario(codigoUniversitario);
+                        list = pagamentoDAO.getPagamentoByIdUniversitario(codigoUniversitario);
 
                         if (list != null)
                         {
-                            req.setAttribute("filter-value", codigoUniversitario);
-
-                            req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                            ValidationUtilsUwU.logSuccessfulReading(req);
+                            req.setAttribute("list", Utils.toPagamentoStringList(list));
+                            Utils.logSuccessfulReading(req);
                         }
                         else
                         {
-                            ValidationUtilsUwU.logDatabaseIssue(req);
+                            Utils.logDatabaseIssue(req);
                         }
                     }
                     else
                     {
-                        ValidationUtilsUwU.logInputSetback(req);
+                        Utils.logInputSetback(req);
                     }
                     break;
 
                 default:
-                    ValidationUtilsUwU.logActionManagerSetback(req);
+                    Utils.logActionManagerSetback(req);
             }
         }
         else
@@ -383,23 +369,23 @@ public class PagamentoControllerUwU extends HttpServlet {
             // Recebe a ação que deve ser ralizada como atributo da requisição
             String action = (String) req.getParameter("action");
 
-            list = pagamentoDAO.selecionarTodosPagamentos();
+            list = pagamentoDAO.getAllPagamentos();
 
             if (list != null && action.equals("read"))
             {
                 // Quando o método é chamado de forma primária, action é "read"
-                req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
-                ValidationUtilsUwU.logSuccessfulReading(req);
+                req.setAttribute("list", Utils.toPagamentoStringList(list));
+                Utils.logSuccessfulReading(req);
             }
             else if (list != null && !action.equals("read"))
             {
                 // Quando o método é chamado por outro método para obter os registros do banco
-                req.setAttribute("list", ValidationUtilsUwU.toPagamentoStringList(list));
+                req.setAttribute("list", Utils.toPagamentoStringList(list));
             }
             else
             {
                 // Quando ocorre erro no banco de dados
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
             }
         }
 
@@ -425,22 +411,22 @@ public class PagamentoControllerUwU extends HttpServlet {
         // Verifica se os parâmetros têm valores válidos
         if
         (
-                ValidationUtilsUwU.isValidUUID(codigoParametro)               &&
-                ValidationUtilsUwU.isValidStringAtivo(ativoParameter)         &&
-                ValidationUtilsUwU.isValidDate(dataParameter)                 &&
-                ValidationUtilsUwU.isValidPorcentagem(porcentagemParameter)   &&
-                ValidationUtilsUwU.isValidDouble(totalParameter)              &&
-                ValidationUtilsUwU.isValidString(userAnuncianteParameter)     &&
-                ValidationUtilsUwU.isValidString(emailAnuncianteParameter)    &&
-                ValidationUtilsUwU.isValidString(nomePlanoParameter)          &&
-                ValidationUtilsUwU.isValidString(userUniversitarioParameter)  &&
-                ValidationUtilsUwU.isValidString(emailUniversitarioParameter) &&
-                ValidationUtilsUwU.isValidString(dneUniversitarioParameter)
+                Utils.isValidUUID(codigoParametro)               &&
+                Utils.isValidStringAtivo(ativoParameter)         &&
+                Utils.isValidDate(dataParameter)                 &&
+                Utils.isValidPorcentagem(porcentagemParameter)   &&
+                Utils.isValidDouble(totalParameter)              &&
+                Utils.isValidString(userAnuncianteParameter)     &&
+                Utils.isValidString(emailAnuncianteParameter)    &&
+                Utils.isValidString(nomePlanoParameter)          &&
+                Utils.isValidString(userUniversitarioParameter)  &&
+                Utils.isValidString(emailUniversitarioParameter) &&
+                Utils.isValidString(dneUniversitarioParameter)
         )
         {
             UUID codigo              = UUID.fromString(codigoParametro);
             String ativo              = ativoParameter;
-            Date data                 = Date.valueOf(ValidationUtilsUwU.toLocalDate(dataParameter));
+            Date data                 = Date.valueOf(Utils.toLocalDate(dataParameter));
             Double porcentagem        = Double.parseDouble(porcentagemParameter);
             Double total              = Double.parseDouble(totalParameter);
             String userAnunciante     = userAnuncianteParameter;
@@ -453,14 +439,14 @@ public class PagamentoControllerUwU extends HttpServlet {
 
             Pagamento pagamento = new Pagamento(codigo, ativo, data, porcentagem, total, userAnunciante, emailAnunciante, dnePlano, userUniversitario, emailUniversitario, dneUniversitario);
 
-            if (pagamentoDAO.atualizarPagamento(pagamento) > 0)
-                ValidationUtilsUwU.logSuccessfulUpdate(req);
+            if (pagamentoDAO.updatePagamento(pagamento) > 0)
+                Utils.logSuccessfulUpdate(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
@@ -473,18 +459,18 @@ public class PagamentoControllerUwU extends HttpServlet {
         String codigoParameter = req.getParameter("uId");
 
         // Verifica se os parâmetros retornaram valores válidos
-        if (ValidationUtilsUwU.isValidUUID(codigoParameter))
+        if (Utils.isValidUUID(codigoParameter))
         {
             UUID codigo = UUID.fromString(codigoParameter);
 
-            if (pagamentoDAO.removerPagamento(codigo) > 0)
-                ValidationUtilsUwU.logSuccessfulRemoval(req);
+            if (pagamentoDAO.removePagamento(codigo) > 0)
+                Utils.logSuccessfulRemoval(req);
             else
-                ValidationUtilsUwU.logDatabaseIssue(req);
+                Utils.logDatabaseIssue(req);
         }
         else
         {
-            ValidationUtilsUwU.logInputSetback(req);
+            Utils.logInputSetback(req);
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
