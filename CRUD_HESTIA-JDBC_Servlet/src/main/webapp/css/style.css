@@ -954,6 +954,7 @@ close-form {
     padding: 2.5rem 10rem;
     color: var(--dark-blue);
     height: 60rem;
+    min-width: 0;
 }
 
 .table-header {
@@ -1013,7 +1014,8 @@ close-form {
     padding: 0rem 3rem 0rem 4.5rem;
     height: calc(100% / 6 - 0.16rem);
     border-bottom: 0.2rem solid color-mix(in srgb, var(--blue) 20%, transparent);
-    overflow: hidden;
+    /*overflow: hidden;*/
+    position: relative;
 
     .material-symbols-outlined {
         opacity: 0;
@@ -1036,6 +1038,7 @@ close-form {
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 1.6rem;
+    white-space: nowrap;
 }
 
 .row:hover .material-symbols-outlined {
