@@ -22,6 +22,7 @@
         String ignoreField;
         String regexIds;
         String fieldTypes;
+        List<String[]> list = (List<String[]>) request.getAttribute("list");
 
         switch (tableIdentifier) {
             case "boost":
@@ -56,7 +57,7 @@
                 fieldNames = "Id,Vantagem,Ativo,Nome do Plano";
                 fieldTypes = "uId,cVantagem,cAtivo,cNmPlano";
                 ignoreField = "true,false,false,false";
-                regexIds = "null,7,12,4";
+                regexIds = "null,7,12,7";
                 break;
 
             default:
@@ -111,7 +112,8 @@
             </label>
         </div>
         <div class="acount">
-            <p id="user-name"> <%= request.getAttribute("user-name") %> </p>
+            <p id="user-name"><%= request.getAttribute("user-name") %>
+            </p>
             <img id="user-photo" src="data:image/png;base64, <%= request.getAttribute("user-photo") %>">
             <a href="login-admin.jsp"><i class="material-icons">logout</i></a>
         </div>
@@ -166,7 +168,6 @@
             </div>
             <div class="table-rows">
                 <%
-                    List<String[]> list = (List<String[]>) request.getAttribute("list");
                     if (list != null && !list.isEmpty()) {
 
                 %>
@@ -270,6 +271,27 @@
 
     document.querySelectorAll('#create').forEach(element => {
         element.addEventListener('click', () => {
+            if (<%= tableIdentifier.equals("plano_vantagem") %>){
+                const predicateExists = document.querySelector('#creation-form form input[name=predicate]');
+
+                if (!predicateExists) {
+                    let predicate = document.createElement('input');
+                    predicate.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+                    predicate.name = 'predicate'; // Set the name attribute
+                    predicate.value = 'cNmPlano'
+
+                    let input = document.createElement('input');
+                    input.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+                    input.name = 'cNmPlano'; // Set the name attribute
+                    input.value = "<%= request.getParameter("cNmPlano") %>"
+                    const cNmPlano = document.querySelector('#creation-form form input[name=cNmPlano]');
+                    cNmPlano.value = "<%= request.getParameter("cNmPlano") %>"
+
+                    creationForm.append(predicate)
+                    creationForm.append(input)
+                }
+            }
+
             creationForm.classList.remove("closed-form")
         });
     });
