@@ -303,11 +303,11 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("DELETE FROM Plano WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT * FROM SP_ExcluirPlano(?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas afetadas
-                linhasAfetadas = pstmt.executeUpdate();
+                linhasAfetadas = pstmt.executeQuery().findColumn("deleted_count");
             }
             catch (SQLException sqle) { erro = true; }
             if (erro)
@@ -321,7 +321,12 @@ public class PlanoDAO extends DatabaseConnection
                     pstmt.setObject(1, uId);
 
                     // Executa a instrução e guarda as linhas afetadas
-                    linhasAfetadas = pstmt.executeQuery().findColumn("deleted_count");
+                    linhasAfetadas = pstmt.executeUpdate();
+
+                    //Deletando as vantagens do plano
+                    pstmt = conn.prepareStatement("UPDATE Plano_vantagem SET cAtivo =  '0' WHERE uId_Plano = ?");
+                    pstmt.setObject(1, uId);
+                    pstmt.executeUpdate();
                 }
                 catch (SQLException sqle)
                 {
