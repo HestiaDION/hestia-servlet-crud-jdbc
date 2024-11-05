@@ -258,7 +258,8 @@ public class Utils
 
     public static List<String[]> toPagamentoStringList(ResultSet resultSet)
     {
-        // Criamos uma lista para guardar cada registro da tabela
+        // Criamos uma lista para
+        // guardar cada registro da tabela
         List<String[]> pagamentoList = new ArrayList<>();
 
         // Recupera os valores do ResultSet e reconstroi o objeto como um vetor de Strings

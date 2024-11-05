@@ -62,6 +62,6 @@
         <a href="login-secret-area.html">Clique aqui para acessar a área secreta</a>
     </div>
 
-    <div class="image-container"><img src="images/icons/web-maintenance.png" alt="" class="main-image"></div>    </div>
+    <div class="image-container"><img src="images/icons/Teamwork.png" alt="" class="main-image"></div>    </div>
 </body>
 </html>

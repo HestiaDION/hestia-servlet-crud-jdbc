@@ -14,7 +14,7 @@
 <%
     request.setAttribute("action", "read");
 %>
-<form action="<%= tableIdentifier %>" method="get" id="filter-form" class="hide-filters">
+<form action="<%= tableIdentifier %>" method="get" id="filter-form" class="hide-filters" onsubmit="loading.classList.remove('hide-loading')">
     <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
 <%--    <input type="hidden" name="uId" value="">--%>
 

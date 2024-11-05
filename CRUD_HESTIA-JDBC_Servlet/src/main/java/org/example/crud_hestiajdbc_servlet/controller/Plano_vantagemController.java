@@ -26,6 +26,9 @@ public class Plano_vantagemController extends HttpServlet
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
 
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "plano_vantagem");
+
         if (Utils.isValidString(action))
         {
             if (action.equals("read"))
@@ -50,6 +53,9 @@ public class Plano_vantagemController extends HttpServlet
     {
         // Recebe a ação que deve ser ralizada como atributo da requisição
         String action = (String) req.getParameter("action");
+
+        // Espefica com a classe do objeto que está sendo enviado
+        req.setAttribute("table-identifier", "plano_vantagem");
 
         // Faz a validação do atributo
         if (Utils.isValidString(action))
@@ -176,10 +182,10 @@ public class Plano_vantagemController extends HttpServlet
                     }
                     break;
 
-                case "uId_Plano":
+                case "cNmPlano":
                     String nomePlanoParameter = req.getParameter("cNmPlano");
 
-                    if (Utils.isValidUUID(nomePlanoParameter))
+                    if (Utils.isValidString(nomePlanoParameter))
                     {
                         String nomePlano = nomePlanoParameter;
                         list = planoVantagemDAO.getPlanoVantagensByNmPlano(nomePlano);

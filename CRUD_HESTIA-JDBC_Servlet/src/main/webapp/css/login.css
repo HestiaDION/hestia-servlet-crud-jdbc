@@ -20,12 +20,12 @@ html {
 }
 
 #admin-login {
-    background-image: url(images/backgrounds/login-blue.png);
+    background-image: url(../images/backgrounds/login-blue.png);
     background-size: cover;
 }
 
 #secret-area-login {
-    background-image: url(images/backgrounds/login-red.png);
+    background-image: url(../images/backgrounds/login-red.png);
     background-size: cover;
 }
 
