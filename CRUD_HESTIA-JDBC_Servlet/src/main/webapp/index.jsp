@@ -28,9 +28,9 @@
         <p>Os fundadores da empresa DION fazem parte da turma de 2024 do primeiro ano TECH do Instituto!</p>
         <div id="form-container">
             <%
-                request.setAttribute("action", "read");
+                request.setAttribute("action", "login");
             %>
-            <form action="login1" method="post">
+            <form action="login" method="post">
                 <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
                 <div class="input-container">
                     <label for="email">E-mail</label>
@@ -45,12 +45,12 @@
 
                 </div>
                 <div class="input-container">
-                    <label for="password">Senha</label>
+                    <label for="senha">Senha</label>
                     <input
                             type="password"
-                            name="password"
+                            name="senha"
                             pattern=".{8,}"
-                            id="password"
+                            id="senha"
                             placeholder=""
                             required
                     />
