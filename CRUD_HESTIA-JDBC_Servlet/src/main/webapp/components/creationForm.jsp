@@ -47,8 +47,8 @@
             <% } else if (regexIds[i].equals("11")) { %>
             <select name="<%= fieldTypes[i] %>" id="<%= fieldTypes[i] %>" required>
                 <option value="" disabled selected>Select one</option>
-                <option value="Anunciante">Anunciante</option>
-                <option value="Universitario">Universitario</option>
+                <option value="anunciante">Anunciante</option>
+                <option value="universitario">Universitario</option>
             </select>
             <% } else { %>
             <select name="<%= fieldTypes[i] %>" id="<%= fieldTypes[i] %>" required>
