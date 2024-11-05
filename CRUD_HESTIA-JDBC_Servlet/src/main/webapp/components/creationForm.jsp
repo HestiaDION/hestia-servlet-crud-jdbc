@@ -20,7 +20,7 @@
     <form action="<%= tableIdentifier %>" method="post">
         <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
         <div class="form-title">
-            <h3>Create <%= tableIdentifier %>
+            <h3>Criar <%= tableIdentifier %>
             </h3>
             <i class="material-icons" id="close-form">close</i>
         </div>

@@ -200,7 +200,7 @@
                         if (tableIdentifier == "plano") {
                     %>
                     <p>
-                        <span class="material-symbols-outlined" id="open-advantages" data-uId="<%=list.get(i)[0]%>">open_in_new</span>
+                        <span class="material-symbols-outlined" id="open-advantages" data-name="<%=list.get(i)[1]%>">open_in_new</span>
                     </p>
                     <%
                         }
@@ -300,12 +300,12 @@
             let predicate = document.createElement('input');
             predicate.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
             predicate.name = 'predicate'; // Set the name attribute
-            predicate.value = 'uId'
+            predicate.value = 'uId_Plano'
 
             let input = document.createElement('input');
             input.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
-            input.name = 'uId'; // Set the name attribute
-            input.value = element.dataset.uid
+            input.name = 'cNmPlano'; // Set the name attribute
+            input.value = element.dataset.name
 
             const sidebar = document.getElementById("sidebar-form")
 

@@ -185,7 +185,7 @@ public class Plano_vantagemController extends HttpServlet
                 case "uId_Plano":
                     String nomePlanoParameter = req.getParameter("cNmPlano");
 
-                    if (Utils.isValidUUID(nomePlanoParameter))
+                    if (Utils.isValidString(nomePlanoParameter))
                     {
                         String nomePlano = nomePlanoParameter;
                         list = planoVantagemDAO.getPlanoVantagensByNmPlano(nomePlano);
