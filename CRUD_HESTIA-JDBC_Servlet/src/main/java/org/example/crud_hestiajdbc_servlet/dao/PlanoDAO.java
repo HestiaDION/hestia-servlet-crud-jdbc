@@ -82,7 +82,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE uId = ?");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -112,7 +112,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE cNome = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cNome = ?");
                 pstmt.setString(1, cNome);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -142,7 +142,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano WHERE cTipoUsuario = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cTipoUsuario = ?");
                 pstmt.setString(1, cTipoUsuario);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -172,7 +172,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano ORDER BY nValor");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano ORDER BY nValor");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -201,7 +201,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuarionValor, cDescricao FROM Plano ORDER BY nValor DESC");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano ORDER BY nValor DESC");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();

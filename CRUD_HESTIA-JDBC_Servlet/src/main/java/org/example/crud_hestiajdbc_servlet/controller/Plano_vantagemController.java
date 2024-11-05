@@ -90,8 +90,8 @@ public class Plano_vantagemController extends HttpServlet
     private void createPlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String vantagemParameter    = req.getParameter("cVantagem");
-        String ativoParameter       = req.getParameter("cAtivo");
+        String vantagemParameter  = req.getParameter("cVantagem");
+        String ativoParameter     = req.getParameter("cAtivo");
         String nomePlanoParameter = req.getParameter("cNmPlano");
     
         // Verifica se os parâmetros retornaram valores válidos
