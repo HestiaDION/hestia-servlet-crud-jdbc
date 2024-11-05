@@ -52,7 +52,7 @@ public class Plano_vantagemDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cVantagem, cAtivo FROM Plano_vantagem");
+                pstmt = conn.prepareStatement("SELECT Vw_Plano_vantagem.uId, Vw_Plano_vantagem.cVantagem, Vw_Plano_vantagem.cAtivo, Vw_Plano_vantagem.cNmPlano FROM Vw_Plano_vantagem");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -81,7 +81,7 @@ public class Plano_vantagemDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT Vw_Plano_vantagem.uId, Vw_Plano_vantagem.cVantagem, Vw_Plano_vantagem.cAtivo FROM Vw_Plano_vantagem WHERE Vw_Plano_vantagem.uId = ?");
+                pstmt = conn.prepareStatement("SELECT Vw_Plano_vantagem.uId, Vw_Plano_vantagem.cVantagem, Vw_Plano_vantagem.cAtivo, Vw_Plano_vantagem.cNmPlano FROM Vw_Plano_vantagem WHERE Vw_Plano_vantagem.uId = ?");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -111,7 +111,7 @@ public class Plano_vantagemDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT Vw_Plano_vantagem.uId, Vw_Plano_vantagem.cVantagem, Vw_Plano_vantagem.cAtivo FROM Vw_Plano_vantagem WHERE Vw_Plano_vantagem.cAtivo = ?");
+                pstmt = conn.prepareStatement("SELECT Vw_Plano_vantagem.uId, Vw_Plano_vantagem.cVantagem, Vw_Plano_vantagem.cAtivo, Vw_Plano_vantagem.cNmPlano FROM Vw_Plano_vantagem WHERE Vw_Plano_vantagem.cAtivo = ?");
                 pstmt.setString(1, cAtivo);
 
                 // Executa a instrução e guarda as linhas retornadas
