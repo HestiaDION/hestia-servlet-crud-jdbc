@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.util.List;
 import java.util.UUID;
 
 import org.example.crud_hestiajdbc_servlet.dao.Plano_vantagemDAO;
@@ -192,7 +193,9 @@ public class Plano_vantagemController extends HttpServlet
 
                         if (list != null)
                         {
-                            req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
+                            List<String[]> lista = Utils.toPlano_vantagemStringList(list);
+
+                            req.setAttribute("list", lista);
                             Utils.logSuccessfulReading(req);
                         }
                         else
@@ -257,9 +260,9 @@ public class Plano_vantagemController extends HttpServlet
                 Utils.isValidString(nomePlanoParameter)
         )
         {
-            UUID codigo      = UUID.fromString(codigoParameter);
-            String vantagem  = vantagemParameter;
-            char ativo       = ativoParameter.charAt(0);
+            UUID codigo     = UUID.fromString(codigoParameter);
+            String vantagem = vantagemParameter;
+            char ativo      = ativoParameter.charAt(0);
             String nmPlano = nomePlanoParameter;
             Plano_vantagem planoVantagem = new Plano_vantagem(codigo, vantagem, ativo, nmPlano);
 

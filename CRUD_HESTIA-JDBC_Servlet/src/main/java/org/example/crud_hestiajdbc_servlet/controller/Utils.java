@@ -275,9 +275,9 @@ public class Utils
                 pagamentoRegister[2] = String.valueOf(resultSet.getDate("dDtFim"));
                 pagamentoRegister[3] = String.valueOf(resultSet.getDouble("nPctDesconto"));
                 pagamentoRegister[4] = String.valueOf(resultSet.getDouble("nTotal"));
-                pagamentoRegister[5] = String.valueOf(resultSet.getObject("uId_Anunciante"));
-                pagamentoRegister[6] = String.valueOf(resultSet.getObject("uId_Plano"));
-                pagamentoRegister[7] = String.valueOf(resultSet.getObject("uId_Universitario"));
+                pagamentoRegister[5] = String.valueOf(resultSet.getString("cEmailAnunciante"));
+                pagamentoRegister[6] = String.valueOf(resultSet.getString("cNmPlano"));
+                pagamentoRegister[7] = String.valueOf(resultSet.getString("cEmailUniversitario"));
 
                 // Adiciona o vetor de Strings na lista
                 pagamentoList.add(pagamentoRegister);
@@ -339,8 +339,8 @@ public class Utils
                 // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null
                 planoVantagemRegister[0] = String.valueOf(resultSet.getObject("uId"));
                 planoVantagemRegister[1] = String.valueOf(resultSet.getString("cVantagem"));
-                planoVantagemRegister[2] = String.valueOf(resultSet.getString("cAtivo").charAt(0));
-                planoVantagemRegister[3] = String.valueOf(resultSet.getObject("uId_Plano"));
+                planoVantagemRegister[2] = String.valueOf(resultSet.getString("cAtivo"));
+                planoVantagemRegister[3] = String.valueOf(resultSet.getString("cNmPlano"));
 
                 // Adiciona o vetor de Strings na lista
                 planoVantagemList.add(planoVantagemRegister);
