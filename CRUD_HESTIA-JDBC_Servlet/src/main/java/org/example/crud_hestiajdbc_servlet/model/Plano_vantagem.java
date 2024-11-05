@@ -50,26 +50,6 @@ public class Plano_vantagem {
         return cNmPlano;
     }
 
-//    DEFINIÇÃO DOS MÉTODOS setters
-    public void setuId(UUID uId)
-    {
-        this.uId = uId;
-    } 
-
-    public void setcVantagem(String cVantagem)
-    {
-        this.cVantagem = cVantagem;
-    } 
-
-    public void setcAtivo(char cAtivo)
-    {
-        this.cAtivo = cAtivo;
-    } 
-
-    public void setcNmPlano(String cNmPlano)
-    {
-        this.cNmPlano = cNmPlano;
-    } 
 
 //    DEFINIÇÃO DO MÉTODO toString
     @Override
