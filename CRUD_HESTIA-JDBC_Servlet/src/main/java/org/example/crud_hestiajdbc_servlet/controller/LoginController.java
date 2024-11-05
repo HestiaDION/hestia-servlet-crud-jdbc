@@ -83,11 +83,13 @@ public class LoginController extends HttpServlet
                         // Espefica com a classe do objeto que está sendo enviado
                         req.setAttribute("table-identifier", "admin");
 
+                        String nome = rs.getString("cNome");
                         // Passa o nome do usuário que está acessando, pegando o valor do ResultSet
-                        req.setAttribute("user-name", rs.getString("cNome"));
+                        req.setAttribute("user-name", nome);
 
+                        String foto = rs.getString("cFoto");
                         // Passa a foto do usuário que está acessando, pegando o valor do ResultSet
-                        req.setAttribute("user-photo", rs.getString("cFoto"));
+                        req.setAttribute("user-photo", foto);
 
                         // Altera o status do login do usuário, para sinalizar que ele está ativo
                         adminDAO.setAdminActive(email);
@@ -97,6 +99,9 @@ public class LoginController extends HttpServlet
 
                         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
                         adminController.readAdmin(req, resp);
+
+                        // Retorna para não chamar outra página
+                        return;
                     }
                     else
                     {
@@ -122,6 +127,9 @@ public class LoginController extends HttpServlet
         {
             Utils.logInputSetback(req);
         }
+
+        // Direciona de volta à página de login, que só é executado em caso de desvio do fluxo esperado
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
     }
 
     private void logout(HttpServletRequest req) throws ServletException, IOException

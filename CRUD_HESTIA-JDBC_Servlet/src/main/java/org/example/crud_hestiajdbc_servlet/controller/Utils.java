@@ -173,14 +173,13 @@ public class Utils
         {
             while (resultSet.next())
             {
-                String[] registerAdmin = new String[5];
+                String[] registerAdmin = new String[4];
 
                 // Usamos o método da classe string para pegar o valor do objeto e transformar em String, até se algum for null/
                 registerAdmin[0] = String.valueOf(resultSet.getObject("uId"));
                 registerAdmin[1] = String.valueOf(resultSet.getString("cNome"));
                 registerAdmin[2] = String.valueOf(resultSet.getString("cEmail"));
-                registerAdmin[3] = String.valueOf(resultSet.getString("cFoto"));
-                registerAdmin[4] = String.valueOf(resultSet.getString("cSenha"));
+                registerAdmin[3] = String.valueOf(resultSet.getString("cSenha"));
 
                 // Adiciona o vetor de Strings na lista
                 listAdmin.add(registerAdmin);
