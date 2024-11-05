@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.ResultSet;
 import java.util.Base64;
 import java.util.UUID;
@@ -16,7 +15,6 @@ import java.util.UUID;
 import jakarta.servlet.http.Part;
 import org.example.crud_hestiajdbc_servlet.dao.AdminDAO;
 import org.example.crud_hestiajdbc_servlet.model.Admin;
-import org.example.crud_hestiajdbc_servlet.model.Pagamento;
 
 @WebServlet(name = "admin", value = "/admin")
 // Permite trabalhar com arquivos
@@ -294,11 +292,11 @@ public class AdminController extends HttpServlet
                 Utils.isValidString(senhaParamter)
         )
         {
-            UUID codigo  = UUID.fromString(codigoParameter);
-            String nome  = nomeParameter;
-            String email = emailParamter;
+            UUID codigo   = UUID.fromString(codigoParameter);
+            String nome   = nomeParameter;
+            String email  = emailParamter;
             String imagem = Base64.getEncoder().encodeToString(Utils.toPhotoByteArray(imagemParameter.getInputStream()));
-            String senha = senhaParamter;
+            String senha  = senhaParamter;
             Admin admin = new Admin(codigo, nome, email, imagem, senha);
 
             if (adminDAO.updateAdmin(admin) > 0)
