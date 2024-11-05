@@ -242,11 +242,11 @@ public class FiltroDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("DELETE FROM Filtro WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT * FROM SP_ExcluirFiltro(?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas afetadas
-                linhasAfetadas = pstmt.executeUpdate();
+                linhasAfetadas = pstmt.executeQuery().findColumn("deleted_count");
             }
             catch (SQLException sqle)
             {
