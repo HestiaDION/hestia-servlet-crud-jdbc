@@ -40,13 +40,13 @@ public class LoginController extends HttpServlet
 
                 default:
                     Utils.logActionManagerSetback(req);
-                    req.getRequestDispatcher("index.jsp").forward(req, resp);
+                    req.getRequestDispatcher("login-admin.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logServerIssue(req);
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("login-admin.jsp").forward(req, resp);
         }
     }
 
@@ -89,8 +89,9 @@ public class LoginController extends HttpServlet
                         // Passa o nome do usuário que está acessando, pegando o valor do ResultSet
                         req.setAttribute("user-name", rs.getString("cNome"));
 
+                        String foto = rs.getString("cFoto");
                         // Passa a foto do usuário que está acessando, pegando o valor do ResultSet
-                        req.setAttribute("user-photo", rs.getString("cFoto"));
+                        req.setAttribute("user-photo", foto);
 
                         // Altera o status do login do usuário, para sinalizar que ele está ativo
                         adminDAO.setAdminActive(email);
@@ -100,12 +101,15 @@ public class LoginController extends HttpServlet
 
                         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
                         adminController.readAdmin(req, resp);
+
+                        // Retorna para não chamar outra página
+                        return;
                     }
                     else
                     {
                         Utils.logUserNotFound(req);
 
-                        req.getRequestDispatcher("index.jsp").forward(req, resp);
+                        req.getRequestDispatcher("login-admin.jsp").forward(req, resp);
                     }
                 }
                 catch (SQLException sqle)
@@ -116,7 +120,7 @@ public class LoginController extends HttpServlet
                     // Erro no banco de dados
                     Utils.logDatabaseIssue(req);
 
-                    req.getRequestDispatcher("index.jsp").forward(req, resp);
+                    req.getRequestDispatcher("login-admin.jsp").forward(req, resp);
                 }
             }
             else
@@ -124,15 +128,18 @@ public class LoginController extends HttpServlet
                 // Erro no banco de dados
                 Utils.logDatabaseIssue(req);
 
-                req.getRequestDispatcher("index.jsp").forward(req, resp);
+                req.getRequestDispatcher("login-admin.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logInputSetback(req);
 
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            req.getRequestDispatcher("login-admin.jsp").forward(req, resp);
         }
+
+        // Direciona de volta à página de login, que só é executado em caso de desvio do fluxo esperado
+        req.getRequestDispatcher("login-admin.jsp").forward(req, resp);
     }
 
     private void logout(HttpServletRequest req) throws ServletException, IOException

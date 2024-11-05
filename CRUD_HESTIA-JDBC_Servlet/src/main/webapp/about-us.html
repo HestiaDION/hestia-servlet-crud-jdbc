@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sobre nós</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+  </head>
+  <body
+    style="
+      --white: #fdfdfd;
+      --dark-blue: #00224d;
+      --red: #e20a3d;
+      --light-red: #ff3263;
+      --light-blue: #f4f8ff;
+      --blue: #195198;
+    "
+  >
+    <div id="preloader" class="blue-preloader"></div>
+
+    <div id="form-container" class="form-container closed-form">
+      <form id="login-form">
+        <div class="form-title">
+          <h3>Login</h3>
+          <i class="material-icons" id="close-form">close</i>
+        </div>
+        <div class="login-options">
+          <button type="submit" onclick="redirectToAdminLogin()">
+            <span class="material-symbols-outlined">
+              admin_panel_settings
+            </span>
+            Painel Admin
+          </button>
+          <button type="submit" onclick="redirectToSecretAreaLogin()">
+            <span class="material-symbols-outlined"> lock </span>
+            Página Secreta
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="nav">
+      <img id="logo" src="images/icons/hestia.svg" alt="" />
+      <div class="nav-content">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">Sobre a empresa</a>
+        <a href="#">Perguntas</a>
+      </div>
+      <div id="sign-up">
+        <h5>Sign up</h5>
+      </div>
+    </div>
+    <div class="about-us background">
+      <div class="title-section">
+        <h1>
+          <span>desenvolvimento e inovação</span>
+          <span>para oportunidades</span> <span>e necessidades</span>
+        </h1>
+      </div>
+    </div>
+    <div class="our-mission background">
+      <img src="images/Group photo.svg" alt="" width="50%" />
+      <div class="our-mission-content">
+        <h1>Nossa missão</h1>
+        <p>
+          No <strong>DION</strong>, acreditamos que o
+          <strong>desenvolvimento</strong> e a <strong>inovação</strong> são os
+          motores que criam novas <strong>oportunidades</strong> e atendem as
+          <strong>necessidades</strong> da sociedade. Nossa missão é impulsionar
+          tecnologias sustentáveis, alinhadas aos Objetivos de Desenvolvimento
+          Sustentável (ODS), e garantir que todos tenham acesso a ferramentas e
+          soluções que transformem suas realidades. Ao fomentar a inovação,
+          criamos um futuro com mais oportunidades para todos, atendendo tanto
+          às demandas atuais quanto às necessidades emergentes.
+        </p>
+      </div>
+    </div>
+    <div class="our-team background">
+      <h1>Nossa Equipe</h1>
+      <div class="team">
+        <h3>#Dev Team</h3>
+        <p>
+          O time de desenvolvimento é composto pelas estudantes do segundo ano
+          TECH de 2023 do Instituto J&F, elas foram responsáveis por desenvolver
+          as APIs e o mobile do Héstia!
+        </p>
+        <div class="members">
+          <img src="sophi.png" alt="" />
+          <img src="sophi.png" alt="" />
+          <img src="sophi.png" alt="" />
+        </div>
+      </div>
+      <div class="team">
+        <h3>#Dados Team</h3>
+        <p>
+          A análise de dados do aplicativo Héstia ficou sob a responsabilidade
+          da dupla do segundo ano TECH 2023 do Instituto J&F. Juntos, eles
+          desenvolveram o algoritmo de recomendação e o banco de dados do
+          aplicativo!
+        </p>
+        <div class="members">
+          <img src="sophi.png" alt="" />
+          <img src="sophi.png" alt="" />
+        </div>
+      </div>
+      <div class="team">
+        <h3>#Fundadores</h3>
+        <p>
+          Os fundadores da empresa DION fazem parte da turma de 2024 do primeiro
+          ano TECH do Instituto J&F, durante o mesmo ano se dedicaram a
+          idealização e criação do aplicativo Héstia!
+        </p>
+        <div class="members">
+          <img src="sophi.png" alt="" />
+          <img src="sophi.png" alt="" />
+          <img src="sophi.png" alt="" />
+          <img src="sophi.png" alt="" />
+          <img src="sophi.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="footer background">
+      <img src="images/icons/hestia.svg" alt="" />
+      <p class="copyright">
+        © Copyright 2024 - DION - Todos os direitos reservados Héstia com essa
+        copyright muito verdadeira
+      </p>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="about-us.html">Sobre a empresa</a>
+        <a href="#anwsers">Perguntas</a>
+        <img src="download.png" alt="" />
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

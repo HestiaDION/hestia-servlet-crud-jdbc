@@ -111,9 +111,9 @@
             </label>
         </div>
         <div class="acount">
-            <p>Flopa fofa</p>
-            <img src="data:image/png:base64;<%= request.getAttribute("user-photo") %>" alt=""/>
-            <a href="index.html"><i class="material-icons">logout</i></a>
+            <p id="user-name"> <%= request.getAttribute("user-name") %> </p>
+            <img id="user-photo" src="data:image/png;base64, <%= request.getAttribute("user-photo") %>">
+            <a href="login-admin.jsp"><i class="material-icons">logout</i></a>
         </div>
     </div>
     <input type="checkbox" id="check"/>
@@ -214,7 +214,7 @@
                     }
                 } else {
                 %>
-                <p>No records found.</p>
+                <p>Nenhum registro foi encontrado.</p>
                 <%
                     }
                 %>
@@ -223,6 +223,31 @@
     </div>
 </div>
 <script>
+    var userName = "<%= request.getAttribute("user-name") != null ? request.getAttribute("user-name") : "" %>";
+    var userPhoto = "<%= request.getAttribute("user-photo") != null ? request.getAttribute("user-photo") : "" %>";
+
+    // Verifica se as informações já estão no sessionStorage
+    if (userName !== "" && userPhoto !== "") {
+        // Pega os valores do request.getAttribute() diretamente do JSP
+        var userName = "<%= request.getAttribute("user-name") %>";
+        var userPhoto = "<%= request.getAttribute("user-photo") %>";
+
+        // Armazena esses valores no sessionStorage
+        sessionStorage.setItem("userName", userName);
+        sessionStorage.setItem("userPhoto", userPhoto);
+    }
+
+    // Verifica se as informações já estão no sessionStorage
+    if (sessionStorage.getItem("userName") != null && sessionStorage.getItem("userPhoto") != null) {
+        // Verifica se as informações já estão no sessionStorage
+        var storedUserName = sessionStorage.getItem("userName");
+        var storedUserPhoto = sessionStorage.getItem("userPhoto");
+
+        // Atualiza o conteúdo da página com essas informações
+        document.getElementById("user-name").textContent = storedUserName;
+        document.getElementById("user-photo").src = "data:image/png;base64, " + storedUserPhoto;
+    }
+
     document.querySelector('.close-alert').addEventListener('click', function () {
         document.querySelector('.alert').classList.add('hide-alert');
     });
@@ -300,7 +325,7 @@
             let predicate = document.createElement('input');
             predicate.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
             predicate.name = 'predicate'; // Set the name attribute
-            predicate.value = 'uId_Plano'
+            predicate.value = 'cNmPlano'
 
             let input = document.createElement('input');
             input.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')

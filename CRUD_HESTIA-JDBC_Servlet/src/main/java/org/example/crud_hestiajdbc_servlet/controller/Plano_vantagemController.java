@@ -182,7 +182,7 @@ public class Plano_vantagemController extends HttpServlet
                     }
                     break;
 
-                case "uId_Plano":
+                case "cNmPlano":
                     String nomePlanoParameter = req.getParameter("cNmPlano");
 
                     if (Utils.isValidString(nomePlanoParameter))
