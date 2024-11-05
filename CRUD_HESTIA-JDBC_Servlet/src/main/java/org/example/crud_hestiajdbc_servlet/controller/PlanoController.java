@@ -38,13 +38,13 @@ public class PlanoController extends HttpServlet
             else
             {
                 Utils.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logServerIssue(req);
-            req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -75,13 +75,13 @@ public class PlanoController extends HttpServlet
 
                 default:
                     Utils.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logServerIssue(req);
-            req.getRequestDispatcher("pages/PlanoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 

@@ -35,13 +35,13 @@ public class Plano_vantagemController extends HttpServlet
             else
             {
                 Utils.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logServerIssue(req);
-            req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -70,13 +70,13 @@ public class Plano_vantagemController extends HttpServlet
 
                 default:
                     Utils.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logServerIssue(req);
-            req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -84,8 +84,8 @@ public class Plano_vantagemController extends HttpServlet
     private void createPlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String vantagemParameter    = req.getParameter("cVantagem");
-        String ativoParameter       = req.getParameter("cAtivo");
+        String vantagemParameter  = req.getParameter("cVantagem");
+        String ativoParameter     = req.getParameter("cAtivo");
         String nomePlanoParameter = req.getParameter("cNmPlano");
     
         // Verifica se os parâmetros retornaram valores válidos
@@ -230,7 +230,7 @@ public class Plano_vantagemController extends HttpServlet
         }
 
         // Redireciona a requisição e resposta de volta à página de administração
-        req.getRequestDispatcher("pages/Plano_vantagemUwU.jsp").forward(req, resp);
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
     private void updatePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException

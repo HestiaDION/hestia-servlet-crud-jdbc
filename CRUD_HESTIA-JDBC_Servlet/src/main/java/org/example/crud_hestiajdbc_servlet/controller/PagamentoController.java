@@ -38,13 +38,13 @@ public class PagamentoController extends HttpServlet {
             else
             {
                 Utils.logActionManagerSetback(req);
-                req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+                req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logServerIssue(req);
-            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("v").forward(req, resp);
         }
     }
 
@@ -76,13 +76,13 @@ public class PagamentoController extends HttpServlet {
 
                 default:
                     Utils.logActionManagerSetback(req);
-                    req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+                    req.getRequestDispatcher("Crud.jsp").forward(req, resp);
             }
         }
         else
         {
             Utils.logServerIssue(req);
-            req.getRequestDispatcher("pages/PagamentoUwU.jsp").forward(req, resp);
+            req.getRequestDispatcher("Crud.jsp").forward(req, resp);
         }
     }
 
@@ -110,13 +110,13 @@ public class PagamentoController extends HttpServlet {
                 Utils.isValidInteger(tipoUsuarioParameter)
         )
         {
-            String ativo              = ativoParameter;
-            Date data                 = Date.valueOf(Utils.toLocalDate(dataParameter));
-            Double porcentagem        = Double.parseDouble(porcentagemParameter);
-            Double total              = Double.parseDouble(totalParameter);
-            String emailUsuario       = emailUsuarioParameter;
-            String nomePlano          = nomePlanoParameter;
-            int tipoUsuario           = Integer.parseInt(tipoUsuarioParameter);
+            String ativo        = ativoParameter;
+            Date data           = Date.valueOf(Utils.toLocalDate(dataParameter));
+            Double porcentagem  = Double.parseDouble(porcentagemParameter);
+            Double total        = Double.parseDouble(totalParameter);
+            String emailUsuario = emailUsuarioParameter;
+            String nomePlano    = nomePlanoParameter;
+            int tipoUsuario     = Integer.parseInt(tipoUsuarioParameter);
 
 
             Pagamento pagamento = new Pagamento(ativo, data, porcentagem, total, emailUsuario, nomePlano, tipoUsuario);
@@ -408,14 +408,14 @@ public class PagamentoController extends HttpServlet {
                 Utils.isValidInteger(tipoUsuarioParameter)
         )
         {
-            UUID codigo              = UUID.fromString(codigoParametro);
-            String ativo              = ativoParameter;
-            Date data                 = Date.valueOf(Utils.toLocalDate(dataParameter));
-            Double porcentagem        = Double.parseDouble(porcentagemParameter);
-            Double total              = Double.parseDouble(totalParameter);
-            String emailUsuario       = emailUsuarioParameter;
-            String nomePlano          = nomePlanoParameter;
-            int tipoUsuario           = Integer.parseInt(tipoUsuarioParameter);
+            UUID codigo         = UUID.fromString(codigoParametro);
+            String ativo        = ativoParameter;
+            Date data           = Date.valueOf(Utils.toLocalDate(dataParameter));
+            Double porcentagem  = Double.parseDouble(porcentagemParameter);
+            Double total        = Double.parseDouble(totalParameter);
+            String emailUsuario = emailUsuarioParameter;
+            String nomePlano    = nomePlanoParameter;
+            int tipoUsuario     = Integer.parseInt(tipoUsuarioParameter);
 
 
             Pagamento pagamento = new Pagamento(codigo, ativo, data, porcentagem, total, emailUsuario, nomePlano, tipoUsuario);
