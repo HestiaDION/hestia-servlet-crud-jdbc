@@ -48,6 +48,7 @@ public class Admin {
     {
         return cEmail;
     }
+
     public String getcFoto()
     {
         return cFoto;

@@ -72,7 +72,7 @@ public class PagamentoDAO extends DatabaseConnection
             {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal" +
-                        ", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento");
+                        ", Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
