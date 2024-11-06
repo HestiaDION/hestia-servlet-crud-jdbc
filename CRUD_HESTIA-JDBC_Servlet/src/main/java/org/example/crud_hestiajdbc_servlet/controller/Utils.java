@@ -91,7 +91,7 @@ public class Utils
     public static boolean isValidDate(String value)
     {
         // Declaração de formatador com o formato brasileiro
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         // Retorna falso se a String for inválida
         if (!isValidString(value))
@@ -135,7 +135,7 @@ public class Utils
     public static LocalDate toLocalDate(String value) throws DateTimeException
     {
         // Declaração de formatador com o formato brasileiro
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         // Retorna a data como objeto
         return LocalDate.parse(value, formatter);

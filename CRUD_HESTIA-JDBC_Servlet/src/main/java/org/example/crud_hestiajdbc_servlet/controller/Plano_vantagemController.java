@@ -193,9 +193,9 @@ public class Plano_vantagemController extends HttpServlet
 
                         if (list != null)
                         {
-                            List<String[]> lista = Utils.toPlano_vantagemStringList(list);
+                            req.setAttribute("parent-table-name", nomePlano);
 
-                            req.setAttribute("list", lista);
+                            req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
                             Utils.logSuccessfulReading(req);
                         }
                         else

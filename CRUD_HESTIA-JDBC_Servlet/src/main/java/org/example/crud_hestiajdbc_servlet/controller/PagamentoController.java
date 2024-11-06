@@ -96,7 +96,7 @@ public class PagamentoController extends HttpServlet {
         String totalParameter        = req.getParameter("nTotal");
         String emailUsuarioParameter = req.getParameter("cEmailUsuario");
         String nomePlanoParameter    = req.getParameter("cNmPlano");
-        String tipoUsuarioParameter  = req.getParameter("tipoUsuario");
+        String tipoUsuarioParameter  = req.getParameter("cTipoUsuario");
 
         // Verifica se os parâmetros retornaram valores válidos
         if
@@ -107,7 +107,7 @@ public class PagamentoController extends HttpServlet {
                 Utils.isValidDouble(totalParameter)              &&
                 Utils.isValidString(emailUsuarioParameter)       &&
                 Utils.isValidString(nomePlanoParameter)          &&
-                Utils.isValidInteger(tipoUsuarioParameter)
+                Utils.isValidString(tipoUsuarioParameter)
         )
         {
             String ativo        = ativoParameter;
@@ -117,7 +117,6 @@ public class PagamentoController extends HttpServlet {
             String emailUsuario = emailUsuarioParameter;
             String nomePlano    = nomePlanoParameter;
             int tipoUsuario     = Integer.parseInt(tipoUsuarioParameter);
-
 
             Pagamento pagamento = new Pagamento(ativo, data, porcentagem, total, emailUsuario, nomePlano, tipoUsuario);
 
