@@ -17,13 +17,29 @@
     <%
         request.setAttribute("action", "update");
     %>
-    <form action="<%= tableIdentifier %>" method="post">
+    <form action="<%= tableIdentifier %>" method="post"
+            <% if (tableIdentifier.equals("admin")){%>
+          enctype="multipart/form-data"
+            <%}%>
+    >
         <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
         <div class="form-title">
             <h3>Editar <%= tableIdentifier %>
             </h3>
             <i class="material-icons" id="close-form">close</i>
         </div>
+        <% if (tableIdentifier.equals("admin")){%>
+        <div class="input-container">
+            <div class="input-container">
+                <label for="cFoto-edit" id="custom-file-upload">Foto
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #e20a3d" id="icon-photo-edit">
+                     check_circle
+                    </span>
+                </label>
+                <input type="file" id="cFoto-edit" name="cFoto" accept="image/*" required>
+            </div>
+        </div>
+        <%}%>
         <% for (int i = 0; i < fieldNames.length; i++) { %>
         <div class="input-container <% if (Boolean.parseBoolean(ignoreField[i])) { %>hidden-input<% } %>">
             <% if (!regexIds[i].equals("10") && !regexIds[i].equals("11") && !regexIds[i].equals("12")) { %>
@@ -79,3 +95,16 @@
         <input type="submit" value="Editar"/>
     </form>
 </div>
+
+<script>
+    document.getElementById('cFoto-edit').addEventListener('change', function() {
+        var icon = document.getElementById('icon-photo-edit');
+        if (this.files && this.files.length > 0) {
+            icon.innerHTML = 'check_circle';
+            icon.style.color = '#37c87b'
+        } else {
+            icon.innerHTML = 'error';
+            icon.style.color = '#e20a3d'
+        }
+    });
+</script>

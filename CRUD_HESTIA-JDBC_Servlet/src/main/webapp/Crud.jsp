@@ -40,7 +40,7 @@
                 break;
 
             case "pagamento":
-                fieldNames = "Id,Ativo,Data Final,Desconto,Total,Plano,Email,Tipo de Usuario";
+                fieldNames = "Id,Ativo,Data Final,Desconto,Total,Plano,E-mail,Tipo de Usuario";
                 fieldTypes = "uId,cAtivo,dDtFim,nPctDesconto,nTotal,cNmPlano,cEmailUsuario,cTipoUsuario";
                 ignoreField = "true,false,false,false,false,false,false,false";
                 regexIds = "null,12,9,6,5,4,1,10";
@@ -111,7 +111,7 @@
                 <i class="material-icons" id="open-menu">menu</i>
             </label>
         </div>
-        <div class="acount">
+        <div class="account">
             <p id="user-name"><%= request.getAttribute("user-name") %>
             </p>
             <img id="user-photo" src="data:image/png;base64, <%= request.getAttribute("user-photo") %>">
@@ -186,13 +186,13 @@
                     <%
                     } else if (regexIds.split(",")[j].equals("6")) {
                     %>
-                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>
-                        %
+                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>%
                     </p>
                     <%
                     } else {
                     %>
-                    <p title="<%= list.get(i)[j] %>"><%= list.get(i)[j] %>
+                    <p title="<%= list.get(i)[j] %>">
+                        <%= list.get(i)[j] %>
                     </p>
                     <%
                             }
