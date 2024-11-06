@@ -82,7 +82,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE uId = ? AND NOT cDescricao ~* '^INATIVO$'");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE uId ~* ('^'||?) AND NOT cDescricao ~* '^INATIVO$'");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -112,7 +112,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cNome = ? AND NOT cDescricao ~* '^INATIVO$'");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cNome ~* ('^'||?) AND NOT cDescricao ~* '^INATIVO$'");
                 pstmt.setString(1, cNome);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -142,7 +142,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cTipoUsuario = ? AND NOT cDescricao ~* '^INATIVO$'");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cTipoUsuario ~* ('^'||?) AND NOT cDescricao ~* '^INATIVO$'");
                 pstmt.setString(1, cTipoUsuario);
 
                 // Executa a instrução e guarda as linhas retornadas

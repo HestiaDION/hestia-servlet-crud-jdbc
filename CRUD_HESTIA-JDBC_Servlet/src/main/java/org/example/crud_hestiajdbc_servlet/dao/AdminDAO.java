@@ -82,7 +82,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE uId ~* ('^'||?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -112,7 +112,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cNome = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cNome ~* ('^'||?)");
                 pstmt.setString(1, cNome);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -142,7 +142,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cEmail = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cEmail ~* ('^'||?)");
                 pstmt.setString(1, cEmail);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -202,7 +202,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cLogin = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cLogin ~* ('^'||?)");
                 pstmt.setString(1, cLogin);
 
                 // Executa a instrução e guarda as linhas retornadas
