@@ -906,12 +906,13 @@ close-form {
 }
 
 #crud-nav {
-    .acount {
+    .account {
         display: flex;
         gap: 3rem;
         align-items: center;
         img {
             height: 5rem;
+            width: 5rem;
         }
     }
 }
@@ -1408,4 +1409,26 @@ button:hover {
 
 #user-photo {
     border-radius: 100%;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#custom-file-upload {
+    width: 100%;
+    height: 4rem;
+    border-radius: 0.8rem;
+    padding: 0rem 0.8rem;
+    box-sizing: border-box;
+    color: var(--dark-blue);
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.15) 0rem 0.2rem 0.8rem;
+    position: relative;
+    display: flex;
+    top: 0;
+    left: 0;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.8rem;
 }
