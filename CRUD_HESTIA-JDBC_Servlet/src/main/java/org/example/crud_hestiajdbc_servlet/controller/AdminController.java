@@ -119,8 +119,23 @@ public class AdminController extends HttpServlet
                 Utils.logSuccessfulCreation(req);
             else
                 Utils.logDatabaseIssue(req);
-        }
-        else
+        } else if
+        (
+                Utils.isValidString(nomeParameter)  &&
+                Utils.isValidString(emailParameter) &&
+                Utils.isValidString(senhaParamter)
+        )
+        {
+            String nome  = nomeParameter;
+            String email = emailParameter;
+            String senha = senhaParamter;
+            Admin admin = new Admin(nome, email, null, senha);
+
+            if (adminDAO.addAdmin(admin) > 0)
+                Utils.logSuccessfulCreation(req);
+            else
+                Utils.logDatabaseIssue(req);
+        } else
         {
             Utils.logInputSetback(req);
         }

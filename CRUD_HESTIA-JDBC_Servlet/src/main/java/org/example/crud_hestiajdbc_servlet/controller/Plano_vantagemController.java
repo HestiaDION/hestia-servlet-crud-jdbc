@@ -34,7 +34,7 @@ public class Plano_vantagemController extends HttpServlet
         {
             if (action.equals("read"))
             {
-                readPlano_vantagem(req, resp);
+                readPlano_vantagem(req, resp, req.getParameter("predicate"));
             }
             else
             {
@@ -119,13 +119,13 @@ public class Plano_vantagemController extends HttpServlet
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
-        readPlano_vantagem(req, resp);
+        readPlano_vantagem(req, resp, "cNmPlano");
     }
 
-    private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp, String predicate) throws ServletException, IOException
     {
-        // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getParameter("predicate");
+//        // Recupera parâmetro que pode conter ou não filtro para a pesquisa
+//        String predicate = (String) req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -249,7 +249,7 @@ public class Plano_vantagemController extends HttpServlet
         String codigoParameter      = req.getParameter("uId");
         String vantagemParameter    = req.getParameter("cVantagem");
         String ativoParameter       = req.getParameter("cAtivo");
-        String nomePlanoParameter = req.getParameter("cNmPlano");
+        String nomePlanoParameter   = req.getParameter("cNmPlano");
 
         // Verifica se os parâmetros têm valores válidos
         if
@@ -277,7 +277,7 @@ public class Plano_vantagemController extends HttpServlet
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
-        readPlano_vantagem(req, resp);
+        readPlano_vantagem(req, resp, "cNmPlano");
     }
 
     private void deletePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -301,6 +301,6 @@ public class Plano_vantagemController extends HttpServlet
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
-        readPlano_vantagem(req, resp);
+        readPlano_vantagem(req, resp, "cNmPlano");
     }
 }
