@@ -23,23 +23,25 @@ public class PagamentoDAO extends DatabaseConnection
                 {
                     // Prepara a instrução SQL e define os seus argumentos
                     pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
-                            "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, DEFAULT, ?, ?, FN_Anunciante_Id(NULL, ?), FN_Plano_Id(?), NULL)");
+                            "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, ?, ?, ?, FN_Anunciante_Id(NULL, ?), FN_Plano_Id(?), NULL)");
                     pstmt.setString(1, pagamento.getcAtivo());
-                    pstmt.setDouble(2, pagamento.getnPctDesconto());
-                    pstmt.setDouble(3, pagamento.getnTotal());
-                    pstmt.setString(4, pagamento.getcEmailAnunciante());
-                    pstmt.setString(5, pagamento.getcNmPlano());
+                    pstmt.setDate(2, pagamento.getdDtFim());
+                    pstmt.setDouble(3, pagamento.getnPctDesconto());
+                    pstmt.setDouble(4, pagamento.getnTotal());
+                    pstmt.setString(5, pagamento.getcEmailAnunciante());
+                    pstmt.setString(6, pagamento.getcNmPlano());
                 }
                 else
                 {
                     // Prepara a instrução SQL e define os seus argumentos
                     pstmt = conn.prepareStatement("INSERT INTO Pagamento (cAtivo, dDtFim, nPctDesconto, nTotal, " +
-                            "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, DEFAULT, ?, ?, NULL, FN_Plano_Id(?), Fn_Universitario_Id(NULL, ?, NULL))");
+                            "uId_Anunciante, uId_Plano, uId_Universitario) VALUES (?, ?, ?, ?, NULL, FN_Plano_Id(?), Fn_Universitario_Id(NULL, ?, NULL))");
                     pstmt.setString(1, pagamento.getcAtivo());
-                    pstmt.setDouble(2, pagamento.getnPctDesconto());
-                    pstmt.setDouble(3, pagamento.getnTotal());
-                    pstmt.setString(4, pagamento.getcNmPlano());
-                    pstmt.setString(5, pagamento.getcEmailUniversitario());
+                    pstmt.setDate(2, pagamento.getdDtFim());
+                    pstmt.setDouble(3, pagamento.getnPctDesconto());
+                    pstmt.setDouble(4, pagamento.getnTotal());
+                    pstmt.setString(5, pagamento.getcNmPlano());
+                    pstmt.setString(6, pagamento.getcEmailUniversitario());
                 }
 
 
@@ -467,7 +469,6 @@ public class PagamentoDAO extends DatabaseConnection
                     pstmt.setString(6, pagamento.getcNmPlano());
                     pstmt.setObject(7, pagamento.getuId());
                 }
-
 
                 // Executa a instrução e guarda as linhas afetadas
                 linhasAfetadas = pstmt.executeUpdate();

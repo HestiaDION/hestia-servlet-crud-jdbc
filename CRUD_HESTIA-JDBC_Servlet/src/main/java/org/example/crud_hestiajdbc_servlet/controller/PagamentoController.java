@@ -385,14 +385,14 @@ public class PagamentoController extends HttpServlet {
     private void updatePagamento (HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
-        String codigoParametro              = req.getParameter("uId");
+        String codigoParametro       = req.getParameter("uId");
         String ativoParameter        = req.getParameter("cAtivo");
         String dataParameter         = req.getParameter("dDtFim");
         String porcentagemParameter  = req.getParameter("nPctDesconto");
         String totalParameter        = req.getParameter("nTotal");
         String emailUsuarioParameter = req.getParameter("cEmailUsuario");
         String nomePlanoParameter    = req.getParameter("cNmPlano");
-        String tipoUsuarioParameter  = req.getParameter("tipoUsuario");
+        String tipoUsuarioParameter  = req.getParameter("cTipoUsuario");
 
         // Verifica se os parâmetros têm valores válidos
         if
@@ -415,7 +415,6 @@ public class PagamentoController extends HttpServlet {
             String emailUsuario = emailUsuarioParameter;
             String nomePlano    = nomePlanoParameter;
             int tipoUsuario     = Integer.parseInt(tipoUsuarioParameter);
-
 
             Pagamento pagamento = new Pagamento(codigo, ativo, data, porcentagem, total, emailUsuario, nomePlano, tipoUsuario);
 
