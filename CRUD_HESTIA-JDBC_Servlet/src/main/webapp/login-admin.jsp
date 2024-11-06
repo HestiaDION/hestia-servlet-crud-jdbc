@@ -38,7 +38,7 @@
                             type="text"
                             name="email"
                             id="email"
-                            pattern="^[\w\-\.]+@([\w\-]+\.)+[\w\-]{2,}$"
+                            pattern="^\S{8,100}@germinare\.org\.br$"
                             placeholder=""
                             required
                     />
@@ -49,7 +49,7 @@
                     <input
                             type="password"
                             name="senha"
-                            pattern=".{8,}"
+                            pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9])\S{4,100}$"
                             id="senha"
                             placeholder=""
                             required

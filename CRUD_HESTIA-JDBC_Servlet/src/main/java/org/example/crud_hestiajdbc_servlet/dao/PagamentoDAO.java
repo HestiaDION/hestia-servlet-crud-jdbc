@@ -72,7 +72,7 @@ public class PagamentoDAO extends DatabaseConnection
             {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal" +
-                        ", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento");
+                        ", Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -100,7 +100,7 @@ public class PagamentoDAO extends DatabaseConnection
             {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.uId = ?");
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.uId ~* ('^'||?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -131,7 +131,7 @@ public class PagamentoDAO extends DatabaseConnection
             {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cAtivo = ?");
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cAtivo ~* ('^'||?)");
                 pstmt.setString(1, cAtivo);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -312,7 +312,7 @@ public class PagamentoDAO extends DatabaseConnection
 //            {
 //                // Prepara a instrução SQL
 //                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cEmailAnunciante = ?");
+//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cEmailAnunciante ~* ('^'||?)");
 //                pstmt.setObject(1, uId_Anunciante);
 //
 //                // Executa a instrução e guarda as linhas retornadas
@@ -343,7 +343,7 @@ public class PagamentoDAO extends DatabaseConnection
             {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cNmPlano = ?");
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cNmPlano ~* ('^'||?)");
                 pstmt.setObject(1, cNmPlano);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -374,7 +374,7 @@ public class PagamentoDAO extends DatabaseConnection
 //            {
 //                // Prepara a instrução SQL
 //                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cEmailUniversitario = ?");
+//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.cEmailUniversitario ~* ('^'||?)");
 //                pstmt.setObject(1, uId_Universitario);
 //
 //                // Executa a instrução e guarda as linhas retornadas

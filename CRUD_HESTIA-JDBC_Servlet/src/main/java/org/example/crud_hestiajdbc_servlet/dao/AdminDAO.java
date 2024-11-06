@@ -19,10 +19,11 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("INSERT INTO Admin (cNome, cEmail, cSenha) VALUES (?, ?, ?)");
+                pstmt = conn.prepareStatement("INSERT INTO Admin (cNome, cEmail, cSenha, cFoto) VALUES (?, ?, ?, ?)");
                 pstmt.setString(1, admin.getcNome());
                 pstmt.setString(2, admin.getcEmail());
                 pstmt.setString(3, admin.getcSenha());
+                pstmt.setString(4, admin.getcFoto());
 
                 // Executa a instrução e guarda as linhas afetadas
                 linhasAfetadas = pstmt.executeUpdate();
@@ -52,7 +53,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -81,7 +82,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE uId ~* ('^'||?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -111,7 +112,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cNome = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cNome ~* ('^'||?)");
                 pstmt.setString(1, cNome);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -141,7 +142,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cEmail = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cEmail ~* ('^'||?)");
                 pstmt.setString(1, cEmail);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -171,7 +172,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE LENGTH(csenha) < ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE LENGTH(csenha) < ?");
                 pstmt.setInt(1, tamanhoSenha);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -201,7 +202,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha FROM Admin WHERE cLogin = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cEmail, cSenha, cFoto FROM Admin WHERE cLogin ~* ('^'||?)");
                 pstmt.setString(1, cLogin);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -343,11 +344,24 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ? WHERE uId = ?");
-                pstmt.setString(1, admin.getcNome());
-                pstmt.setString(2, admin.getcEmail());
-                pstmt.setString(3, admin.getcSenha());
-                pstmt.setObject(4, admin.getuId());
+                if (admin.getcFoto() == null)
+                {
+                    pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ?, cFoto = ? WHERE uId = ?");
+                    pstmt.setString(1, admin.getcNome());
+                    pstmt.setString(2, admin.getcEmail());
+                    pstmt.setString(3, admin.getcSenha());
+                    pstmt.setString(4, admin.getcFoto());
+                    pstmt.setObject(5, admin.getuId());
+                }
+                else
+                {
+                    pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ? WHERE uId = ?");
+                    pstmt.setString(1, admin.getcNome());
+                    pstmt.setString(2, admin.getcEmail());
+                    pstmt.setString(3, admin.getcSenha());
+                    pstmt.setString(4, admin.getcFoto());
+                }
+
 
                 // Executa a instrução e guarda as linhas afetadas
                 linhasAfetadas = pstmt.executeUpdate();

@@ -17,13 +17,27 @@
     <%
         request.setAttribute("action", "create");
     %>
-    <form action="<%= tableIdentifier %>" method="post">
+    <form action="<%= tableIdentifier %>" method="post"
+            <% if (tableIdentifier.equals("admin")){%>
+          enctype="multipart/form-data"
+            <%}%>
+    >
         <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
         <div class="form-title">
             <h3>Criar <%= tableIdentifier %>
             </h3>
             <i class="material-icons" id="close-form">close</i>
         </div>
+        <% if (tableIdentifier.equals("admin")){%>
+            <div class="input-container">
+                <label for="cFoto" id="custom-file-upload">Foto
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #e20a3d" id="icon">
+                     error
+                    </span>
+                </label>
+                <input type="file" id="cFoto" name="cFoto" accept="image/*" required>
+            </div>
+        <%}%>
         <% for (int i = 0; i < fieldNames.length; i++) {
             if (!Boolean.parseBoolean(ignoreField[i])) {%>
         <div class="input-container">
@@ -47,8 +61,8 @@
             <% } else if (regexIds[i].equals("11")) { %>
             <select name="<%= fieldTypes[i] %>" id="<%= fieldTypes[i] %>" required>
                 <option value="" disabled selected>Select one</option>
-                <option value="Anunciante">Anunciante</option>
-                <option value="Universitario">Universitario</option>
+                <option value="anunciante">Anunciante</option>
+                <option value="universitario">Universitario</option>
             </select>
             <% } else { %>
             <select name="<%= fieldTypes[i] %>" id="<%= fieldTypes[i] %>" required>
@@ -77,3 +91,16 @@
         <input type="submit" value="Criar"/>
     </form>
 </div>
+
+<script>
+    document.getElementById('cFoto').addEventListener('change', function() {
+        var icon = document.getElementById('icon');
+        if (this.files && this.files.length > 0) {
+            icon.innerHTML = 'check_circle';
+            icon.style.color = '#37c87b'
+        } else {
+            icon.innerHTML = 'error';
+            icon.style.color = '#e20a3d'
+        }
+    });
+</script>

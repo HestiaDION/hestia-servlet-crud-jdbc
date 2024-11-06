@@ -22,6 +22,7 @@
         String ignoreField;
         String regexIds;
         String fieldTypes;
+        List<String[]> list = (List<String[]>) request.getAttribute("list");
 
         switch (tableIdentifier) {
             case "boost":
@@ -39,7 +40,7 @@
                 break;
 
             case "pagamento":
-                fieldNames = "Id,Ativo,Data Final,Desconto,Total,Plano,Email,Tipo de Usuario";
+                fieldNames = "Id,Ativo,Data Final,Desconto,Total,Plano,E-mail,Tipo de Usuario";
                 fieldTypes = "uId,cAtivo,dDtFim,nPctDesconto,nTotal,cNmPlano,cEmailUsuario,cTipoUsuario";
                 ignoreField = "true,false,false,false,false,false,false,false";
                 regexIds = "null,12,9,6,5,4,1,10";
@@ -56,7 +57,7 @@
                 fieldNames = "Id,Vantagem,Ativo,Nome do Plano";
                 fieldTypes = "uId,cVantagem,cAtivo,cNmPlano";
                 ignoreField = "true,false,false,false";
-                regexIds = "null,7,12,4";
+                regexIds = "null,7,12,7";
                 break;
 
             default:
@@ -110,8 +111,9 @@
                 <i class="material-icons" id="open-menu">menu</i>
             </label>
         </div>
-        <div class="acount">
-            <p id="user-name"> <%= request.getAttribute("user-name") %> </p>
+        <div class="account">
+            <p id="user-name"><%= request.getAttribute("user-name") %>
+            </p>
             <img id="user-photo" src="data:image/png;base64, <%= request.getAttribute("user-photo") %>">
             <a href="login-admin.jsp"><i class="material-icons">logout</i></a>
         </div>
@@ -166,7 +168,6 @@
             </div>
             <div class="table-rows">
                 <%
-                    List<String[]> list = (List<String[]>) request.getAttribute("list");
                     if (list != null && !list.isEmpty()) {
 
                 %>
@@ -185,13 +186,13 @@
                     <%
                     } else if (regexIds.split(",")[j].equals("6")) {
                     %>
-                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>
-                        %
+                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>%
                     </p>
                     <%
                     } else {
                     %>
-                    <p title="<%= list.get(i)[j] %>"><%= list.get(i)[j] %>
+                    <p title="<%= list.get(i)[j] %>">
+                        <%= list.get(i)[j] %>
                     </p>
                     <%
                             }
@@ -270,6 +271,27 @@
 
     document.querySelectorAll('#create').forEach(element => {
         element.addEventListener('click', () => {
+            if (<%= tableIdentifier.equals("plano_vantagem") %>){
+                const predicateExists = document.querySelector('#creation-form form input[name=predicate]');
+
+                if (!predicateExists) {
+                    let predicate = document.createElement('input');
+                    predicate.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+                    predicate.name = 'predicate'; // Set the name attribute
+                    predicate.value = 'cNmPlano'
+
+                    let input = document.createElement('input');
+                    input.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+                    input.name = 'cNmPlano'; // Set the name attribute
+                    input.value = "<%= request.getParameter("cNmPlano") %>"
+                    const cNmPlano = document.querySelector('#creation-form form input[name=cNmPlano]');
+                    cNmPlano.value = "<%= request.getParameter("cNmPlano") %>"
+
+                    creationForm.append(predicate)
+                    creationForm.append(input)
+                }
+            }
+
             creationForm.classList.remove("closed-form")
         });
     });

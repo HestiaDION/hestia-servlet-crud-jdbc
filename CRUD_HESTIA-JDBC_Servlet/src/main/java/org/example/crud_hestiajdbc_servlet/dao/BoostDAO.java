@@ -82,7 +82,7 @@ public class BoostDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE uId ~* ('^'||?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -112,7 +112,7 @@ public class BoostDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE cNmBoost ~* ('^'||?)");
                 pstmt.setString(1, cNmBoost);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -332,11 +332,11 @@ public class BoostDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("DELETE FROM Boost WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT * FROM SP_ExcluirBoost(?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas afetadas
-                linhasAfetadas = pstmt.executeUpdate();
+                linhasAfetadas = pstmt.executeQuery().findColumn("deleted_count");
             }
             catch (SQLException sqle)
             {

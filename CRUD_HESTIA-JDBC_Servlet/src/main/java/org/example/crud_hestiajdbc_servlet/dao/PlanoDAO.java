@@ -53,7 +53,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE NOT cDescricao ~* '^INATIVO$'");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -82,7 +82,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE uId ~* ('^'||?) AND NOT cDescricao ~* '^INATIVO$'");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -112,7 +112,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cNome = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cNome ~* ('^'||?) AND NOT cDescricao ~* '^INATIVO$'");
                 pstmt.setString(1, cNome);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -142,7 +142,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cTipoUsuario = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE cTipoUsuario ~* ('^'||?) AND NOT cDescricao ~* '^INATIVO$'");
                 pstmt.setString(1, cTipoUsuario);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -172,7 +172,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano ORDER BY nValor");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE NOT cDescricao ~* '^INATIVO$' ORDER BY nValor");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -201,7 +201,7 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano ORDER BY nValor DESC");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE NOT cDescricao ~* '^INATIVO$' ORDER BY nValor DESC");
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -297,27 +297,44 @@ public class PlanoDAO extends DatabaseConnection
     public int removePlano(UUID uId)
     {
         int linhasAfetadas = -1;
-
+        boolean erro = false;
         if (connect())
         {
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("DELETE FROM Plano WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT * FROM SP_ExcluirPlano(?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas afetadas
-                linhasAfetadas = pstmt.executeUpdate();
+                linhasAfetadas = pstmt.executeQuery().findColumn("deleted_count");
             }
-            catch (SQLException sqle)
+            catch (SQLException sqle) { erro = true; }
+            if (erro)
             {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
+                try
+                {
+                    // Se der erro, há algum pagamento feito por esse plano, ele não pode ser excluído
+                    //Mudança da descrição do plano para 'INATIVO', excluindo-o da lista de visualização no CRUD e mantendo no banco
+                    // Prepara a instrução SQL e define os seus argumentos
+                    pstmt = conn.prepareStatement("UPDATE Plano SET cDescricao = 'INATIVO' WHERE uId = ?");
+                    pstmt.setObject(1, uId);
+
+                    // Executa a instrução e guarda as linhas afetadas
+                    linhasAfetadas = pstmt.executeUpdate();
+
+                    //Deletando as vantagens do plano
+                    pstmt = conn.prepareStatement("UPDATE Plano_vantagem SET cAtivo =  '0' WHERE uId_Plano = ?");
+                    pstmt.setObject(1, uId);
+                    pstmt.executeUpdate();
+                }
+                catch (SQLException sqle)
+                {
+                    // Imprime a exceção no console
+                    sqle.printStackTrace();
+                }
             }
-            finally
-            {
-                disconnect();
-            }
+            disconnect();
         }
 
         // Sempre retorna um inteiro, que pode ser -1 caso não seja possível conectar ou ocorra uma exceção

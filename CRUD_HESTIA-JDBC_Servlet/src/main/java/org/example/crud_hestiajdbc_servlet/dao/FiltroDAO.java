@@ -80,7 +80,7 @@ public class FiltroDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE uId ~* ('^'||?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -110,7 +110,7 @@ public class FiltroDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cNome = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cNome ~* ('^'||?)");
                 pstmt.setString(1, cNome);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -140,7 +140,7 @@ public class FiltroDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cCategoria = ?");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cCategoria FROM Filtro WHERE cCategoria ~* ('^'||?)");
                 pstmt.setString(1, cCategoria);
 
                 // Executa a instrução e guarda as linhas retornadas
@@ -242,11 +242,11 @@ public class FiltroDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("DELETE FROM Filtro WHERE uId = ?");
+                pstmt = conn.prepareStatement("SELECT * FROM SP_ExcluirFiltro(?)");
                 pstmt.setObject(1, uId);
 
                 // Executa a instrução e guarda as linhas afetadas
-                linhasAfetadas = pstmt.executeUpdate();
+                linhasAfetadas = pstmt.executeQuery().findColumn("deleted_count");
             }
             catch (SQLException sqle)
             {
