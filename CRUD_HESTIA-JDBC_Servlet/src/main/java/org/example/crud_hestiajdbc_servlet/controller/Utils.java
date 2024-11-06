@@ -14,6 +14,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Utils
 {
@@ -131,6 +134,28 @@ public class Utils
         }
     }
 
+//    DEFINIÇÃO DOS MÉTODOS DE CRIPTOGRAFIA
+    public static String encryptPassword(String password) throws NoSuchAlgorithmException {
+        MessageDigest algorithm = MessageDigest.getInstance(System.getenv("algoritmo_hash"));
+        byte[] mensagemDigest = algorithm.digest(password.getBytes(StandardCharsets.UTF_8));
+
+        StringBuilder hashString = new StringBuilder();
+        for (byte b : mensagemDigest) {
+            hashString.append(String.format("%02X", 0xFF & b));
+        }
+        return hashString.toString();
+    }
+
+//    public boolean checkPassword(String password, String bankPassword) throws NoSuchAlgorithmException {
+//        String passwordComparation = encryptPassword(password);
+//        if (passwordComparation.equals(bankPassword)){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
+
 //    DEFINIÇÃO DOS MÉTODOS DE CONVERSÃO
     public static LocalDate toLocalDate(String value) throws DateTimeException
     {
@@ -179,7 +204,8 @@ public class Utils
                 registerAdmin[0] = String.valueOf(resultSet.getObject("uId"));
                 registerAdmin[1] = String.valueOf(resultSet.getString("cNome"));
                 registerAdmin[2] = String.valueOf(resultSet.getString("cEmail"));
-                registerAdmin[3] = String.valueOf(resultSet.getString("cSenha"));
+//                registerAdmin[3] = String.valueOf(resultSet.getString("cSenha"));
+                registerAdmin[3] = "*****";
 
                 // Adiciona o vetor de Strings na lista
                 listAdmin.add(registerAdmin);

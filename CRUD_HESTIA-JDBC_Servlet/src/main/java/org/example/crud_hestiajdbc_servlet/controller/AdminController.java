@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.util.Base64;
 import java.util.UUID;
@@ -97,7 +98,7 @@ public class AdminController extends HttpServlet
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
         String nomeParameter  = req.getParameter("cNome");
         String emailParameter = req.getParameter("cEmail");
-        String senhaParamter  = req.getParameter("cSenha");
+        String senhaParameter  = req.getParameter("cSenha");
         Part imagemParameter  = req.getPart("cFoto");
 
         // Verifica se os parâmetros retornaram valores válidos
@@ -105,13 +106,18 @@ public class AdminController extends HttpServlet
         (
                 Utils.isValidString(nomeParameter)  &&
                 Utils.isValidString(emailParameter) &&
-                Utils.isValidString(senhaParamter)  &&
+                Utils.isValidString(senhaParameter)  &&
                 Utils.isValidPhoto(imagemParameter)
         )
         {
             String nome  = nomeParameter;
             String email = emailParameter;
-            String senha = senhaParamter;
+            String senha = senhaParameter;
+            try {
+                senha = Utils.encryptPassword(senhaParameter);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
             String imagem = Base64.getEncoder().encodeToString(Utils.toPhotoByteArray(imagemParameter.getInputStream()));
             Admin admin = new Admin(nome, email, imagem, senha);
 
@@ -119,23 +125,8 @@ public class AdminController extends HttpServlet
                 Utils.logSuccessfulCreation(req);
             else
                 Utils.logDatabaseIssue(req);
-        } else if
-        (
-                Utils.isValidString(nomeParameter)  &&
-                Utils.isValidString(emailParameter) &&
-                Utils.isValidString(senhaParamter)
-        )
-        {
-            String nome  = nomeParameter;
-            String email = emailParameter;
-            String senha = senhaParamter;
-            Admin admin = new Admin(nome, email, null, senha);
-
-            if (adminDAO.addAdmin(admin) > 0)
-                Utils.logSuccessfulCreation(req);
-            else
-                Utils.logDatabaseIssue(req);
-        } else
+        }
+        else
         {
             Utils.logInputSetback(req);
         }
@@ -295,7 +286,7 @@ public class AdminController extends HttpServlet
         String nomeParameter   = req.getParameter("cNome");
         String emailParamter   = req.getParameter("cEmail");
         Part imagemParameter   = req.getPart("cFoto");
-        String senhaParamter   = req.getParameter("cSenha");
+        String senhaParameter   = req.getParameter("cSenha");
 
         // Verifica se os parâmetros têm valores válidos
         if
@@ -304,14 +295,19 @@ public class AdminController extends HttpServlet
                 Utils.isValidString(nomeParameter)  &&
                 Utils.isValidString(emailParamter)  &&
                 Utils.isValidPhoto(imagemParameter) &&
-                Utils.isValidString(senhaParamter)
+                Utils.isValidString(senhaParameter)
         )
         {
             UUID codigo   = UUID.fromString(codigoParameter);
             String nome   = nomeParameter;
             String email  = emailParamter;
             String imagem = Base64.getEncoder().encodeToString(Utils.toPhotoByteArray(imagemParameter.getInputStream()));
-            String senha  = senhaParamter;
+            String senha = senhaParameter;
+            try {
+                senha = Utils.encryptPassword(senhaParameter);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
             Admin admin = new Admin(codigo, nome, email, imagem, senha);
 
             if (adminDAO.updateAdmin(admin) > 0)
