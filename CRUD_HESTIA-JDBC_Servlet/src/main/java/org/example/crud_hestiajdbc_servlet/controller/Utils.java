@@ -276,17 +276,15 @@ public class Utils
                 pagamentoRegister[3] = String.valueOf(resultSet.getDouble("nPctDesconto"));
                 pagamentoRegister[4] = String.valueOf(resultSet.getDouble("nTotal"));
                 pagamentoRegister[5] = String.valueOf(resultSet.getString("cNmPlano"));
-                if (String.valueOf(resultSet.getString("cEmailAnunciante")) != null){
+                if (String.valueOf(resultSet.getString("cEmailUniversitario")).equals("null")){
                     pagamentoRegister[6] = String.valueOf(resultSet.getString("cEmailAnunciante"));
                     pagamentoRegister[7] = "Anunciante";
                 }
-                else
+                else if(String.valueOf(resultSet.getString("cEmailAnunciante")).equals("null"))
                 {
                     pagamentoRegister[6] = String.valueOf(resultSet.getString("cEmailUniversitario"));
                     pagamentoRegister[7] = "Universitario";
                 }
-
-
 
                 // Adiciona o vetor de Strings na lista
                 pagamentoList.add(pagamentoRegister);
