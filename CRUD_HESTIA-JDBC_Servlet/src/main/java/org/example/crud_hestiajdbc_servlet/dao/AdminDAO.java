@@ -344,12 +344,24 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ?, cFoto = ? WHERE uId = ?");
-                pstmt.setString(1, admin.getcNome());
-                pstmt.setString(2, admin.getcEmail());
-                pstmt.setString(3, admin.getcSenha());
-                pstmt.setString(4, admin.getcFoto());
-                pstmt.setObject(5, admin.getuId());
+                if (admin.getcFoto() == null)
+                {
+                    pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ?, cFoto = ? WHERE uId = ?");
+                    pstmt.setString(1, admin.getcNome());
+                    pstmt.setString(2, admin.getcEmail());
+                    pstmt.setString(3, admin.getcSenha());
+                    pstmt.setString(4, admin.getcFoto());
+                    pstmt.setObject(5, admin.getuId());
+                }
+                else
+                {
+                    pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ? WHERE uId = ?");
+                    pstmt.setString(1, admin.getcNome());
+                    pstmt.setString(2, admin.getcEmail());
+                    pstmt.setString(3, admin.getcSenha());
+                    pstmt.setString(4, admin.getcFoto());
+                }
+
 
                 // Executa a instrução e guarda as linhas afetadas
                 linhasAfetadas = pstmt.executeUpdate();
