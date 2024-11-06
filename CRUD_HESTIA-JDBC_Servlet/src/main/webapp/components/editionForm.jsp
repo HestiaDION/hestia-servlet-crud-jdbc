@@ -32,7 +32,7 @@
         <div class="input-container">
             <div class="input-container">
                 <label for="cFoto-edit" id="custom-file-upload">Foto
-                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #e20a3d" id="icon-photo-edit">
+                    <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1; color: #37c87b" id="icon-photo-edit">
                      check_circle
                     </span>
                 </label>

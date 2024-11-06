@@ -10,7 +10,7 @@ const next = document.getElementById("next");
 var path = window.location.pathname;
 var page = path.split("/").pop();
 
-if (page === "index.html") {
+if (page === "") {
   const advantagesStack = Array.from(document.querySelectorAll(".advantage"));
 
   const updateClasses = () => {
@@ -47,6 +47,7 @@ signUp.addEventListener("click", () => {
 closeForm.addEventListener("click", () => {
   formContainer.classList.add("closed-form");
   document.body.classList.add("scrolling-allowed");
+  console.log(page)
 });
 
 window.addEventListener("load", function () {
