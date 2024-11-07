@@ -184,7 +184,7 @@ public class PagamentoDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getPagamentosByPctDescontoAscending()
+    public ResultSet getPagamentosByPctDesconto(String nPctDesconto)
     {
         rs = null;
 
@@ -194,7 +194,8 @@ public class PagamentoDAO extends DatabaseConnection
             {
                 // Prepara a instrução SQL
                 pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nPctDesconto");
+                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.nPctDesconto::text ~* ('^'||?)");
+                pstmt.setString(1, nPctDesconto);
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -214,7 +215,37 @@ public class PagamentoDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getPagamentosByPctDescontoDescending()
+//    public ResultSet getPagamentosByPctDescontoDescending()
+//    {
+//        rs = null;
+//
+//        if (connect())
+//        {
+//            try
+//            {
+//                // Prepara a instrução SQL
+//                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nPctDesconto DESC");
+//
+//                // Executa a instrução e guarda as linhas retornadas
+//                rs = pstmt.executeQuery();
+//            }
+//            catch (SQLException sqle)
+//            {
+//                // Imprime a exceção no console
+//                sqle.printStackTrace();
+//            }
+//            finally
+//            {
+//                disconnect();
+//            }
+//        }
+//
+//        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+//        return rs;
+//    }
+
+    public ResultSet getPagamentosByTotal(String nTotal)
     {
         rs = null;
 
@@ -223,8 +254,8 @@ public class PagamentoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nPctDesconto DESC");
+                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal, Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento WHERE Vw_Pagamento.nTotal::text ~* ('^'||?)");
+                pstmt.setString(1, nTotal);
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -244,65 +275,35 @@ public class PagamentoDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getPagamentosByTotalAscending()
-    {
-        rs = null;
-
-        if (connect())
-        {
-            try
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nTotal");
-
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            catch (SQLException sqle)
-            {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
-            }
-            finally
-            {
-                disconnect();
-            }
-        }
-
-        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
-        return rs;
-    }
-
-    public ResultSet getPagamentosByTotalDescending()
-    {
-        rs = null;
-
-        if (connect())
-        {
-            try
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
-                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nTotal DESC");
-
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            catch (SQLException sqle)
-            {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
-            }
-            finally
-            {
-                disconnect();
-            }
-        }
-
-        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
-        return rs;
-    }
+//    public ResultSet getPagamentosByTotalDescending()
+//    {
+//        rs = null;
+//
+//        if (connect())
+//        {
+//            try
+//            {
+//                // Prepara a instrução SQL
+//                pstmt = conn.prepareStatement("SELECT Vw_Pagamento.uId, Vw_Pagamento.cAtivo, Vw_Pagamento.dDtFim, Vw_Pagamento.nPctDesconto, Vw_Pagamento.nTotal\" +\n" +
+//                        "                        \", Vw_Pagamento.cEmailAnunciante, Vw_Pagamento.cNmPlano, Vw_Pagamento.cEmailUniversitario FROM Vw_Pagamento ORDER BY Vw_Pagamento.nTotal DESC");
+//
+//                // Executa a instrução e guarda as linhas retornadas
+//                rs = pstmt.executeQuery();
+//            }
+//            catch (SQLException sqle)
+//            {
+//                // Imprime a exceção no console
+//                sqle.printStackTrace();
+//            }
+//            finally
+//            {
+//                disconnect();
+//            }
+//        }
+//
+//        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+//        return rs;
+//    }
 
 //    public ResultSet getPagamentosByEmailAnunciante(UUID uId_Anunciante)
 //    {

@@ -133,7 +133,7 @@ public class BoostDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getBoostByValorAscending()
+    public ResultSet getBoostByValor(String nTotal)
     {
         rs = null;
 
@@ -142,7 +142,8 @@ public class BoostDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor");
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE nValor::text ~* ('^'||?)");
+                pstmt.setString(1, nTotal);
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -163,7 +164,36 @@ public class BoostDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getBoostsByValorDescending()
+//    public ResultSet getBoostsByValorDescending()
+//    {
+//        rs = null;
+//
+//        if (connect())
+//        {
+//            try
+//            {
+//                // Prepara a instrução SQL
+//                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor DESC");
+//
+//                // Executa a instrução e guarda as linhas retornadas
+//                rs = pstmt.executeQuery();
+//            }
+//            catch (SQLException sqle)
+//            {
+//                // Imprime a exceção no console
+//                sqle.printStackTrace();
+//            }
+//            finally
+//            {
+//                disconnect();
+//            }
+//        }
+//
+//        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+//        return rs;
+//    }
+
+    public ResultSet getBoostsByPctBoost(String nPctDesconto)
     {
         rs = null;
 
@@ -172,7 +202,8 @@ public class BoostDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nValor DESC");
+                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost WHERE nPctBoost::text ~* ('^'||?)");
+                pstmt.setString(1, nPctDesconto);
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -192,63 +223,34 @@ public class BoostDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getBoostsByPctBoostAscending()
-    {
-        rs = null;
-
-        if (connect())
-        {
-            try
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost");
-
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            catch (SQLException sqle)
-            {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
-            }
-            finally
-            {
-                disconnect();
-            }
-        }
-
-        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
-        return rs;
-    }
-
-    public ResultSet getBoostByPctBoostDescending()
-    {
-        rs = null;
-
-        if (connect())
-        {
-            try
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost DESC");
-
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            catch (SQLException sqle)
-            {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
-            }
-            finally
-            {
-                disconnect();
-            }
-        }
-
-        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
-        return rs;
-    }
+//    public ResultSet getBoostByPctBoostDescending()
+//    {
+//        rs = null;
+//
+//        if (connect())
+//        {
+//            try
+//            {
+//                // Prepara a instrução SQL
+//                pstmt = conn.prepareStatement("SELECT uId, cNmBoost, nValor, nPctBoost, cDescricao FROM Boost ORDER BY nPctBoost DESC");
+//
+//                // Executa a instrução e guarda as linhas retornadas
+//                rs = pstmt.executeQuery();
+//            }
+//            catch (SQLException sqle)
+//            {
+//                // Imprime a exceção no console
+//                sqle.printStackTrace();
+//            }
+//            finally
+//            {
+//                disconnect();
+//            }
+//        }
+//
+//        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+//        return rs;
+//    }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
     public UUID getBoostId(String nmBoost)

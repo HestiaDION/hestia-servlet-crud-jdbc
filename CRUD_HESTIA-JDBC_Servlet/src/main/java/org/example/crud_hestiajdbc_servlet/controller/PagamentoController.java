@@ -137,7 +137,7 @@ public class PagamentoController extends HttpServlet {
     private void readPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = (String) req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -211,22 +211,16 @@ public class PagamentoController extends HttpServlet {
                     break;
 
                 case "nPctDesconto":
-                    // Não recebe um valor, e sim um char ('>' para crescente ou '<' para decrescente)
-                    String ordenacaoPctDescontoParameter = req.getParameter("sort");
+                    String pctDescontoParameter = req.getParameter("nPctDesconto");
 
                     if
                     (
-                            Utils.isValidChar(ordenacaoPctDescontoParameter) &&
-                            ordenacaoPctDescontoParameter.charAt(0) == '>'                ||
-                            ordenacaoPctDescontoParameter.charAt(0) == '<'
+                            Utils.isValidDouble(pctDescontoParameter)
                     )
                     {
-                        char ordenacaoPctDesconto = ordenacaoPctDescontoParameter.charAt(0);
-
-                        if (ordenacaoPctDesconto == '>')
-                            list = pagamentoDAO.getPagamentosByPctDescontoAscending();
-                        else
-                            list = pagamentoDAO.getPagamentosByPctDescontoDescending();
+                        // Guarda a váriavel em uma String, por ser o tipo necessário para a busca
+                        String pctDesconto = pctDescontoParameter;
+                        list = pagamentoDAO.getPagamentosByPctDesconto(pctDesconto);
 
                         if (list != null)
                         {
@@ -245,22 +239,16 @@ public class PagamentoController extends HttpServlet {
                     break;
 
                 case "nTotal":
-                    // Não recebe um valor, e sim um char ('>' para crescente ou '<' para decrescente)
-                    String ordenacaoTotalParameter = req.getParameter("sort");
+                    String totalParameter = req.getParameter("nTotal");
 
                     if
                     (
-                            Utils.isValidChar(ordenacaoTotalParameter) &&
-                            ordenacaoTotalParameter.charAt(0) == '>'                ||
-                            ordenacaoTotalParameter.charAt(0) == '<'
+                            Utils.isValidDouble(totalParameter)
                     )
                     {
-                        char ordenacaoTotal = ordenacaoTotalParameter.charAt(0);
-
-                        if (ordenacaoTotal == '>')
-                            list = pagamentoDAO.getPagamentosByTotalAscending();
-                        else
-                            list = pagamentoDAO.getPagamentosByTotalDescending();
+                        // Guarda a váriavel em uma String, por ser o tipo necessário para a busca
+                        String total = totalParameter;
+                        list = pagamentoDAO.getPagamentosByTotal(total);
 
                         if (list != null)
                         {

@@ -34,7 +34,7 @@ public class Plano_vantagemController extends HttpServlet
         {
             if (action.equals("read"))
             {
-                readPlano_vantagem(req, resp, req.getParameter("predicate"));
+                readPlano_vantagem(req, resp);
             }
             else
             {
@@ -105,13 +105,23 @@ public class Plano_vantagemController extends HttpServlet
         {
             String vantagem = vantagemParameter;
             char ativo      = ativoParameter.charAt(0);
-            String nmPlano  = nomePlanoParameter;
-            Plano_vantagem planoVantagem = new Plano_vantagem(vantagem, ativo, nmPlano);
+            String nomePlano  = nomePlanoParameter;
+            Plano_vantagem planoVantagem = new Plano_vantagem(vantagem, ativo, nomePlano);
 
             if (planoVantagemDAO.addPlanoVantagem(planoVantagem) > 0)
+            {
                 Utils.logSuccessfulCreation(req);
+
+                // Chama o método de leitura, que obtém os registros do banco e responde a requisição com o parâmetro
+                readPlano_vantagem(req, resp, nomePlano);
+
+                // Retorna para não chamar o dispacher novamente
+                return;
+            }
             else
+            {
                 Utils.logDatabaseIssue(req);
+            }
         }
         else
         {
@@ -119,13 +129,13 @@ public class Plano_vantagemController extends HttpServlet
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
-        readPlano_vantagem(req, resp, "cNmPlano");
+        readPlano_vantagem(req, resp);
     }
 
-    private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp, String predicate) throws ServletException, IOException
+    private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
 //        // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-//        String predicate = (String) req.getParameter("predicate");
+        String predicate = (String) req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
@@ -242,6 +252,36 @@ public class Plano_vantagemController extends HttpServlet
         req.getRequestDispatcher("Crud.jsp").forward(req, resp);
     }
 
+    // Sobrecarga que retorna as vantagens de mesmo plano
+    private void readPlano_vantagem(HttpServletRequest req, HttpServletResponse resp, String nomePlanoParameter) throws ServletException, IOException
+    {
+        // Verifica se o parâmetro do nome é válido
+        if (Utils.isValidString(nomePlanoParameter))
+        {
+            String nomePlano = nomePlanoParameter;
+            ResultSet list = planoVantagemDAO.getPlanoVantagensByNmPlano(nomePlano);
+
+            if (list != null)
+            {
+                req.setAttribute("parent-table-name", nomePlano);
+
+                req.setAttribute("list", Utils.toPlano_vantagemStringList(list));
+                Utils.logSuccessfulReading(req);
+            }
+            else
+            {
+                Utils.logDatabaseIssue(req);
+            }
+        }
+        else
+        {
+            Utils.logInputSetback(req);
+        }
+
+        // Redireciona a requisição e resposta de volta à página de administração
+        req.getRequestDispatcher("Crud.jsp").forward(req, resp);
+    }
+
     private void updatePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetros da requisão e os amarzena nas variáveis correspondentes
@@ -263,13 +303,23 @@ public class Plano_vantagemController extends HttpServlet
             UUID codigo     = UUID.fromString(codigoParameter);
             String vantagem = vantagemParameter;
             char ativo      = ativoParameter.charAt(0);
-            String nmPlano = nomePlanoParameter;
-            Plano_vantagem planoVantagem = new Plano_vantagem(codigo, vantagem, ativo, nmPlano);
+            String nomePlano = nomePlanoParameter;
+            Plano_vantagem planoVantagem = new Plano_vantagem(codigo, vantagem, ativo, nomePlano);
 
             if (planoVantagemDAO.updatePlanoVantagem(planoVantagem) > 0)
+            {
                 Utils.logSuccessfulUpdate(req);
+
+                // Chama o método de leitura, que obtém os registros do banco e responde a requisição com o parâmetro
+                readPlano_vantagem(req, resp, nomePlano);
+
+                // Retorna para não chamar o dispacher novamente
+                return;
+            }
             else
+            {
                 Utils.logDatabaseIssue(req);
+            }
         }
         else
         {
@@ -277,23 +327,40 @@ public class Plano_vantagemController extends HttpServlet
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
-        readPlano_vantagem(req, resp, "cNmPlano");
+        readPlano_vantagem(req, resp);
     }
 
     private void deletePlano_vantagem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        // Recupera o parâmetro da requisão e o amarzena
+        // Recupera parâmetros da requisão e os amarzena
         String codigoParameter = req.getParameter("uId");
+        String nomePlanoParameter = req.getParameter("cNmPlano");
 
         // Verifica se os parâmetros retornaram valores válidos
-        if (Utils.isValidUUID(codigoParameter))
+        if
+        (
+                Utils.isValidUUID(codigoParameter)      &&
+                Utils.isValidString(nomePlanoParameter)
+        )
         {
             UUID codigo = UUID.fromString(codigoParameter);
+            String nomePlano = nomePlanoParameter;
 
             if (planoVantagemDAO.removePlanoVantagem(codigo) > 0)
+            {
                 Utils.logSuccessfulRemoval(req);
+
+                // Chama o método de leitura, que obtém os registros do banco e responde a requisição com o parâmetro
+                readPlano_vantagem(req, resp, nomePlano);
+
+                // Retorna para não chamar o dispacher novamente
+                return;
+            }
             else
+            {
                 Utils.logDatabaseIssue(req);
+
+            }
         }
         else
         {
@@ -301,6 +368,6 @@ public class Plano_vantagemController extends HttpServlet
         }
 
         // Chama o método de leitura, que obtém os registros do banco e responde a requisição
-        readPlano_vantagem(req, resp, "cNmPlano");
+        readPlano_vantagem(req, resp);
     }
 }
