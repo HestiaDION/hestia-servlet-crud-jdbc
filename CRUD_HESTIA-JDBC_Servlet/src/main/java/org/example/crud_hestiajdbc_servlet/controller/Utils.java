@@ -146,15 +146,6 @@ public class Utils
         return hashString.toString();
     }
 
-//    public boolean checkPassword(String password, String bankPassword) throws NoSuchAlgorithmException {
-//        String passwordComparation = encryptPassword(password);
-//        if (passwordComparation.equals(bankPassword)){
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONVERSÃO
     public static LocalDate toLocalDate(String value) throws DateTimeException
@@ -204,8 +195,8 @@ public class Utils
                 registerAdmin[0] = String.valueOf(resultSet.getObject("uId"));
                 registerAdmin[1] = String.valueOf(resultSet.getString("cNome"));
                 registerAdmin[2] = String.valueOf(resultSet.getString("cEmail"));
-//                registerAdmin[3] = String.valueOf(resultSet.getString("cSenha"));
-                registerAdmin[3] = "*****";
+                registerAdmin[3] = String.valueOf(resultSet.getString("cSenha"));
+//                registerAdmin[3] = "*****";
 
                 // Adiciona o vetor de Strings na lista
                 listAdmin.add(registerAdmin);
