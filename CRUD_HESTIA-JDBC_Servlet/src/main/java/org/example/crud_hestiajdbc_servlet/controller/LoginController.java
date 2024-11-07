@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -65,6 +66,11 @@ public class LoginController extends HttpServlet
         {
             String email = emailParameter;
             String senha = senhaParameter;
+            try {
+                senha = Utils.encryptPassword(senhaParameter);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
 
             // Declara e instancia objeto de controle para chamar o método de leitura da classe
             AdminController adminController = new AdminController();

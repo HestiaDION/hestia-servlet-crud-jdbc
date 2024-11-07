@@ -344,7 +344,7 @@ public class AdminDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL e define os seus argumentos
-                if (admin.getcFoto() == null)
+                if (admin.getcFoto() != null)
                 {
                     pstmt = conn.prepareStatement("UPDATE Admin SET cNome = ?, cEmail = ?, cSenha = ?, cFoto = ? WHERE uId = ?");
                     pstmt.setString(1, admin.getcNome());
