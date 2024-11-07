@@ -146,6 +146,15 @@ public class Utils
         return hashString.toString();
     }
 
+//    public boolean checkPassword(String password, String bankPassword) throws NoSuchAlgorithmException {
+//        String passwordComparation = encryptPassword(password);
+//        if (passwordComparation.equals(bankPassword)){
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
 
 //    DEFINIÇÃO DOS MÉTODOS DE CONVERSÃO
     public static LocalDate toLocalDate(String value) throws DateTimeException

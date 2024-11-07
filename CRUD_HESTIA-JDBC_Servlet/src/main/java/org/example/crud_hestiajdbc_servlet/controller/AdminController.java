@@ -286,7 +286,7 @@ public class AdminController extends HttpServlet
         String nomeParameter   = req.getParameter("cNome");
         String emailParamter   = req.getParameter("cEmail");
         Part imagemParameter   = req.getPart("cFoto");
-        String senhaParameter   = req.getParameter("cSenha");
+        String senhaParameter  = req.getParameter("cSenha");
 
         // Verifica se os parâmetros têm valores válidos
         if
