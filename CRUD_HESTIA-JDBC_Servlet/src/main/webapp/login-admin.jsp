@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Admin</title>
     <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
 </head>
 <body
         style="
@@ -17,7 +20,28 @@
       --shadow: #00224daa;
     "
 >
+<div id="loading" class="hide-loading"></div>
 <div class="background" id="admin-login">
+    <%
+        if (request.getAttribute("success") != null) {
+        boolean success = (boolean) request.getAttribute("success");
+        String log = (String) request.getAttribute("log");
+        if (log != null) {
+    %>
+    <div class="alert" style="--alert-color: <%= success ? "#37c87b" : "#e20a3d" %>">
+        <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">
+            <%= success ? "check_circle" : "error" %>
+        </span>
+        <p><%= log %>
+        </p>
+        <div class="close-alert">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <%
+        }
+        }
+    %>
     <div class="login-card">
         <h1>Welcome to</h1>
         <div class="login-title">
@@ -30,7 +54,7 @@
             <%
                 request.setAttribute("action", "login");
             %>
-            <form action="login" method="post">
+            <form action="login" method="post" onsubmit="document.getElementById('loading').classList.remove('hide-loading')">
                 <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
                 <div class="input-container">
                     <label for="email">E-mail</label>
@@ -63,5 +87,11 @@
     </div>
 
     <div class="image-container"><img src="images/icons/Teamwork.png" alt="" class="main-image"></div>    </div>
+
+<script>
+    document.querySelector('.close-alert').addEventListener('click', function () {
+        document.querySelector('.alert').classList.add('hide-alert');
+    });
+</script>
 </body>
 </html>

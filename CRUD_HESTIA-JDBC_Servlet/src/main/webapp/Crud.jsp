@@ -43,7 +43,7 @@
                 fieldNames = "Id,Ativo,Data Final,Desconto,Total,Plano,E-mail,Tipo de Usuario";
                 fieldTypes = "uId,cAtivo,dDtFim,nPctDesconto,nTotal,cNmPlano,cEmailUsuario,cTipoUsuario";
                 ignoreField = "true,false,false,false,false,false,false,false";
-                regexIds = "null,12,9,6,5,4,1,10";
+                regexIds = "null,12,9,6,5,0,8,11";
                 break;
 
             case "plano":
@@ -57,7 +57,7 @@
                 fieldNames = "Id,Vantagem,Ativo,Nome do Plano";
                 fieldTypes = "uId,cVantagem,cAtivo,cNmPlano";
                 ignoreField = "true,false,false,false";
-                regexIds = "null,7,12,7";
+                regexIds = "null,7,12,0";
                 break;
 
             default:
@@ -140,7 +140,7 @@
 
         <div class="table">
             <div class="table-title">
-                <h3><%= tableIdentifier %>
+                <h3><%= (tableIdentifier != "plano_vantagem") ? tableIdentifier : "Vantagens do " + request.getParameter("cNmPlano") %>
                 </h3>
                 <div class="blue-button" id="create">Criar</div>
             </div>
@@ -186,7 +186,8 @@
                     <%
                     } else if (regexIds.split(",")[j].equals("6")) {
                     %>
-                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>%
+                    <p title="<%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.',',') %>%"><%= String.format("%.1f", Double.parseDouble(list.get(i)[j])).replace('.', ',') %>
+                        %
                     </p>
                     <%
                     } else {
@@ -271,17 +272,17 @@
 
     document.querySelectorAll('#create').forEach(element => {
         element.addEventListener('click', () => {
-            if (<%= tableIdentifier.equals("plano_vantagem") %>){
+            if (<%= tableIdentifier.equals("plano_vantagem") %>) {
                 const predicateExists = document.querySelector('#creation-form form input[name=predicate]');
 
                 if (!predicateExists) {
                     let predicate = document.createElement('input');
-                    predicate.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+                    predicate.type = 'hidden'; // Specify the type of input (e.g., 'text', 'email', 'number')
                     predicate.name = 'predicate'; // Set the name attribute
                     predicate.value = 'cNmPlano'
 
                     let input = document.createElement('input');
-                    input.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+                    input.type = 'hidden'; // Specify the type of input (e.g., 'text', 'email', 'number')
                     input.name = 'cNmPlano'; // Set the name attribute
                     input.value = "<%= request.getParameter("cNmPlano") %>"
                     const cNmPlano = document.querySelector('#creation-form form input[name=cNmPlano]');
@@ -311,10 +312,9 @@
             const values = element.dataset.values.split(",");
 
             inputs.forEach((inputName, index) => {
-                if (inputName === "nValor" || inputName === "nPctBoost") {
+                if (inputName === "nValor" || inputName === "nPctBoost" || inputName === "nTotal" || inputName === "nPctDesconto") {
                     const input = document.querySelector('#edition-form form input[name=' + inputName + ']');
                     if (input) {
-                        console.log(input)
                         input.value = values[index]
                     }
                     inputName += "-edit-masked"
@@ -326,15 +326,26 @@
                 }
                 if (input) {
                     let value = values[index]
-                    if (inputName === "nValor-edit-masked") {
+                    if (inputName === "nValor-edit-masked" || inputName === "nTotal-edit-masked") {
                         value += 0
                         value = formatAsMoney(value)
                     }
-                    if (inputName === "nPctBoost-edit-masked") {
+                    if (inputName === "nPctBoost-edit-masked" || inputName === "nPctDesconto-edit-masked") {
                         value += 0
                         value = formatAsPercentage(value)
                     }
+                    if (inputName === "cTipoUsuario" && "<%=tableIdentifier%>" === "pagamento") {
+                        console.log(value)
+                        value = value.toLowerCase()
+                        console.log(value)
+                    }
                     input.value = value
+
+                    console.log(inputName)
+                    if ((inputName === "cNmPlano" && "<%=tableIdentifier%>" === "plano_vantagem") || (inputName === "cTipoUsuario" && "<%=tableIdentifier%>" === "pagamento") || (inputName === "cEmailUsuario" && "<%=tableIdentifier%>" === "pagamento")) {
+                        input.readOnly = true;
+                        console.log(input)
+                    }
                 }
             });
 
@@ -345,12 +356,12 @@
     document.querySelectorAll('#open-advantages').forEach(element => {
         element.addEventListener('click', () => {
             let predicate = document.createElement('input');
-            predicate.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+            predicate.type = 'hidden'; // Specify the type of input (e.g., 'text', 'email', 'number')
             predicate.name = 'predicate'; // Set the name attribute
             predicate.value = 'cNmPlano'
 
             let input = document.createElement('input');
-            input.type = 'text'; // Specify the type of input (e.g., 'text', 'email', 'number')
+            input.type = 'hidden'; // Specify the type of input (e.g., 'text', 'email', 'number')
             input.name = 'cNmPlano'; // Set the name attribute
             input.value = element.dataset.name
 

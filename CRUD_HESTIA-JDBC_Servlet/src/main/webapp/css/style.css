@@ -1432,3 +1432,7 @@ input[type="file"] {
     justify-content: space-between;
     font-size: 1.8rem;
 }
+
+button#close-form {
+    color: var(--white);
+}

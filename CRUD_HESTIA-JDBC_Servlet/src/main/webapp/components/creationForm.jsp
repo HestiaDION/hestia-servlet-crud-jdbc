@@ -43,14 +43,14 @@
         <div class="input-container">
             <% if (!regexIds[i].equals("10") && !regexIds[i].equals("11") && !regexIds[i].equals("12")) { %>
             <input
-                    type=<%= regexIds[i].equals("2") ? "password" : regexIds[i].equals("9") ? "date" : regexIds[i].equals("5") || regexIds[i].equals("6") ? "hidden" : "text" %>
+                    type=<%= regexIds[i].equals("2") ? "password" : regexIds[i].equals("9") ? "date" : regexIds[i].equals("8") ? "email" : regexIds[i].equals("5") || regexIds[i].equals("6") ? "hidden" : "text" %>
                             name=<%= fieldTypes[i] %>
                     id=<%= fieldTypes[i] %>
-                        <% if (!regexIds[i].equals("5") && !regexIds[i].equals("6") && !regexIds[i].equals("9")) { %>
+                        <% if (!regexIds[i].equals("5") && !regexIds[i].equals("6") && !regexIds[i].equals("9") && !regexIds[i].equals("8")) { %>
                             pattern=<%= regex[Integer.parseInt(regexIds[i])] %>
                     <% } %>
                     placeholder=""
-                    required
+                    <% if (!regexIds[i].equals("9")) { %>required <%}%>
             />
             <% } else if (regexIds[i].equals("10")) { %>
             <select name="<%= fieldTypes[i] %>" id="<%= fieldTypes[i] %>" required>

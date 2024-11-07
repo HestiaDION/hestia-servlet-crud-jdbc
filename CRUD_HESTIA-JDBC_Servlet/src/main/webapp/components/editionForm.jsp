@@ -36,7 +36,7 @@
                      check_circle
                     </span>
                 </label>
-                <input type="file" id="cFoto-edit" name="cFoto" accept="image/*" required>
+                <input type="file" id="cFoto-edit" name="cFoto" accept="image/*">
             </div>
         </div>
         <%}%>
@@ -44,14 +44,14 @@
         <div class="input-container <% if (Boolean.parseBoolean(ignoreField[i])) { %>hidden-input<% } %>">
             <% if (!regexIds[i].equals("10") && !regexIds[i].equals("11") && !regexIds[i].equals("12")) { %>
             <input
-                    type=<%= Boolean.parseBoolean(ignoreField[i]) ? "hidden" : regexIds[i].equals("2") ? "password" : regexIds[i].equals("9") ? "date" : regexIds[i].equals("5") || regexIds[i].equals("6") ? "hidden" : "text" %>
+                    type=<%= Boolean.parseBoolean(ignoreField[i]) ? "hidden" : regexIds[i].equals("2") ? "password" : regexIds[i].equals("9") ? "date" : regexIds[i].equals("8") ? "email" : regexIds[i].equals("5") || regexIds[i].equals("6") ? "hidden" : "text" %>
                             name=<%= fieldTypes[i] %>
                     id=<%= fieldTypes[i] + "-edit" %>
-                        <% if (!Boolean.parseBoolean(ignoreField[i]) && !regexIds[i].equals("5") && !regexIds[i].equals("6")  && !regexIds[i].equals("9")) { %>
+                        <% if (!Boolean.parseBoolean(ignoreField[i]) && !regexIds[i].equals("5") && !regexIds[i].equals("6")  && !regexIds[i].equals("9")  && !regexIds[i].equals("8")) { %>
                             pattern="<%= regex[Integer.parseInt(regexIds[i])] %>"
                     <% } %>
                     placeholder=""
-                    required
+                    <% if (!regexIds[i].equals("9")) { %>required <%}%>
             />
             <% } else if (regexIds[i].equals("10")) { %>
             <select name="<%= fieldTypes[i] %>" id="<%= fieldTypes[i] %>" required>
