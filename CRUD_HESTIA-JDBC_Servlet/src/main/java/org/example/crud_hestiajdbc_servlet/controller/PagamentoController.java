@@ -137,7 +137,7 @@ public class PagamentoController extends HttpServlet {
     private void readPagamento(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
         // Recupera parâmetro que pode conter ou não filtro para a pesquisa
-        String predicate = (String) req.getAttribute("predicate");
+        String predicate = (String) req.getParameter("predicate");
 
         // Declaração de objeto para guardar os registro retornados
         ResultSet list;
