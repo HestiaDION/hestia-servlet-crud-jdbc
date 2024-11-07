@@ -185,22 +185,16 @@ public class PlanoController extends HttpServlet
                     break;
 
                 case "nValor":
-                    // Não recebe um valor, e sim um char ('>' para crescente ou '<' para decrescente)
-                    String ordenacaoValorParameter = req.getParameter("sort");
+                    String valorParameter = req.getParameter("nValor");
 
                     if
                     (
-                            Utils.isValidChar(ordenacaoValorParameter) &&
-                            ordenacaoValorParameter.charAt(0) == '>' ||
-                            ordenacaoValorParameter.charAt(0) == '<'
+                            Utils.isValidDouble(valorParameter)
                     )
                     {
-                        char ordenacaoValor = ordenacaoValorParameter.charAt(0);
-
-                        if (ordenacaoValor == '>')
-                            list = planoDAO.getPlanoByValorAscending();
-                        else
-                            list = planoDAO.getPlanoByValorDescending();
+                        // Guarda a váriavel em uma String, por ser o tipo necessário para a busca
+                        String valor = valorParameter;
+                        list = planoDAO.getPlanoByValor(valor);
 
                         if (list != null)
                         {

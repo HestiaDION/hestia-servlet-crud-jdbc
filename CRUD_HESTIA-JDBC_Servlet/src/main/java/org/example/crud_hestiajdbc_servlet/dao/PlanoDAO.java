@@ -163,7 +163,7 @@ public class PlanoDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getPlanoByValorAscending()
+    public ResultSet getPlanoByValor(String nValor)
     {
         rs = null;
 
@@ -172,7 +172,8 @@ public class PlanoDAO extends DatabaseConnection
             try
             {
                 // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE NOT cDescricao ~* '^INATIVO$' ORDER BY nValor");
+                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE NOT cDescricao ~* '^INATIVO$' AND nValor::text ~* ('^'||?)");
+                pstmt.setString(1, nValor);
 
                 // Executa a instrução e guarda as linhas retornadas
                 rs = pstmt.executeQuery();
@@ -192,34 +193,34 @@ public class PlanoDAO extends DatabaseConnection
         return rs;
     }
 
-    public ResultSet getPlanoByValorDescending()
-    {
-        rs = null;
-
-        if (connect())
-        {
-            try
-            {
-                // Prepara a instrução SQL
-                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE NOT cDescricao ~* '^INATIVO$' ORDER BY nValor DESC");
-
-                // Executa a instrução e guarda as linhas retornadas
-                rs = pstmt.executeQuery();
-            }
-            catch (SQLException sqle)
-            {
-                // Imprime a exceção no console
-                sqle.printStackTrace();
-            }
-            finally
-            {
-                disconnect();
-            }
-        }
-
-        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
-        return rs;
-    }
+//    public ResultSet getPlanoByValorDescending()
+//    {
+//        rs = null;
+//
+//        if (connect())
+//        {
+//            try
+//            {
+//                // Prepara a instrução SQL
+//                pstmt = conn.prepareStatement("SELECT uId, cNome, cTipoUsuario, nValor, cDescricao FROM Plano WHERE NOT cDescricao ~* '^INATIVO$' ORDER BY nValor DESC");
+//
+//                // Executa a instrução e guarda as linhas retornadas
+//                rs = pstmt.executeQuery();
+//            }
+//            catch (SQLException sqle)
+//            {
+//                // Imprime a exceção no console
+//                sqle.printStackTrace();
+//            }
+//            finally
+//            {
+//                disconnect();
+//            }
+//        }
+//
+//        // Sempre retorna um ResultSet, que pode ser null caso não seja possível conectar ou ocorra uma exceção
+//        return rs;
+//    }
 
 //    DEFINIÇÃO DOS MÉTODOS DE FUNCTIONS E PROCEDURES NO BANCO DE DADOS
     public UUID getPlanoId(String nmPlao)

@@ -215,30 +215,30 @@ public class AdminController extends HttpServlet
                     }
                     break;
 
-                case "cSenha":
-                    // Não recebe uma senha especifica, e sim um tamanho de senha (Integer)
-                    String tamanhoSenhaParameter = req.getParameter("length");
-
-                    if (Utils.isValidInteger(tamanhoSenhaParameter))
-                    {
-                        int tamanhoSenha = Integer.parseInt(tamanhoSenhaParameter);
-                        list = adminDAO.getAdminsByPasswordSize(tamanhoSenha);
-
-                        if (list != null)
-                        {
-                            req.setAttribute("list", Utils.toAdminStringList(list));
-                            Utils.logSuccessfulReading(req);
-                        }
-                        else
-                        {
-                            Utils.logDatabaseIssue(req);
-                        }
-                    }
-                    else
-                    {
-                        Utils.logInputSetback(req);
-                    }
-                    break;
+//                case "cSenha":
+//                    // Não recebe uma senha especifica, e sim um tamanho de senha (Integer)
+//                    String tamanhoSenhaParameter = req.getParameter("length");
+//
+//                    if (Utils.isValidInteger(tamanhoSenhaParameter))
+//                    {
+//                        int tamanhoSenha = Integer.parseInt(tamanhoSenhaParameter);
+//                        list = adminDAO.getAdminsByPasswordSize(tamanhoSenha);
+//
+//                        if (list != null)
+//                        {
+//                            req.setAttribute("list", Utils.toAdminStringList(list));
+//                            Utils.logSuccessfulReading(req);
+//                        }
+//                        else
+//                        {
+//                            Utils.logDatabaseIssue(req);
+//                        }
+//                    }
+//                    else
+//                    {
+//                        Utils.logInputSetback(req);
+//                    }
+//                    break;
 
                 default:
                     Utils.logActionManagerSetback(req);

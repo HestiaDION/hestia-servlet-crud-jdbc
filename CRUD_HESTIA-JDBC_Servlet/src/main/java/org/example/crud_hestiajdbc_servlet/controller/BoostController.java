@@ -186,21 +186,15 @@ public class BoostController extends HttpServlet
                     break;
 
                 case "nValor":
-                    // Não recebe um valor, e sim um char ('>' para crescente ou '<' para decrescente)
-                    String ordenacaoValorParameter = req.getParameter("sort");
+                    String valorParameter = req.getParameter("nValor");
 
                     if (
-                            Utils.isValidChar(ordenacaoValorParameter) &&
-                            ordenacaoValorParameter.charAt(0) == '>'                ||
-                            ordenacaoValorParameter.charAt(0) == '<'
+                            Utils.isValidDouble(valorParameter)
                     )
                     {
-                        char ordenacaoValor = ordenacaoValorParameter.charAt(0);
-
-                        if (ordenacaoValor == '>')
-                            list = boostDAO.getBoostByValorAscending();
-                        else
-                            list = boostDAO.getBoostsByValorDescending();
+                        // Guarda a váriavel em uma String, por ser o tipo necessário para a busca
+                        String valor = valorParameter;
+                        list = boostDAO.getBoostByValor(valor);
 
                         if (list != null)
                         {
@@ -219,21 +213,15 @@ public class BoostController extends HttpServlet
                     break;
 
                 case "nPctBoost":
-                    // Não recebe um valor, e sim um char ('>' para crescente ou '<' para decrescente)
-                    String ordenacaoPctParameter = req.getParameter("sort");
+                    String pctBoostParameter = req.getParameter("nPctBoost");
 
                     if (
-                            Utils.isValidChar(ordenacaoPctParameter) &&
-                            ordenacaoPctParameter.charAt(0) == '>'                ||
-                            ordenacaoPctParameter.charAt(0) == '<'
+                            Utils.isValidDouble(pctBoostParameter)
                     )
                     {
-                        char ordenacaoPct = ordenacaoPctParameter.charAt(0);
-
-                        if (ordenacaoPct == '>')
-                            list = boostDAO.getBoostsByPctBoostAscending();
-                        else
-                            list = boostDAO.getBoostByPctBoostDescending();
+                        // Guarda a váriavel em uma String, por ser o tipo necessário para a busca
+                        String pctBoost = pctBoostParameter;
+                        list = boostDAO.getBoostsByPctBoost(pctBoost);
 
                         if (list != null)
                         {
