@@ -301,6 +301,20 @@
         element.addEventListener('click', () => {
             const uidInput = document.querySelector('#confirm-delete form input[name="uId"]');
 
+            if (<%= tableIdentifier.equals("plano_vantagem") %>) {
+
+                const predicateExists = document.querySelector('#confirm-delete form input[name=predicate]');
+
+                if (!predicateExists) {
+                    let input = document.createElement('input');
+                    input.type = 'hidden'; // Specify the type of input (e.g., 'text', 'email', 'number')
+                    input.name = 'cNmPlano'; // Set the name attribute
+                    input.value = "<%= request.getParameter("cNmPlano") %>"
+                    deleteForm.append(input)
+                }
+            }
+
+
             uidInput.value = element.dataset.uid;
             deleteForm.classList.remove("closed-form");
         });
@@ -493,12 +507,23 @@
     }
 
     document.getElementById("filter").addEventListener('click', () => {
-        filterForm.classList.toggle('hide-filters')
+        if(<%= !tableIdentifier.equals("plano_vantagem") %>) {
+            filterForm.classList.toggle('hide-filters')
+            if (<%= request.getParameter("predicate")%>) {
+                changeTable("<%=tableIdentifier%>")
+            }
+        }
     })
 
     document.getElementById("predicate").addEventListener('input', (event) => {
         document.getElementById("filter-value").name = event.target.value;
     })
+
+    if (<%= request.getParameter("predicate") != null && !tableIdentifier.equals("plano_vantagem") %>){
+        filterForm.classList.remove('hide-filters')
+        document.getElementById("predicate").value = "<%=request.getParameter("predicate")%>"
+        document.getElementById("filter-value").value = "<%=request.getParameter(request.getParameter("predicate"))%>"
+    }
 </script>
 </body>
 </html>
