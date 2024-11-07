@@ -18,7 +18,7 @@
     <input type="hidden" name="action" value="<%= request.getAttribute("action") %>">
 <%--    <input type="hidden" name="uId" value="">--%>
 
-    <label for="filter-value" id="filter-label">Select * from <%= tableIdentifier %> where <select name="predicate" id="predicate">
+    <label for="filter-value" id="filter-label">Mostre todos os <%= tableIdentifier %>s onde <select name="predicate" id="predicate">
         <% for (int i = 0; i < fieldTypes.length; i++) {%>
         <option value="<%= fieldTypes[i] %>"><%= fieldNames[i] %>
         </option>
