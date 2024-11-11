@@ -25,7 +25,6 @@ img {
 
 h1 {
     font-size: 4.8rem;
-    width: 65rem;
     font-weight: 800;
     text-transform: uppercase;
     font-family: "Montserrat", sans-serif;
@@ -69,6 +68,10 @@ reveal-text {
     top: 25%;
     left: 12.5%;
     color: var(--white);
+
+    h1 {
+        width: 65rem;
+    }
 }
 
 .title-section h1 span:nth-child(1){
@@ -218,12 +221,14 @@ reveal-text {
     aspect-ratio: 1366/661;
     color: var(--white);
     padding: 12.5rem 12.5rem 0rem;
+    background-size: cover;
 
     h1 {
         position: relative;
         top: 0;
         animation: reveal-text both;
         animation-timeline: view(50% 25%);
+        width: 65rem;
     }
 
     & > h5 {
@@ -305,7 +310,7 @@ reveal-text {
     font-size: 1.8rem;
 }
 
-.vertical-line {
+.blue-vertical-line {
     height: 75%;
     border-radius: 0.5rem;
     width: 0.16rem;

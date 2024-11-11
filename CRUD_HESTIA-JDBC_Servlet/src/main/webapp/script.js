@@ -60,5 +60,5 @@ function redirectToAdminLogin() {
 }
 
 function redirectToSecretAreaLogin() {
-  document.getElementById("login-form").action = "/login-secret-area.html";
+  document.getElementById("login-form").action = "https://hestia-secrect-area-vercel.vercel.app";
 }
